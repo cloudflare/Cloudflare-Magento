@@ -1,5 +1,5 @@
 <?php
-namespace CloudFlare\Plugin\Controller\Hello;
+namespace CloudFlare\Plugin\Controller\Adminhtml\Hello;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Action\Context;
 
