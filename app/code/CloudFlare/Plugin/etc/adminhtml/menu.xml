@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="CloudFlare_Plugin::cloudflare_plugin" title="CloudFlare" module="CloudFlare_Plugin" sortOrder="20" parent="Magento_Integration::system_extensions" action="cloudflare/hello/world" resource="CloudFlare_Plugin::test"/>
+    </menu>
+</config>
