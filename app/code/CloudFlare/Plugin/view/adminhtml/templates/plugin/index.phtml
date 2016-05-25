@@ -12,26 +12,30 @@
      * @param {Function} [opts.onError]
      */
     var absoluteUrlBase = '<?php echo $this->getRestProxyPrefix(); ?>';
+    var proxyUrl = '<?php echo $this->getProxyUrl(); ?>';
     function RestProxyCallback(opts) {
         //only proxy external REST calls
         if(opts.url.lastIndexOf("http", 0) === 0) {
+            if(!opts.parameters) {
+                opts.parameters = {};
+            }
+            if(!opts.body) {
+                opts.body = {};
+            }
             if(opts.method.toUpperCase() !== "GET") {
-                if(!opts.body) {
-                    opts.body = {};
-                }
-                opts.body['cfCSRFToken'] = cfCSRFToken;
                 opts.body['proxyURL'] = opts.url;
+                //Magento CSRF token
+                opts.body['form_key'] = window.FORM_KEY;
             } else {
-                if(!opts.parameters) {
-                    opts.parameters = {};
-                }
                 opts.parameters['proxyURL'] = opts.url;
             }
-            opts.url = "./proxy.live.php";
+            opts.url = proxyUrl;
+            opts.parameters['isAjax'] = true;
         } else {
             opts.url = absoluteUrlBase + opts.url;
         }
     }
 </script>
+<!-- <?php echo $this->getFormKey();?> -->
 <div id="root" class="cloudflare-partners site-wrapper"></div>
 <script src="<?php echo $this->getCompiledJsUrl(); ?>"></script>
