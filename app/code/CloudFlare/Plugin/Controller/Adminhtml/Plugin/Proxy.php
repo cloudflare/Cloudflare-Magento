@@ -10,6 +10,8 @@ class Proxy extends AbstractAction {
 
     protected $logger;
 
+    const FORM_KEY = "form_key";
+
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
@@ -39,10 +41,16 @@ class Proxy extends AbstractAction {
     }
 
     /*
-     * I don't know why https://github.com/magento/magento2/blob/develop/app/code/Magento/Backend/App/AbstractAction.php#L247
-     * doesn't accept window.FORM_KEY so I overrode this method to return true.  Its okay because we use our own custom CSRF token.
-     */
+     * Magento CSRF validation can't find the CSRF Token "form_key" if its in the JSON
+     * so we copy it from the JSON body to the Magento request parameters.
+    */
     public function _processUrlKeys() {
-        return true;
+        $requestJsonBody = json_decode(file_get_contents('php://input'), true);
+        if(array_key_exists(self::FORM_KEY, $requestJsonBody)) {
+            $parameters = $this->getRequest()->getParams();
+            $parameters[self::FORM_KEY] = $requestJsonBody[self::FORM_KEY];
+            $this->getRequest()->setParams($parameters);
+        }
+        return parent::_processUrlKeys();
     }
 }
