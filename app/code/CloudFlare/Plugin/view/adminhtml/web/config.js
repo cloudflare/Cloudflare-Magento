@@ -15,6 +15,7 @@
     "featureManagerIsSecurityLevelEnabled": true,
     "featureManagerIsSSLEnabled": false,
     "locale": "en",
-    "integrationName": "cpanel",
-    "version": "6.0.0"
+    "integrationName": "magento",
+    "useHostAPILogin": false,
+    "version": "1.0.0"
 }
