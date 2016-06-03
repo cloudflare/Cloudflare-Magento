@@ -1,8 +1,6 @@
 <?php
 namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
 
-require_once(__DIR__."/vendor/autoload.php");
-
 use \Magento\Backend\App\AbstractAction;
 use \Magento\Backend\App\Action\Context;
 use \Magento\Framework\Controller\Result\JsonFactory;
