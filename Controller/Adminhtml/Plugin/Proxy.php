@@ -53,12 +53,25 @@ class Proxy extends AbstractAction {
      * so we copy it from the JSON body to the Magento request parameters.
     */
     public function _processUrlKeys() {
-        $requestJsonBody = json_decode(file_get_contents('php://input'), true);
+        $requestJsonBody = $this->getJSONBody();
         if(array_key_exists(self::FORM_KEY, $requestJsonBody)) {
-            $parameters = $this->getRequest()->getParams();
-            $parameters[self::FORM_KEY] = $requestJsonBody[self::FORM_KEY];
-            $this->getRequest()->setParams($parameters);
+            $this->setJsonFormTokenOnMagentoRequest($requestJsonBody[self::FORM_KEY], $this->getRequest());
         }
         return parent::_processUrlKeys();
+    }
+
+    public function getJSONBody() {
+        return json_decode(file_get_contents('php://input'), true);
+    }
+
+    /**
+     * @param $token "form_key"
+     * @param $request
+     */
+    public function setJsonFormTokenOnMagentoRequest($token, $request) {
+        $parameters = $request->getParams();
+        $parameters[self::FORM_KEY] = $token;
+        $request->setParams($parameters);
+        return $request;
     }
 }
