@@ -5,7 +5,8 @@
   "homepage": "https://github.com/cloudflare/CloudFlare-Magento",
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
-    "guzzlehttp/guzzle": "~5.0"
+    "guzzlehttp/guzzle": "~5.0",
+    "cloudflare/cloudflare-plugin-backend": "1.0.0"
   },
   "type": "magento2-module",
   "license": [
@@ -16,5 +17,6 @@
     "psr-4": {
       "CloudFlare\\Plugin\\": ""
     }
-  }
+  },
+  "minimum-stability": "alpha"
 }
