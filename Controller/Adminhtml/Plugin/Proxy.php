@@ -5,6 +5,9 @@ use \Magento\Backend\App\AbstractAction;
 use \Magento\Backend\App\Action\Context;
 use \Magento\Framework\Controller\Result\JsonFactory;
 use \Psr\Log\LoggerInterface;
+
+use \CloudFlare\Plugin\Backend;
+use \CF\Integration\DefaultConfig;
 use GuzzleHttp;
 
 class Proxy extends AbstractAction {
@@ -32,20 +35,23 @@ class Proxy extends AbstractAction {
      * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute() {
-        $request = $this->getRequest();
-        $this->logger->info("Method: ". $request->getMethod());
-        $this->logger->info("Params: ". print_r($request->getParams(),true));
-        $this->logger->info("Body: ". print_r(json_decode(file_get_contents('php://input'), true),true));
-        /** @var \Magento\Framework\Controller\Result\Json $result */
-        $result = $this->resultJsonFactory->create();
-        try {
-            $client = new GuzzleHttp\Client(['base_url' => "test.com"]);
-            $this->logger->info(print_r($client,true));
-        } catch(GuzzleHttp\Exception\RequestException $e) {
-            $this->logger->info(print_r($e,true));
-        }
+        $config = new DefaultConfig("[]");
+        $magentoAPI = new Backend\MagentoAPI();
+        $dataStore = new Backend\DataStore();
+        $integrationContext = new \CF\Integration\DefaultIntegration($config, $magentoAPI, $dataStore, $this->logger);
 
-        return $result->setData($request->getMethod());
+        $magentoRequest = $this->getRequest();
+        $method =  $magentoRequest->getMethod();
+        $parameters = $magentoRequest->getParams();
+        $body = $this->getJSONBody();
+        $path = (strtoupper($method === "GET") ? $_GET['proxyURL'] : $body['proxyURL']);
+
+        $request = new \CF\API\Request($method, $path, $parameters, $body);
+
+        $clientAPIClient = new \CF\API\Client($integrationContext);
+
+        $result = $this->resultJsonFactory->create();
+        return $result->setData($clientAPIClient->callAPI($request));
     }
 
     /*
@@ -54,7 +60,7 @@ class Proxy extends AbstractAction {
     */
     public function _processUrlKeys() {
         $requestJsonBody = $this->getJSONBody();
-        if(array_key_exists(self::FORM_KEY, $requestJsonBody)) {
+        if($requestJsonBody !== null && array_key_exists(self::FORM_KEY, $requestJsonBody)) {
             $this->setJsonFormTokenOnMagentoRequest($requestJsonBody[self::FORM_KEY], $this->getRequest());
         }
         return parent::_processUrlKeys();
