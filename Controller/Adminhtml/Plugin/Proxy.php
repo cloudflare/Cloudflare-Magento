@@ -44,7 +44,7 @@ class Proxy extends AbstractAction {
         $method =  $magentoRequest->getMethod();
         $parameters = $magentoRequest->getParams();
         $body = $this->getJSONBody();
-        $path = (strtoupper($method === "GET") ? $_GET['proxyURL'] : $body['proxyURL']);
+        $path = (strtoupper($method === "GET") ? $parameters['proxyURL'] : $body['proxyURL']);
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
 
