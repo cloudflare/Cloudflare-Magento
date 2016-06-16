@@ -7,12 +7,15 @@ use \Magento\Framework\Controller\Result\JsonFactory;
 use \Psr\Log\LoggerInterface;
 
 use \CloudFlare\Plugin\Backend;
+use \CloudFlare\Plugin\Model\KeyValueFactory;
 use \CF\Integration\DefaultConfig;
 use GuzzleHttp;
+
 
 class Proxy extends AbstractAction {
 
     protected $logger;
+    protected $keyValueFactory;
 
     const FORM_KEY = "form_key";
 
@@ -24,11 +27,14 @@ class Proxy extends AbstractAction {
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        KeyValueFactory $keyValueFactory
+
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->logger = $logger;
+        $this->keyValueFactory = $keyValueFactory;
     }
 
     /**
@@ -37,7 +43,7 @@ class Proxy extends AbstractAction {
     public function execute() {
         $config = new DefaultConfig("[]");
         $magentoAPI = new Backend\MagentoAPI();
-        $dataStore = new Backend\DataStore();
+        $dataStore = new Backend\DataStore($this->keyValueFactory, $this->logger);
         $integrationContext = new \CF\Integration\DefaultIntegration($config, $magentoAPI, $dataStore, $this->logger);
 
         $magentoRequest = $this->getRequest();
