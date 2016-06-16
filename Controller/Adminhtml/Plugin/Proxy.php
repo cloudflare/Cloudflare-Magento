@@ -42,8 +42,8 @@ class Proxy extends AbstractAction {
      */
     public function execute() {
         $config = new DefaultConfig("[]");
-        $magentoAPI = new Backend\MagentoAPI();
-        $dataStore = new Backend\DataStore($this->keyValueFactory, $this->logger);
+        $magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
+        $dataStore = new Backend\DataStore($magentoAPI);
         $integrationContext = new \CF\Integration\DefaultIntegration($config, $magentoAPI, $dataStore, $this->logger);
 
         $magentoRequest = $this->getRequest();

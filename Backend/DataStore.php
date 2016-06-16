@@ -5,6 +5,12 @@ use \CF\Integration\DataStoreInterface;
 
 class DataStore implements DataStoreInterface
 {
+    protected $magentoAPI;
+
+    public function __construct(MagentoAPI $magentoAPI) {
+        $this->magentoAPI = $magentoAPI;
+    }
+
     /**
      * @param $clientAPIKey
      * @param $email
