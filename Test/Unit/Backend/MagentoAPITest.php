@@ -3,7 +3,7 @@ namespace CloudFlare\Plugin\Test\Unit\Backend;
 
 use CloudFlare\Plugin\Backend\MagentoAPI;
 
-class ProxyTest extends \PHPUnit_Framework_TestCase {
+class MagentoAPITest extends \PHPUnit_Framework_TestCase {
 
     protected $mockKeyValueFactory;
     protected $mockLogger;

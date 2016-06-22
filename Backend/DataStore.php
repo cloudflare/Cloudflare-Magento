@@ -7,6 +7,9 @@ class DataStore implements DataStoreInterface
 {
     protected $magentoAPI;
 
+    const CLIENT_API_KEY = "clientApiKey";
+    const CLOUDFLARE_EMAIL = "cloudflareEmail";
+
     public function __construct(MagentoAPI $magentoAPI) {
         $this->magentoAPI = $magentoAPI;
     }
@@ -22,8 +25,9 @@ class DataStore implements DataStoreInterface
      * @internal param $user_key
      */
     public function createUserDataStore($clientAPIKey, $email, $uniqueId, $userKey) {
-        //TODO
-        return true;
+        //Magento doesn't use the host api - $uniqueId, $userKey will always be null
+        $this->magentoAPI->setValue(self::CLIENT_API_KEY, $clientAPIKey);
+        $this->magentoAPI->setValue(self::CLOUDFLARE_EMAIL, $email);
     }
 
     /**
@@ -37,8 +41,7 @@ class DataStore implements DataStoreInterface
      * @return mixed
      */
     public function getClientV4APIKey() {
-        //TODO
-        return "";
+        return $this->magentoAPI->getValue(self::CLIENT_API_KEY);
     }
 
     /**
@@ -52,7 +55,6 @@ class DataStore implements DataStoreInterface
      * @return mixed
      */
     public function getCloudFlareEmail() {
-        //TODO
-        return "";
+        return $this->magentoAPI->getValue(self::CLOUDFLARE_EMAIL);
     }
 }
