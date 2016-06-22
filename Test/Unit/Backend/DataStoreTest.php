@@ -18,7 +18,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
     public function testCreateUserDataStoreSavesAPIKeyAndEmail() {
         $apiKey = "apiKey";
         $email = "email";
-        
+
         $this->mockMagentoAPI->expects($this->at(0))
             ->method('setValue')
             ->with(DataStore::CLIENT_API_KEY, $apiKey);
@@ -35,7 +35,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
         $this->mockMagentoAPI->method('getValue')->willReturn($apiKey);
 
         $response = $this->dataStore->getClientV4APIKey();
-        $this->assertEquals($response,$apiKey);
+        $this->assertEquals($response, $apiKey);
     }
 
     public function testGetCloudFlareEmailReturnsCorrectValue() {
@@ -43,7 +43,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
         $this->mockMagentoAPI->method('getValue')->willReturn($email);
 
         $response = $this->dataStore->getClientV4APIKey();
-        $this->assertEquals($response,$email);
+        $this->assertEquals($response, $email);
     }
 
     public function testGetHostAPIUserKeyReturnsNull() {

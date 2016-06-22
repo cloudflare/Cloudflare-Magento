@@ -43,13 +43,13 @@ class MagentoAPI implements IntegrationAPIInterface
         if(empty($keyValueModel->getData())) {
             //key doesn't exist yet, create new
             $keyValueModel = $this->keyValueFactory->create();
-            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN, $key)
-                ->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value)
-                ->save();
+            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN, $key);
+            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
+            $keyValueModel->save();
         } else {
             //update existing key
-            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value)
-                ->save();
+            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
+            $keyValueModel->save();
         }
     }
 
