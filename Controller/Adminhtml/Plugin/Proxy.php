@@ -14,8 +14,13 @@ use GuzzleHttp;
 
 class Proxy extends AbstractAction {
 
+    protected $clientAPIClient;
+    protected $config;
+    protected $dataStore;
+    protected $integrationContext;
     protected $logger;
     protected $keyValueFactory;
+    protected $magentoAPI;
 
     const FORM_KEY = "form_key";
 
@@ -31,21 +36,23 @@ class Proxy extends AbstractAction {
         KeyValueFactory $keyValueFactory
 
     ) {
-        parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->logger = $logger;
         $this->keyValueFactory = $keyValueFactory;
+
+        $this->config = new DefaultConfig("[]"); //config only used for debug mode but we use monolog so not based on config anymore
+        $this->magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
+        $this->dataStore = new Backend\DataStore($this->magentoAPI);
+        $this->integrationContext = new \CF\Integration\DefaultIntegration($this->config, $this->magentoAPI, $this->dataStore, $this->logger);
+        $this->clientAPIClient = new \CF\API\Client($this->integrationContext);
+
+        parent::__construct($context);
     }
 
     /**
      * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute() {
-        $config = new DefaultConfig("[]");
-        $magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
-        $dataStore = new Backend\DataStore($magentoAPI);
-        $integrationContext = new \CF\Integration\DefaultIntegration($config, $magentoAPI, $dataStore, $this->logger);
-
         $magentoRequest = $this->getRequest();
         $method =  $magentoRequest->getMethod();
         $parameters = $magentoRequest->getParams();
@@ -54,10 +61,18 @@ class Proxy extends AbstractAction {
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
 
-        $clientAPIClient = new \CF\API\Client($integrationContext);
+        $response = "";
+        if($this->isClientAPI($path)) {
+            $clientRouter = new \CF\Router\DefaultRestAPIRouter($this->integrationContext, $this->clientAPIClient, Backend\ClientRoutes::$routes);
+            $response = $clientRouter->route($request);
+        }
 
         $result = $this->resultJsonFactory->create();
-        return $result->setData($clientAPIClient->callAPI($request));
+        return $result->setData($response);
+    }
+
+    public function isClientAPI($path) {
+        return (strpos($path, \CF\API\Client::ENDPOINT) !== false);
     }
 
     /*

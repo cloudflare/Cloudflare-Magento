@@ -64,4 +64,9 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($token, $mockRequest->getParam(Proxy::FORM_KEY));
     }
+
+    public function testIsClientAPIReturnsTrueForClientAPIPaths() {
+        $this->assertTrue($this->proxy->isClientAPI("https://api.cloudflare.com/client/v4/zones/:zoneId"));
+    }
+
 }
