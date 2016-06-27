@@ -1,12 +1,19 @@
 <?php
 namespace CloudFlare\Plugin\Block\Adminhtml;
 
+use CloudFlare\Plugin\Backend\DataStore;
 use \Magento\Framework\View\Element\Template\Context;
 use \Magento\Backend\Model\UrlInterface;
+use \CloudFlare\Plugin\Model\KeyValueFactory;
+use \CloudFlare\Plugin\Backend\MagentoAPI;
 
 class Index extends \Magento\Framework\View\Element\Template
 {
     protected $assetFactory;
+    protected $dataStore;
+    protected $keyValueModelFactory;
+    protected $logger;
+    protected $magentoAPI;
     protected $urlBuilder;
 
     const COMPILED_JS_PATH = "js/compiled.js";
@@ -14,13 +21,22 @@ class Index extends \Magento\Framework\View\Element\Template
     /**
      * @param Context $context
      * @param UrlInterface $urlBuilder
+     * @param KeyValueFactory $keyValueModelFactory
+     * @internal param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
-        UrlInterface $urlBuilder
+        UrlInterface $urlBuilder,
+        KeyValueFactory $keyValueModelFactory
     ) {
         $this->assetRepository = $context->getAssetRepository();
+        $this->keyValueModelFactory = $keyValueModelFactory;
+        $this->logger = $context->getLogger();
         $this->urlBuilder = $urlBuilder;
+
+        $this->magentoAPI = new MagentoAPI($this->keyValueModelFactory, $this->logger);
+        $this->dataStore = new DataStore($this->magentoAPI);
+
         parent::__construct($context);
     }
 
@@ -34,5 +50,6 @@ class Index extends \Magento\Framework\View\Element\Template
         $this->setRestProxyPrefix($restProxyPrefix);
 
         $this->setProxyUrl($this->urlBuilder->getUrl("cloudflare/plugin/proxy"));
+        $this->setCloudflareEmail($this->dataStore->getCloudFlareEmail());
     }
 }

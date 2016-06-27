@@ -14,8 +14,14 @@ use GuzzleHttp;
 
 class Proxy extends AbstractAction {
 
+    protected $clientAPIClient;
+    protected $config;
+    protected $dataStore;
+    protected $integrationContext;
     protected $logger;
     protected $keyValueFactory;
+    protected $magentoAPI;
+    protected $pluginAPIClient;
 
     const FORM_KEY = "form_key";
 
@@ -31,20 +37,25 @@ class Proxy extends AbstractAction {
         KeyValueFactory $keyValueFactory
 
     ) {
-        parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->logger = $logger;
         $this->keyValueFactory = $keyValueFactory;
+
+        $this->config = new DefaultConfig("[]"); //config only used for debug mode but we use monolog so not based on config anymore
+        $this->magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
+        $this->dataStore = new Backend\DataStore($this->magentoAPI);
+        $this->integrationContext = new \CF\Integration\DefaultIntegration($this->config, $this->magentoAPI, $this->dataStore, $this->logger);
+        $this->clientAPIClient = new \CF\API\Client($this->integrationContext);
+        $this->pluginAPIClient = new \CF\API\Plugin($this->integrationContext);
+
+        parent::__construct($context);
     }
 
     /**
      * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute() {
-        $config = new DefaultConfig("[]");
-        $magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
-        $dataStore = new Backend\DataStore($magentoAPI);
-        $integrationContext = new \CF\Integration\DefaultIntegration($config, $magentoAPI, $dataStore, $this->logger);
+        $result = $this->resultJsonFactory->create();
 
         $magentoRequest = $this->getRequest();
         $method =  $magentoRequest->getMethod();
@@ -54,10 +65,39 @@ class Proxy extends AbstractAction {
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
 
-        $clientAPIClient = new \CF\API\Client($integrationContext);
+        $apiClient = null;
+        $routes = null;
+        if($this->isClientAPI($path)) {
+            $apiClient = $this->clientAPIClient;
+            $routes = Backend\ClientRoutes::$routes;
+        } else if($this->isPluginAPI($path)) {
+            $apiClient = $this->pluginAPIClient;
+            $routes = Backend\PluginRoutes::$routes;
+        } else {
+            $this->logger->error("Bad Request: ". $request->getUrl());
+            return $result->setData($this->clientAPIClient->createAPIError($request->getUrl()));
+        }
 
-        $result = $this->resultJsonFactory->create();
-        return $result->setData($clientAPIClient->callAPI($request));
+        $router = new \CF\Router\DefaultRestAPIRouter($this->integrationContext, $apiClient, $routes);
+        $response = $router->route($request);
+
+        return $result->setData($response);
+    }
+
+    /**
+     * @param $path
+     * @return bool
+     */
+    public function isClientAPI($path) {
+        return (strpos($path, \CF\API\Client::ENDPOINT) !== false);
+    }
+
+    /**
+     * @param $path
+     * @return bool
+     */
+    public function isPluginAPI($path) {
+        return (strpos($path, \CF\API\Plugin::ENDPOINT) !== false);
     }
 
     /*
