@@ -69,4 +69,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->proxy->isClientAPI("https://api.cloudflare.com/client/v4/zones/:zoneId"));
     }
 
+    public function testIsPluginAPIReturnsTrueForPluginAPIPaths() {
+        $this->assertTrue($this->proxy->isClientAPI("https://partners.cloudflare/plugins/account/"));
+    }
+
 }

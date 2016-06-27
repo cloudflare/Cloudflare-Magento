@@ -21,6 +21,7 @@ class Proxy extends AbstractAction {
     protected $logger;
     protected $keyValueFactory;
     protected $magentoAPI;
+    protected $pluginAPIClient;
 
     const FORM_KEY = "form_key";
 
@@ -45,6 +46,7 @@ class Proxy extends AbstractAction {
         $this->dataStore = new Backend\DataStore($this->magentoAPI);
         $this->integrationContext = new \CF\Integration\DefaultIntegration($this->config, $this->magentoAPI, $this->dataStore, $this->logger);
         $this->clientAPIClient = new \CF\API\Client($this->integrationContext);
+        $this->pluginAPIClient = new \CF\API\Plugin($this->integrationContext);
 
         parent::__construct($context);
     }
@@ -53,6 +55,8 @@ class Proxy extends AbstractAction {
      * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute() {
+        $result = $this->resultJsonFactory->create();
+
         $magentoRequest = $this->getRequest();
         $method =  $magentoRequest->getMethod();
         $parameters = $magentoRequest->getParams();
@@ -61,18 +65,39 @@ class Proxy extends AbstractAction {
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
 
-        $response = "";
+        $apiClient = null;
+        $routes = null;
         if($this->isClientAPI($path)) {
-            $clientRouter = new \CF\Router\DefaultRestAPIRouter($this->integrationContext, $this->clientAPIClient, Backend\ClientRoutes::$routes);
-            $response = $clientRouter->route($request);
+            $apiClient = $this->clientAPIClient;
+            $routes = Backend\ClientRoutes::$routes;
+        } else if($this->isPluginAPI($path)) {
+            $apiClient = $this->pluginAPIClient;
+            $routes = Backend\PluginRoutes::$routes;
+        } else {
+            $this->logger->error("Bad Request: ". $request->getUrl());
+            return $result->setData($this->clientAPIClient->createAPIError($request->getUrl()));
         }
 
-        $result = $this->resultJsonFactory->create();
+        $router = new \CF\Router\DefaultRestAPIRouter($this->integrationContext, $apiClient, $routes);
+        $response = $router->route($request);
+
         return $result->setData($response);
     }
 
+    /**
+     * @param $path
+     * @return bool
+     */
     public function isClientAPI($path) {
         return (strpos($path, \CF\API\Client::ENDPOINT) !== false);
+    }
+
+    /**
+     * @param $path
+     * @return bool
+     */
+    public function isPluginAPI($path) {
+        return (strpos($path, \CF\API\Plugin::ENDPOINT) !== false);
     }
 
     /*
