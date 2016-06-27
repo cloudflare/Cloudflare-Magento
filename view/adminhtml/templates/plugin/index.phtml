@@ -13,6 +13,7 @@
      */
     var absoluteUrlBase = '<?php echo $this->getRestProxyPrefix(); ?>';
     var proxyUrl = '<?php echo $this->getProxyUrl(); ?>';
+    localStorage.cfEmail = '<?php echo $this->getCloudflareEmail(); ?>';
     function RestProxyCallback(opts) {
         //only proxy external REST calls
         if(opts.url.lastIndexOf("http", 0) === 0) {
