@@ -70,7 +70,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testIsPluginAPIReturnsTrueForPluginAPIPaths() {
-        $this->assertTrue($this->proxy->isClientAPI("https://partners.cloudflare/plugins/account/"));
+        $this->assertTrue($this->proxy->isPluginAPI("https://partners.cloudflare/plugins/account/"));
     }
 
 }

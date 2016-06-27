@@ -6,7 +6,7 @@ use \CF\Integration\DefaultIntegration;
 use \CF\API\APIInterface;
 use \CF\API\Request;
 
-class ClientActions
+class PluginActions
 {
     protected $api;
     protected $config;
@@ -19,7 +19,6 @@ class ClientActions
      * @param DefaultIntegration $magentoIntegration
      * @param APIInterface $api
      * @param Request $request
-     * @internal param DefaultIntegration $cpanelIntegration
      */
     public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request) {
         $this->api = $api;
