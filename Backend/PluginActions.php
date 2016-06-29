@@ -23,7 +23,7 @@ class PluginActions
     public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request) {
         $this->api = $api;
         $this->config = $magentoIntegration->getConfig();
-        $this->cpanelAPI = $magentoIntegration->getIntegrationAPI();
+        $this->integrationAPI = $magentoIntegration->getIntegrationAPI();
         $this->dataStore = $magentoIntegration->getDataStore();
         $this->logger = $magentoIntegration->getLogger();
         $this->request = $request;

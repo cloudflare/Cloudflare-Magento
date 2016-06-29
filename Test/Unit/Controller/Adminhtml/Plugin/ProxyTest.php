@@ -8,6 +8,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     private $mockLogger;
     private $mockKeyValueFactory;
     private $mockResultJsonFactory;
+    private $mockStoreManager;
     private $proxy;
 
     public function setUp() {
@@ -21,10 +22,13 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $this->mockKeyValueFactory = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValueFactory')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockStoreManager = $this->getMockBuilder('\Magento\Store\Model\StoreManagerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockResultJsonFactory = $this->getMockBuilder('Magento\Framework\Controller\Result\JsonFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->proxy = new Proxy($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory);
+        $this->proxy = new Proxy($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager);
     }
 
     public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest() {
@@ -36,7 +40,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
 
         $mockProxy = $this->getMock('CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
             array('setJsonFormTokenOnMagentoRequest', 'getJSONBody'),
-            array($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory)
+            array($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager)
         );
         $mockProxy->method('getJSONBody')->willReturn(array(Proxy::FORM_KEY => Proxy::FORM_KEY));
 
