@@ -31,6 +31,7 @@ class MagentoAPI implements IntegrationAPIInterface
         //getBaseUrl() has format (http | https)://[DOMAIN NAME]/
         //need [DOMAIN NAME]
         $domainName = $this->storeManager->getStore()->getBaseUrl();
+        $this->logger->info(get_class($this->storeManager->getStore()));
         $domainName = str_replace("http://", "", $domainName);
         $domainName = str_replace("https://", "", $domainName);
         $domainName = rtrim($domainName, "/");

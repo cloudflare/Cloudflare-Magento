@@ -8,7 +8,9 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
 
     protected $mockKeyValueFactory;
     protected $mockKeyValueModel;
+    protected $mockStoreManager;
     protected $mockLogger;
+    protected $mockStore;
     protected $magentoAPI;
 
     public function setUp() {
@@ -22,7 +24,21 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
         $this->mockLogger = $this->getMockBuilder('\Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->magentoAPI = new MagentoAPI($this->mockKeyValueFactory, $this->mockLogger);
+        $this->mockStoreManager = $this->getMockBuilder('\Magento\Store\Model\StoreManagerInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        //\Magento\Store\Api\Data\StoreInterface doesn't have getBaseUrl, this is what gets injected.
+        $this->mockStore = $this->getMockBuilder('\Magento\Store\Model\Store\Interceptor')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->mockStoreManager->method('getStore')->willReturn($this->mockStore);
+        $this->magentoAPI = new MagentoAPI($this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+    }
+
+    public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl() {
+        $this->mockStore->method('getBaseUrl')->willReturn("http://site.com/");
+        $fqdn = $this->magentoAPI->getMagentoDomainName();
+        $this->assertEquals("site.com", $fqdn);
     }
 
     public function testGetValueReturnsNullForBadKey() {
