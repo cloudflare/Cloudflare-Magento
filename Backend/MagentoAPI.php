@@ -1,20 +1,41 @@
 <?php
 namespace CloudFlare\Plugin\Backend;
+
 use \CF\Integration\IntegrationAPIInterface;
 use \CF\DNSRecord;
 use \CloudFlare\Plugin\Model\KeyValueFactory;
 use \CF\Integration\DataStoreInterface;
 use \Psr\Log\LoggerInterface;
 use \CloudFlare\Plugin\Setup\InstallSchema;
+use \Magento\Store\Model\StoreManagerInterface;
 
 class MagentoAPI implements IntegrationAPIInterface
 {
     protected $keyValueFactory;
     protected $logger;
+    protected $storeManager;
 
-    public function __construct(KeyValueFactory $keyValueFactory, LoggerInterface $logger) {
+    /**
+     * @param KeyValueFactory $keyValueFactory
+     * @param StoreManagerInterface $storeManager
+     * @param LoggerInterface $logger
+     */
+    public function __construct(KeyValueFactory $keyValueFactory, StoreManagerInterface $storeManager, LoggerInterface $logger) {
         $this->keyValueFactory = $keyValueFactory;
         $this->logger = $logger;
+        $this->storeManager = $storeManager;
+    }
+
+    public function getMagentoDomainName() {
+
+        //getBaseUrl() has format (http | https)://[DOMAIN NAME]/
+        //need [DOMAIN NAME]
+        $domainName = $this->storeManager->getStore()->getBaseUrl();
+        $domainName = str_replace("http://", "", $domainName);
+        $domainName = str_replace("https://", "", $domainName);
+        $domainName = rtrim($domainName, "/");
+
+        return $domainName;
     }
 
     /**

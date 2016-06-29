@@ -34,12 +34,16 @@ class Index extends \Magento\Framework\View\Element\Template
         $this->logger = $context->getLogger();
         $this->urlBuilder = $urlBuilder;
 
-        $this->magentoAPI = new MagentoAPI($this->keyValueModelFactory, $this->logger);
+        $this->magentoAPI = new MagentoAPI($this->keyValueModelFactory, $context->getStoreManager(), $this->logger);
         $this->dataStore = new DataStore($this->magentoAPI);
 
         parent::__construct($context);
     }
 
+    /*
+     * $this->set*() are "magic" in that you can call set[THING]() and magento store and expose a
+     * get[THING]() for you to retrieve the value on the front end.
+     */
     protected function _prepareLayout() {
         //Generate link to CloudFlare/Plugin/view/web/js/compiled.js
         $asset = $this->assetRepository->createAsset('CloudFlare_Plugin::js/compiled.js');

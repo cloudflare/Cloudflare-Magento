@@ -9,7 +9,7 @@ use \Psr\Log\LoggerInterface;
 use \CloudFlare\Plugin\Backend;
 use \CloudFlare\Plugin\Model\KeyValueFactory;
 use \CF\Integration\DefaultConfig;
-use GuzzleHttp;
+use \Magento\Store\Model\StoreManagerInterface;
 
 
 class Proxy extends AbstractAction {
@@ -22,6 +22,7 @@ class Proxy extends AbstractAction {
     protected $keyValueFactory;
     protected $magentoAPI;
     protected $pluginAPIClient;
+    protected $storeManager;
 
     const FORM_KEY = "form_key";
 
@@ -34,15 +35,17 @@ class Proxy extends AbstractAction {
         Context $context,
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
-        KeyValueFactory $keyValueFactory
+        KeyValueFactory $keyValueFactory,
+        StoreManagerInterface $storeManager
 
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->logger = $logger;
         $this->keyValueFactory = $keyValueFactory;
+        $this->storeManager = $storeManager;
 
         $this->config = new DefaultConfig("[]"); //config only used for debug mode but we use monolog so not based on config anymore
-        $this->magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->logger);
+        $this->magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->storeManager, $this->logger);
         $this->dataStore = new Backend\DataStore($this->magentoAPI);
         $this->integrationContext = new \CF\Integration\DefaultIntegration($this->config, $this->magentoAPI, $this->dataStore, $this->logger);
         $this->clientAPIClient = new \CF\API\Client($this->integrationContext);
@@ -75,7 +78,7 @@ class Proxy extends AbstractAction {
             $routes = Backend\PluginRoutes::$routes;
         } else {
             $this->logger->error("Bad Request: ". $request->getUrl());
-            return $result->setData($this->clientAPIClient->createAPIError($request->getUrl()));
+            return $result->setData($this->clientAPIClient->createAPIError("Bad Request: ". $request->getUrl()));
         }
 
         $router = new \CF\Router\DefaultRestAPIRouter($this->integrationContext, $apiClient, $routes);
