@@ -1,0 +1,10 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <!-- Restore original visitor IP from CloudFlare header -->
+    <type name="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
+        <arguments>
+            <argument name="alternativeHeaders" xsi:type="array">
+                <item name="http_cf_connecting_ip" xsi:type="string">HTTP_CF_CONNECTING_IP</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
