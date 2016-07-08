@@ -18,8 +18,9 @@ class Proxy extends AbstractAction {
     protected $config;
     protected $dataStore;
     protected $integrationContext;
-    protected $logger;
     protected $keyValueFactory;
+    protected $logger;
+    protected $jsonBody;
     protected $magentoAPI;
     protected $pluginAPIClient;
     protected $storeManager;
@@ -51,6 +52,9 @@ class Proxy extends AbstractAction {
         $this->clientAPIClient = new \CF\API\Client($this->integrationContext);
         $this->pluginAPIClient = new \CF\API\Plugin($this->integrationContext);
 
+        // php://input can only be read once
+        $this->jsonBody = $this->getJsonBody();
+
         parent::__construct($context);
     }
 
@@ -63,7 +67,7 @@ class Proxy extends AbstractAction {
         $magentoRequest = $this->getRequest();
         $method =  $magentoRequest->getMethod();
         $parameters = $magentoRequest->getParams();
-        $body = $this->getJSONBody();
+        $body = $this->jsonBody;
         $path = (strtoupper($method === "GET") ? $parameters['proxyURL'] : $body['proxyURL']);
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
@@ -87,6 +91,14 @@ class Proxy extends AbstractAction {
         return $result->setData($response);
     }
 
+    public function getJsonBody() {
+        $decodedJson = json_decode(file_get_contents('php://input'), true);
+        if(json_last_error() !== 0) {
+            $this->logger->error("Error decoding JSON: ". json_last_error_msg());
+        }
+        return $decodedJson;
+    }
+
     /**
      * @param $path
      * @return bool
@@ -108,15 +120,11 @@ class Proxy extends AbstractAction {
      * so we copy it from the JSON body to the Magento request parameters.
     */
     public function _processUrlKeys() {
-        $requestJsonBody = $this->getJSONBody();
+        $requestJsonBody = $this->jsonBody;
         if($requestJsonBody !== null && array_key_exists(self::FORM_KEY, $requestJsonBody)) {
             $this->setJsonFormTokenOnMagentoRequest($requestJsonBody[self::FORM_KEY], $this->getRequest());
         }
         return parent::_processUrlKeys();
-    }
-
-    public function getJSONBody() {
-        return json_decode(file_get_contents('php://input'), true);
     }
 
     /**
