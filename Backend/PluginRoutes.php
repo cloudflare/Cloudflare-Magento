@@ -12,6 +12,14 @@ class PluginRoutes
                     'function' => 'postAccountSaveAPICredentials'
                 )
             )
+        ),
+        'plugin/:id/settings' => array(
+            'class' => 'CloudFlare\Plugin\Backend\PluginActions',
+            'methods' => array(
+                'GET' => array(
+                    'function' => 'getPluginSettings'
+                )
+            )
         )
     );
 }
