@@ -48,4 +48,11 @@ class PluginActions
 
         return $this->api->createAPISuccessResponse(array("email" => $this->dataStore->getCloudFlareEmail()));
     }
+
+    /*
+     * GET /settings
+     */
+    public function getPluginSettings() {
+        return $this->api->createAPISuccessResponse(array());
+    }
 }
