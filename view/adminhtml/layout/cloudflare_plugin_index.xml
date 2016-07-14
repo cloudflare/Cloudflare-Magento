@@ -3,6 +3,7 @@
     <head>
         <css src="CloudFlare_Plugin::stylesheets/cf.core.css"/>
         <css src="CloudFlare_Plugin::stylesheets/components.css"/>
+        <css src="CloudFlare_Plugin::stylesheets/hacks.css"/>
     </head>
     <body>
         <referenceContainer name="content">

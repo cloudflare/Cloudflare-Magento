@@ -4,14 +4,9 @@
  * everything here.
  */
 
-/* fix Cpanel Plugin title */
-span#pageHeading {
-    display: block;
-}
 
-/* change bg of body, wrapper */
-body, .cloudflare-partners .wrapper {
-    background-color: #ebebeb; /* new */
+.cloudflare-partners .col-5 {
+    margin-left: 0 !important; /* margin-left: 0 */
 }
 
 /* hide checkbox on cf-component-toggle */
@@ -19,78 +14,16 @@ body, .cloudflare-partners .wrapper {
     display: none; /* block */
 }
 
-/* center and change bg color of app nav */
-.cloudflare-partners .apps-nav-container {
-    background-color: #ebebeb; /* new */
-    padding: 0.66667rem 0;
-    position: relative;
-}
+/* center app nav */
 .cloudflare-partners .slider-nav-container {
-    display: table;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    table-layout: fixed;
-    width: auto; /* 100% */
-    margin: 0 auto; /* new */
+    margin: 0 auto; /* margin: 0*/
+    width: 40%; /* width: 100% */
 }
 
-/* app nav performance text is hidden */
-.cloudflare-partners .icon-item a {
-    color: #333333;
-    display: block;
-    font-size: 0.8rem;
-    line-height: 1.2;
+/* center cf-component-toggle */
+.cf-toggle {
+
     margin: 0 auto;
-    overflow: visible; /* hidden */
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    padding-bottom: 0.26667em;
-    position: relative;
-}
-
-/* center cf-component-toggle in cards */
-label.cf-toggle {
-    margin: 0 auto;
-}
-
-/* align checkbox/radios */
-.cloudflare-partners .cf-radio__group, .cloudflare-partners .cf-checkbox__group {
-    text-align: left; /* new */
-}
-
-/* White bg for analytics */
-.cloudflare-partners section.cf-tabs {
-    background-color: #FFF;
-}
-
-/* Fix Analytics Tabs overflow */
-.cloudflare-partners .cf-tabs__group {
-    margin-left: 0;
-}
-
-/* More space between radio/checkbox and text */
-
-.cloudflare-partners input[type="radio"], .cloudflare-partners input[type="checkbox"] {
-    height: 15px;
-    line-height: normal;
-    margin: 0px 5px 0;
-    padding: 5px;
-    position: relative;
-    width: 15px;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
-
-/* fix modal */
-.cf-modal__actions {
-    float: none; /* right */
-}
-
-/* hide input on <CloudToggle/> */
-label.proxy input {
-    display: none;
 }
 
 /* cf-component-select */
@@ -430,4 +363,3 @@ label.proxy input {
 }
 
 /* end cf-component-select */
-
