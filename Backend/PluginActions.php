@@ -53,6 +53,6 @@ class PluginActions
      * GET /settings
      */
     public function getPluginSettings() {
-        return $this->api->createAPISuccessResponse(array());
+        return $this->api->createAPISuccessResponse(array($this->api->createPluginResult(\CF\API\Plugin::SETTING_DEFAULT_SETTINGS, false, true, '')));
     }
 }
