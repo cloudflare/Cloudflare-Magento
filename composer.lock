@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1d2687710a9bc5b95891238b28e39f3b",
-    "content-hash": "b03e835b598c441769d2bb0fc3395a1b",
+    "hash": "9ef7d859bbd86f1837467bafa93f622f",
+    "content-hash": "13249dca87ca31d99cf6caf597ca2117",
     "packages": [
         {
             "name": "cloudflare/cloudflare-plugin-backend",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudflare/cloudflare-plugin-backend.git",
-                "reference": "d331b6d5c477f2e10e552709b27fff5fc39b1f40"
+                "reference": "f52dbd54eb638af451305a1367db11e637dc9de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudflare/cloudflare-plugin-backend/zipball/d331b6d5c477f2e10e552709b27fff5fc39b1f40",
-                "reference": "d331b6d5c477f2e10e552709b27fff5fc39b1f40",
+                "url": "https://api.github.com/repos/cloudflare/cloudflare-plugin-backend/zipball/f52dbd54eb638af451305a1367db11e637dc9de2",
+                "reference": "f52dbd54eb638af451305a1367db11e637dc9de2",
                 "shasum": ""
             },
             "require": {
@@ -40,7 +40,7 @@
                 "BSD-3-Clause"
             ],
             "description": "A PHP backend for CloudFlare plugins.",
-            "time": "2016-06-27 15:49:36"
+            "time": "2016-07-15 09:14:53"
         },
         {
             "name": "guzzlehttp/guzzle",
