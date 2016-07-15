@@ -20,6 +20,14 @@ class PluginRoutes
                     'function' => 'getPluginSettings'
                 )
             )
+        ),
+        'plugin/:id/settings/:human_readable_id' => array(
+            'class' => 'CloudFlare\Plugin\Backend\PluginActions',
+            'methods' => array(
+                'PATCH' => array(
+                    'function' => 'patchPluginSettings'
+                )
+            )
         )
     );
 }
