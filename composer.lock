@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ef7d859bbd86f1837467bafa93f622f",
-    "content-hash": "13249dca87ca31d99cf6caf597ca2117",
+    "hash": "7be78d6b869fb212dff8e96e6f0236e9",
+    "content-hash": "4ebaf339c74bb8ad7035cf13633fa0ed",
     "packages": [
         {
             "name": "cloudflare/cloudflare-plugin-backend",
