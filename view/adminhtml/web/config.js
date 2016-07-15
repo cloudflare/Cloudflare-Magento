@@ -7,15 +7,24 @@
     "featureManagerIsChallengePassageEnabled": true,
     "featureManagerIsDevelopmentModeEnabled": true,
     "featureManagerIsFullZoneProvisioningEnabled": false,
+    "featureManagerIsImageOptimizationEnabled": true,
     "featureManagerIsIpv6Enabled": true,
+    "featureManagerIsIpRewriteEnabled": true,
     "featureManagerIsMinifyEnabled": true,
+    "featureManagerIsProtocolRewriteEnabled": true,
     "featureManagerIsPurgeCacheEnabled": true,
     "featureManagerIsRailgunEnabled": true,
     "featureManagerIsScanEnabled": false,
     "featureManagerIsSecurityLevelEnabled": true,
     "featureManagerIsSSLEnabled": false,
+    "featureManagerIsWAFEnabled": true,
+    "homePageCards": ["ApplyDefaultSettingsCard", "SSLCard", "PurgeCacheCard"],
+    "moreSettingsCards": {
+        "container.moresettings.speed": ["CacheLevelCard", "AlwaysOnlineCard", "ImageOptimizationCard"],
+        "container.moresettings.security": ["SecurityLevelCard"]
+    },
     "locale": "en",
     "integrationName": "magento",
-    "useHostAPILogin": false,
-    "version": "1.0.0"
+    "useHostAPILogin": true,
+    "version": "1.0.0-beta"
 }
