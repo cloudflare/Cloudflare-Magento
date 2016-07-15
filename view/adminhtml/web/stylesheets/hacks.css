@@ -17,13 +17,18 @@
 /* center app nav */
 .cloudflare-partners .slider-nav-container {
     margin: 0 auto; /* margin: 0*/
-    width: 40%; /* width: 100% */
+    width: 25%; /* width: 100% */
 }
 
 /* center cf-component-toggle */
 .cf-toggle {
 
     margin: 0 auto;
+}
+
+/* hide ul disc on purge cache button list */
+.cloudflare-partners ul.cf-dropdown {
+    list-style-type: none;
 }
 
 /* cf-component-select */
