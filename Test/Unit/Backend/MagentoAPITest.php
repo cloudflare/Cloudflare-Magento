@@ -45,6 +45,18 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("site.com", $fqdn);
     }
 
+    public function testGetMagentoAdminPathReturnsConfigPath() {
+        $configPath = "configPath";
+        $this->mockConfigReader->method('load')->willReturn(
+            array(
+                'backend' => array('frontName' => $configPath)
+            )
+        );
+        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+
+        $this->assertEquals($configPath, $this->magentoAPI->getMagentoAdminPath());
+    }
+
     public function testGetValueReturnsNullForBadKey() {
         $key = "key";
 
