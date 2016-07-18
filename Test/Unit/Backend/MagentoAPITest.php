@@ -6,6 +6,7 @@ use CloudFlare\Plugin\Setup\InstallSchema;
 
 class MagentoAPITest extends \PHPUnit_Framework_TestCase {
 
+    protected $mockConfigReader;
     protected $mockKeyValueFactory;
     protected $mockKeyValueModel;
     protected $mockStoreManager;
@@ -14,6 +15,9 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
     protected $magentoAPI;
 
     public function setUp() {
+        $this->mockConfigReader = $this->getMockBuilder('\Magento\Framework\App\DeploymentConfig\Reader')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockKeyValueFactory = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValueFactory')
             ->disableOriginalConstructor()
             ->getMock();
@@ -32,13 +36,25 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockStoreManager->method('getStore')->willReturn($this->mockStore);
-        $this->magentoAPI = new MagentoAPI($this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
     }
 
     public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl() {
         $this->mockStore->method('getBaseUrl')->willReturn("http://site.com/");
         $fqdn = $this->magentoAPI->getMagentoDomainName();
         $this->assertEquals("site.com", $fqdn);
+    }
+
+    public function testGetMagentoAdminPathReturnsConfigPath() {
+        $configPath = "configPath";
+        $this->mockConfigReader->method('load')->willReturn(
+            array(
+                'backend' => array('frontName' => $configPath)
+            )
+        );
+        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+
+        $this->assertEquals($configPath, $this->magentoAPI->getMagentoAdminPath());
     }
 
     public function testGetValueReturnsNullForBadKey() {

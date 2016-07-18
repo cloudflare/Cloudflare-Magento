@@ -4,6 +4,7 @@ namespace CloudFlare\Plugin\Test\Unit\Controller\Adminhtml\Plugin;
 use CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy;
 
 class ProxyTest extends \PHPUnit_Framework_TestCase {
+    private $mockConfigReader;
     private $mockContext;
     private $mockLogger;
     private $mockKeyValueFactory;
@@ -12,10 +13,12 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     private $proxy;
 
     public function setUp() {
+        $this->mockConfigReader = $this->getMockBuilder('\Magento\Framework\App\DeploymentConfig\Reader')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockContext = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
-
         $this->mockLogger = $this->getMockBuilder('Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
@@ -28,7 +31,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $this->mockResultJsonFactory = $this->getMockBuilder('Magento\Framework\Controller\Result\JsonFactory')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->proxy = new Proxy($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager);
+        $this->proxy = new Proxy($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockConfigReader);
     }
 
     public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest() {
@@ -40,7 +43,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
 
         $mockProxy = $this->getMock('CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
             array('setJsonFormTokenOnMagentoRequest', 'getJSONBody'),
-            array($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager)
+            array($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockConfigReader)
         );
         $mockProxy->method('getJSONBody')->willReturn(array(Proxy::FORM_KEY => Proxy::FORM_KEY));
 

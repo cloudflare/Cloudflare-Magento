@@ -91,4 +91,10 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockPluginAPIClient->expects($this->once())->method('createAPIError');
         $this->pluginActions->patchPluginSettings();
     }
+
+    public function testCreatePageRuleDisablePerformanceCacheBypassJsonBodyPutsUrlPatternInTargetConstraintValue() {
+        $urlPattern = "urlPattern";
+        $response = $this->pluginActions->createPageRuleDisablePerformanceCacheBypassJsonBody($urlPattern);
+        $this->assertEquals($urlPattern, $response["targets"][0]["constraint"]["value"]);
+    }
 }
