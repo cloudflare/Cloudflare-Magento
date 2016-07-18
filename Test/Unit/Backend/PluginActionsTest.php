@@ -75,4 +75,20 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
 
         $this->pluginActions->postAccountSaveAPICredentials();
     }
+
+    public function testGetPluginSettingsReturnsArray() {
+        $this->mockPluginAPIClient
+            ->expects($this->once())
+            ->method('createAPISuccessResponse')
+            ->will($this->returnCallback(function($input) {
+                $this->assertTrue(is_array($input));
+            }));
+        $this->pluginActions->getPluginSettings();
+    }
+
+    public function testPatchPluginSettingsReturnsErrorForBadSetting() {
+        $this->mockRequest->method('getUrl')->willReturn('plugin/:id/settings/nonExistentSetting');
+        $this->mockPluginAPIClient->expects($this->once())->method('createAPIError');
+        $this->pluginActions->patchPluginSettings();
+    }
 }

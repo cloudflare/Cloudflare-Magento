@@ -53,7 +53,11 @@ class Proxy extends AbstractAction {
         $this->pluginAPIClient = new \CF\API\Plugin($this->integrationContext);
 
         // php://input can only be read once
-        $this->jsonBody = $this->getJsonBody();
+        $decodedJson = json_decode(file_get_contents('php://input'), true);
+        if(json_last_error() !== 0) {
+            $this->logger->error("Error decoding JSON: ". json_last_error_msg());
+        }
+        $this->jsonBody = $decodedJson;
 
         parent::__construct($context);
     }
@@ -67,7 +71,7 @@ class Proxy extends AbstractAction {
         $magentoRequest = $this->getRequest();
         $method =  $magentoRequest->getMethod();
         $parameters = $magentoRequest->getParams();
-        $body = $this->jsonBody;
+        $body = $this->getJsonBody();
         $path = (strtoupper($method === "GET") ? $parameters['proxyURL'] : $body['proxyURL']);
 
         $request = new \CF\API\Request($method, $path, $parameters, $body);
@@ -92,11 +96,14 @@ class Proxy extends AbstractAction {
     }
 
     public function getJsonBody() {
-        $decodedJson = json_decode(file_get_contents('php://input'), true);
-        if(json_last_error() !== 0) {
-            $this->logger->error("Error decoding JSON: ". json_last_error_msg());
-        }
-        return $decodedJson;
+        return $this->jsonBody;
+    }
+
+    /**
+     * @param $jsonBody
+     */
+    public function setJsonBody($jsonBody) {
+        $this->jsonBody = $jsonBody;
     }
 
     /**
@@ -120,7 +127,7 @@ class Proxy extends AbstractAction {
      * so we copy it from the JSON body to the Magento request parameters.
     */
     public function _processUrlKeys() {
-        $requestJsonBody = $this->jsonBody;
+        $requestJsonBody = $this->getJsonBody();
         if($requestJsonBody !== null && array_key_exists(self::FORM_KEY, $requestJsonBody)) {
             $this->setJsonFormTokenOnMagentoRequest($requestJsonBody[self::FORM_KEY], $this->getRequest());
         }
