@@ -6,6 +6,7 @@ use CloudFlare\Plugin\Setup\InstallSchema;
 
 class MagentoAPITest extends \PHPUnit_Framework_TestCase {
 
+    protected $mockConfigReader;
     protected $mockKeyValueFactory;
     protected $mockKeyValueModel;
     protected $mockStoreManager;
@@ -14,6 +15,9 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
     protected $magentoAPI;
 
     public function setUp() {
+        $this->mockConfigReader = $this->getMockBuilder('\Magento\Framework\App\DeploymentConfig\Reader')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockKeyValueFactory = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValueFactory')
             ->disableOriginalConstructor()
             ->getMock();
@@ -32,7 +36,7 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockStoreManager->method('getStore')->willReturn($this->mockStore);
-        $this->magentoAPI = new MagentoAPI($this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
     }
 
     public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl() {
