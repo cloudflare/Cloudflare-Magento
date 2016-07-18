@@ -10,12 +10,14 @@ use \CloudFlare\Plugin\Backend;
 use \CloudFlare\Plugin\Model\KeyValueFactory;
 use \CF\Integration\DefaultConfig;
 use \Magento\Store\Model\StoreManagerInterface;
+use \Magento\Framework\App\DeploymentConfig\Reader;
 
 
 class Proxy extends AbstractAction {
 
     protected $clientAPIClient;
     protected $config;
+    protected $configReader;
     protected $dataStore;
     protected $integrationContext;
     protected $keyValueFactory;
@@ -37,7 +39,8 @@ class Proxy extends AbstractAction {
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
         KeyValueFactory $keyValueFactory,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        Reader $configReader
 
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
@@ -46,7 +49,8 @@ class Proxy extends AbstractAction {
         $this->storeManager = $storeManager;
 
         $this->config = new DefaultConfig("[]"); //config only used for debug mode but we use monolog so not based on config anymore
-        $this->magentoAPI = new Backend\MagentoAPI($this->keyValueFactory, $this->storeManager, $this->logger);
+        $this->configReader = $configReader;
+        $this->magentoAPI = new Backend\MagentoAPI($this->configReader, $this->keyValueFactory, $this->storeManager, $this->logger);
         $this->dataStore = new Backend\DataStore($this->magentoAPI);
         $this->integrationContext = new \CF\Integration\DefaultIntegration($this->config, $this->magentoAPI, $this->dataStore, $this->logger);
         $this->clientAPIClient = new \CF\API\Client($this->integrationContext);

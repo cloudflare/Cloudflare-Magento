@@ -4,15 +4,17 @@ namespace CloudFlare\Plugin\Backend;
 use \CF\Integration\IntegrationAPIInterface;
 use \CF\DNSRecord;
 use \CloudFlare\Plugin\Model\KeyValueFactory;
-use \CF\Integration\DataStoreInterface;
 use \Psr\Log\LoggerInterface;
 use \CloudFlare\Plugin\Setup\InstallSchema;
 use \Magento\Store\Model\StoreManagerInterface;
+use \Magento\Framework\App\DeploymentConfig\Reader;
 
 class MagentoAPI implements IntegrationAPIInterface
 {
+    protected $configReader;
     protected $keyValueFactory;
     protected $logger;
+    protected $magentoConfig;
     protected $storeManager;
 
     /**
@@ -20,10 +22,13 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param StoreManagerInterface $storeManager
      * @param LoggerInterface $logger
      */
-    public function __construct(KeyValueFactory $keyValueFactory, StoreManagerInterface $storeManager, LoggerInterface $logger) {
+    public function __construct(Reader $configReader, KeyValueFactory $keyValueFactory, StoreManagerInterface $storeManager, LoggerInterface $logger) {
+        $this->configReader = $configReader;
         $this->keyValueFactory = $keyValueFactory;
         $this->logger = $logger;
         $this->storeManager = $storeManager;
+
+        $this->magentoConfig = $this->configReader->load();
     }
 
     public function getMagentoDomainName() {
@@ -34,8 +39,12 @@ class MagentoAPI implements IntegrationAPIInterface
         $domainName = str_replace("http://", "", $domainName);
         $domainName = str_replace("https://", "", $domainName);
         $domainName = rtrim($domainName, "/");
-
+        
         return $domainName;
+    }
+
+    public function getMagentoAdminPath() {
+        return $this->magentoConfig['backend']['frontName'];
     }
 
     /**

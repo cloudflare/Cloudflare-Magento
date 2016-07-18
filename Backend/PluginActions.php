@@ -101,13 +101,13 @@ class PluginActions
 
         $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/development_mode', array(), array('value' => 'off')));
 
-        /*
-         * TODO: Page Rule API calls for
-         * Disable Performance (Auto-Minify, disable Rocket Loader, disable Mirage, bypass cache for
-         * - admin
-         * - setup
-         * - checkout pages
-         */
+        $adminUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/' . $this->integrationAPI->getMagentoAdminPath() . "*";
+        $checkoutUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/checkout*';
+        $setupUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/setup*';
+
+        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($adminUrlPattern)));
+        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($checkoutUrlPattern)));
+        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($setupUrlPattern)));
 
         $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/ipv6', array(), array('value' => 'off')));
 
@@ -128,5 +128,33 @@ class PluginActions
         $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/rocket_loader', array(), array('value' => 'off')));
 
         return $this->api->createAPISuccessResponse($this->api->createPluginResult(\CF\API\Plugin::SETTING_DEFAULT_SETTINGS, true, true, ''));
+    }
+
+    /**
+     * @param $urlPattern
+     * @return array
+     */
+    public function createPageRuleDisablePerformanceCacheBypassJsonBody($urlPattern) {
+        return array(
+            'targets' => array(
+                array(
+                    'target' => 'url',
+                    'constraint' => array(
+                        'operator' => 'matches',
+                        'value' => $urlPattern
+                    )
+                )
+            ),
+            'actions' => array(
+                array(
+                    'id' => 'disable_performance'
+                ),
+                array(
+                    'id' => 'cache_level',
+                    'value' => 'bypass'
+                )
+            ),
+            'status' => 'active'
+        );
     }
 }
