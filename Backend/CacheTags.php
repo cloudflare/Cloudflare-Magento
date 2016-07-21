@@ -4,7 +4,7 @@ namespace CloudFlare\Plugin\Backend;
 
 use \Psr\Log\LoggerInterface;
 
-class CacheTagsUtil
+class CacheTags
 {
     const CLOUDFLARE_CACHE_TAG_HEADER = "X-Cache-Tags";
 

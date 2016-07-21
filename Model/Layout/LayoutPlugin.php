@@ -5,7 +5,7 @@ namespace CloudFlare\Plugin\Model\Layout;
 use \Magento\Framework\App\ResponseInterface;
 use \Magento\PageCache\Model\Config;
 use \Psr\Log\LoggerInterface;
-use \CloudFlare\Plugin\Backend\CacheTagsUtil;
+use \CloudFlare\Plugin\Backend\CacheTags;
 class LayoutPlugin
 {
     /**
@@ -41,7 +41,7 @@ class LayoutPlugin
         ResponseInterface $response,
         Config $config,
         LoggerInterface $logger,
-        CacheTagsUtil $cacheTagsUtil
+        CacheTags $cacheTagsUtil
     ) {
         $this->response = $response;
         $this->config = $config;
