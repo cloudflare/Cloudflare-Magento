@@ -25,7 +25,7 @@ class CacheTags
      * @return $response
      */
     public function setCloudFlareCacheTagsResponseHeader($response, $tags) {
-        $cacheTagHeaderList = $this->get255ByteXCacheTagHeaderStringValues($tags);
+        $cacheTagHeaderList = $this->get255ByteCacheTagHeaderStringValues($tags);
 
         /*
          * CloudFlare Cache Tags allow for multiple X-Cache-Tags headers but Magento2's
@@ -50,7 +50,7 @@ class CacheTags
      * @param $cacheTagList
      * @return array
      */
-    public function get255ByteXCacheTagHeaderStringValues($cacheTagList) {
+    public function get255ByteCacheTagHeaderStringValues($cacheTagList) {
         $cacheTagHeaderList = array();
         $cacheTagHeader = "";
 
@@ -59,7 +59,7 @@ class CacheTags
             $cacheTagEncoding = mb_detect_encoding($cacheTag);
 
             //Is this cache tag larger than 255 bytes?
-            if(mb_strlen($cacheTag, $cacheTagEncoding) > 255) {
+            if(mb_strlen($cacheTag, $cacheTagEncoding) >= 255) {
                 array_push($cacheTagHeaderList, mb_strcut($cacheTag, 1, 255));
             }
             //Would appending the current cache tag to the cache tag header put it over the 255 byte limit?
