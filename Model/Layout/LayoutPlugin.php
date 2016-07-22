@@ -61,17 +61,19 @@ class LayoutPlugin
      */
     public function afterGetOutput(\Magento\Framework\View\Layout $subject, $result)
     {
-        if ($subject->isCacheable() && $this->config->isEnabled()) {
-            $tags = [];
-            foreach ($subject->getAllBlocks() as $block) {
-                if ($block->getIdentities() !== null) {
-                    $tags = array_merge($tags, $block->getIdentities());
-                }
-            }
-            $tags = array_unique($tags);
-
-            $this->cacheTagsUtil->setCloudFlareCacheTagsResponseHeader($this->response, $tags);
+        if (!$subject->isCacheable() || !$this->config->isEnabled()) {
+            return $result;
         }
+
+        $tags = [];
+        foreach ($subject->getAllBlocks() as $block) {
+            if ($block->getIdentities() !== null) {
+                $tags = array_merge($tags, $block->getIdentities());
+            }
+        }
+        $tags = array_unique($tags);
+
+        $this->cacheTagsUtil->setCloudFlareCacheTagsResponseHeader($this->response, $tags);
 
         return $result;
     }
