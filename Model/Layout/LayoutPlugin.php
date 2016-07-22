@@ -61,7 +61,7 @@ class LayoutPlugin
      */
     public function afterGetOutput(\Magento\Framework\View\Layout $subject, $result)
     {
-        if (!$subject->isCacheable() && !$this->config->isEnabled()) {
+        if (!$subject->isCacheable() || !$this->config->isEnabled()) {
             return $result;
         }
 
