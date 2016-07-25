@@ -80,4 +80,11 @@ class CacheTags
 
         return $cacheTagHeaderList;
     }
+
+    /**
+     * @param $tags
+     */
+    public function purgeCacheTags($tags) {
+        //TODO
+    }
 }
