@@ -4,34 +4,55 @@ namespace CloudFlare\Plugin\Test\Unit\Controller\Adminhtml\Plugin;
 use CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy;
 
 class ProxyTest extends \PHPUnit_Framework_TestCase {
-    private $mockConfigReader;
-    private $mockContext;
-    private $mockLogger;
-    private $mockKeyValueFactory;
-    private $mockResultJsonFactory;
-    private $mockStoreManager;
-    private $proxy;
+    protected $mockClienAPIClient;
+    protected $mockContext;
+    protected $mockDataStore;
+    protected $mockConfig;
+    protected $mockIntegrationContext;
+    protected $mockResultJsonFactory;
+    protected $mockLogger;
+    protected $mockMagentoAPI;
+    protected $mockPluginAPIClient;
+    protected $proxy;
 
     public function setUp() {
-        $this->mockConfigReader = $this->getMockBuilder('\Magento\Framework\App\DeploymentConfig\Reader')
+        $this->mockClienAPIClient = $this->getMockBuilder('\CF\API\Client')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockContext = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockDataStore = $this->getMockBuilder('\CloudFlare\Plugin\Backend\DataStore')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->mockConfig = $this->getMockBuilder('\CF\Integration\DefaultConfig')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->mockIntegrationContext = $this->getMockBuilder('\CF\Integration\DefaultIntegration')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->mockResultJsonFactory = $this->getMockBuilder('\Magento\Framework\Controller\Result\JsonFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockLogger = $this->getMockBuilder('Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockKeyValueFactory = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValueFactory')
+        $this->mockMagentoAPI = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoAPI')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockStoreManager = $this->getMockBuilder('\Magento\Store\Model\StoreManagerInterface')
+        $this->mockPluginAPIClient = $this->getMockBuilder('\CF\API\Plugin')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockResultJsonFactory = $this->getMockBuilder('Magento\Framework\Controller\Result\JsonFactory')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->proxy = new Proxy($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockConfigReader);
+        $this->proxy = new Proxy(
+            $this->mockClienAPIClient,
+            $this->mockContext,
+            $this->mockDataStore,
+            $this->mockConfig,
+            $this->mockIntegrationContext,
+            $this->mockResultJsonFactory,
+            $this->mockLogger,
+            $this->mockMagentoAPI,
+            $this->mockPluginAPIClient);
     }
 
     public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest() {
@@ -43,7 +64,16 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
 
         $mockProxy = $this->getMock('CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
             array('setJsonFormTokenOnMagentoRequest', 'getJSONBody'),
-            array($this->mockContext, $this->mockResultJsonFactory, $this->mockLogger, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockConfigReader)
+            array(
+                $this->mockClienAPIClient,
+                $this->mockContext,
+                $this->mockDataStore,
+                $this->mockConfig,
+                $this->mockIntegrationContext,
+                $this->mockResultJsonFactory,
+                $this->mockLogger,
+                $this->mockMagentoAPI,
+                $this->mockPluginAPIClient)
         );
         $mockProxy->method('getJSONBody')->willReturn(array(Proxy::FORM_KEY => Proxy::FORM_KEY));
 
