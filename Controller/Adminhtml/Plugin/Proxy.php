@@ -24,15 +24,13 @@ class Proxy extends AbstractAction {
 
     protected $clientAPIClient;
     protected $config;
-    protected $configReader;
     protected $dataStore;
     protected $integrationContext;
-    protected $keyValueFactory;
     protected $logger;
     protected $jsonBody;
     protected $magentoAPI;
     protected $pluginAPIClient;
-    protected $storeManager;
+    protected $resultJsonFactory;
 
     const FORM_KEY = "form_key";
 
@@ -60,14 +58,14 @@ class Proxy extends AbstractAction {
         Plugin $pluginAPIClient
 
     ) {
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->logger = $logger;
+        $this->clientAPIClient = $clienAPIClient;
         $this->config = $config;
-        $this->magentoAPI = $magentoAPI;
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
-        $this->clientAPIClient = $clienAPIClient;
+        $this->logger = $logger;
+        $this->magentoAPI = $magentoAPI;
         $this->pluginAPIClient = $pluginAPIClient;
+        $this->resultJsonFactory = $resultJsonFactory;
 
         // php://input can only be read once
         $decodedJson = json_decode(file_get_contents('php://input'), true);
