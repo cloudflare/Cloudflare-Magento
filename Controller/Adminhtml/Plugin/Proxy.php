@@ -21,7 +21,6 @@ use \Psr\Log\LoggerInterface;
 class Proxy extends AbstractAction {
 
     protected $clientAPIClient;
-    protected $config;
     protected $dataStore;
     protected $integrationContext;
     protected $logger;
@@ -42,7 +41,6 @@ class Proxy extends AbstractAction {
      * @param LoggerInterface $logger
      * @param Backend\MagentoAPI|MagentoAPI $magentoAPI
      * @param Plugin $pluginAPIClient
-     * @internal param DefaultConfig $config
      */
     public function __construct(
         Client $clienAPIClient,
