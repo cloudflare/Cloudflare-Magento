@@ -1,19 +1,15 @@
 <?php
 namespace CloudFlare\Plugin\Block\Adminhtml;
 
-use \CloudFlare\Plugin\Backend\DataStore;
-use \Magento\Framework\View\Element\Template\Context;
-use \Magento\Backend\Model\UrlInterface;
-use \CloudFlare\Plugin\Model\KeyValueFactory;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
-use \Magento\Framework\App\DeploymentConfig\Reader;
+use \CloudFlare\Plugin\Backend\DataStore;
+use \Magento\Backend\Model\UrlInterface;
+use \Magento\Framework\View\Element\Template\Context;
 
 class Index extends \Magento\Framework\View\Element\Template
 {
     protected $assetFactory;
-    protected $configReader;
     protected $dataStore;
-    protected $keyValueModelFactory;
     protected $logger;
     protected $magentoAPI;
     protected $urlBuilder;
@@ -22,24 +18,21 @@ class Index extends \Magento\Framework\View\Element\Template
 
     /**
      * @param Context $context
+     * @param DataStore $dataStore
+     * @param MagentoAPI $magentoAPI
      * @param UrlInterface $urlBuilder
-     * @param KeyValueFactory $keyValueModelFactory
-     * @internal param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
-        UrlInterface $urlBuilder,
-        KeyValueFactory $keyValueModelFactory,
-        Reader $configReader
+        DataStore $dataStore,
+        MagentoAPI $magentoAPI,
+        UrlInterface $urlBuilder
     ) {
         $this->assetRepository = $context->getAssetRepository();
-        $this->configReader = $configReader;
-        $this->keyValueModelFactory = $keyValueModelFactory;
+        $this->dataStore = $dataStore;
+        $this->magentoAPI = $magentoAPI;
         $this->logger = $context->getLogger();
         $this->urlBuilder = $urlBuilder;
-
-        $this->magentoAPI = new MagentoAPI($this->configReader, $this->keyValueModelFactory, $context->getStoreManager(), $this->logger);
-        $this->dataStore = new DataStore($this->magentoAPI);
 
         parent::__construct($context);
     }
