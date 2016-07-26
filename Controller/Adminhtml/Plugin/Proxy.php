@@ -11,11 +11,9 @@ use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
 use \CloudFlare\Plugin\Backend\PluginRoutes;
-use \CloudFlare\Plugin\Model\KeyValueFactory;
 
 use \Magento\Backend\App\AbstractAction;
 use \Magento\Backend\App\Action\Context;
-use \Magento\Framework\App\DeploymentConfig\Reader;
 use \Magento\Framework\Controller\Result\JsonFactory;
 use \Magento\Store\Model\StoreManagerInterface;
 use \Psr\Log\LoggerInterface;
@@ -39,18 +37,17 @@ class Proxy extends AbstractAction {
      * @param Client $clienAPIClient
      * @param Context $context
      * @param Backend\DataStore|DataStore $dataStore
-     * @param DefaultConfig $config
      * @param DefaultIntegration $integrationContext
      * @param JsonFactory $resultJsonFactory
      * @param LoggerInterface $logger
      * @param Backend\MagentoAPI|MagentoAPI $magentoAPI
      * @param Plugin $pluginAPIClient
+     * @internal param DefaultConfig $config
      */
     public function __construct(
         Client $clienAPIClient,
         Context $context,
         DataStore $dataStore,
-        DefaultConfig $config,
         DefaultIntegration $integrationContext,
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
@@ -59,7 +56,6 @@ class Proxy extends AbstractAction {
 
     ) {
         $this->clientAPIClient = $clienAPIClient;
-        $this->config = $config;
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
         $this->logger = $logger;
