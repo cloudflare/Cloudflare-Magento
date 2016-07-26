@@ -7,7 +7,6 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     protected $mockClienAPIClient;
     protected $mockContext;
     protected $mockDataStore;
-    protected $mockConfig;
     protected $mockIntegrationContext;
     protected $mockResultJsonFactory;
     protected $mockLogger;
@@ -23,9 +22,6 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockDataStore = $this->getMockBuilder('\CloudFlare\Plugin\Backend\DataStore')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->mockConfig = $this->getMockBuilder('\CF\Integration\DefaultConfig')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockIntegrationContext = $this->getMockBuilder('\CF\Integration\DefaultIntegration')
@@ -47,7 +43,6 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
             $this->mockClienAPIClient,
             $this->mockContext,
             $this->mockDataStore,
-            $this->mockConfig,
             $this->mockIntegrationContext,
             $this->mockResultJsonFactory,
             $this->mockLogger,
@@ -68,7 +63,6 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
                 $this->mockClienAPIClient,
                 $this->mockContext,
                 $this->mockDataStore,
-                $this->mockConfig,
                 $this->mockIntegrationContext,
                 $this->mockResultJsonFactory,
                 $this->mockLogger,
