@@ -21,7 +21,7 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testSetCloudFlareCacheTagsResponseHeaderSetsHeader() {
-        $mockResponse = $this->getMockBuilder('Magento\Framework\App\Response\Http\Interceptor')
+        $mockResponse = $this->getMockBuilder('\Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->getMock();
         $mockResponse->expects($this->once())->method('setHeader');
