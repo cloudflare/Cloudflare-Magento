@@ -1,12 +1,12 @@
 <?php
 namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
 
-use \CF\API\Client;
 use \CF\API\Plugin;
 use \CF\API\Request;
 use \CF\Integration\DefaultConfig;
 use \CF\Integration\DefaultIntegration;
 use \CF\Router\DefaultRestAPIRouter;
+use \CloudFlare\Plugin\Backend\ClientAPI;
 use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
@@ -43,7 +43,7 @@ class Proxy extends AbstractAction {
      * @param Plugin $pluginAPIClient
      */
     public function __construct(
-        Client $clienAPIClient,
+        ClientAPI $clienAPIClient,
         Context $context,
         DataStore $dataStore,
         DefaultIntegration $integrationContext,
@@ -120,7 +120,7 @@ class Proxy extends AbstractAction {
      * @return bool
      */
     public function isClientAPI($path) {
-        return (strpos($path, Client::ENDPOINT) !== false);
+        return (strpos($path, ClientAPI::ENDPOINT) !== false);
     }
 
     /**

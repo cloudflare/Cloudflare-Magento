@@ -9,6 +9,7 @@ class DataStore implements DataStoreInterface
 
     const CLIENT_API_KEY = "clientApiKey";
     const CLOUDFLARE_EMAIL = "cloudflareEmail";
+    const ZONE_ID_KEY = "zoneId:";
 
     public function __construct(MagentoAPI $magentoAPI) {
         $this->magentoAPI = $magentoAPI;
@@ -56,5 +57,21 @@ class DataStore implements DataStoreInterface
      */
     public function getCloudFlareEmail() {
         return $this->magentoAPI->getValue(self::CLOUDFLARE_EMAIL);
+    }
+
+    /**
+     * @param $domainName
+     * @return null
+     */
+    public function getZoneId($domainName) {
+        return $this->magentoAPI->getValue(self::ZONE_ID_KEY . $domainName);
+    }
+
+    /**
+     * @param $domainName
+     * @param $zoneId
+     */
+    public function setZoneId($domainName, $zoneId) {
+        return $this->magentoAPI->setValue(self::ZONE_ID_KEY . $domainName, $zoneId);
     }
 }

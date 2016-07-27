@@ -9,11 +9,17 @@ class CacheTags
     const CLOUDFLARE_CACHE_TAG_HEADER = "X-Cache-Tags";
 
     /**
+     * @var \CloudFlare\Plugin\Backend\ClientAPI
+     */
+    protected $clientAPI;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
-    public function __construct(LoggerInterface $logger) {
+    public function __construct(ClientAPI $clientAPI, LoggerInterface $logger) {
+        $this->clientAPI = $clientAPI;
         $this->logger = $logger;
     }
 
@@ -79,5 +85,14 @@ class CacheTags
         array_push($cacheTagHeaderList, $cacheTagHeader);
 
         return $cacheTagHeaderList;
+    }
+
+    /**
+     * @param $tags
+     */
+    public function purgeCacheTags(array $tags) {
+        if(!empty($tags)) {
+            $this->clientAPI->zonePurgeCacheByTags($tags);
+        }
     }
 }

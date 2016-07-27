@@ -29,7 +29,7 @@ class PluginActions
         $this->logger = $magentoIntegration->getLogger();
         $this->request = $request;
         //plugin API needs to make client API calls as part of setting default settings.
-        $this->clientAPI = new \CF\API\Client($magentoIntegration);
+        $this->clientAPI = new ClientAPI($magentoIntegration);
     }
 
     /**

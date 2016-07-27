@@ -1,0 +1,5 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="clean_cache_by_tags">
+        <observer name="invalidate_cloudflare_observer" instance="CloudFlare\Plugin\Observer\InvalidateCloudFlareObserver"/>
+    </event>
+</config>

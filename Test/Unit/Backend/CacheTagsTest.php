@@ -6,18 +6,22 @@ use CloudFlare\Plugin\Backend\CacheTags;
 class CacheTagsTest extends \PHPUnit_Framework_TestCase
 {
     protected $cacheTags;
+    protected $mockClientAPI;
     protected $mockLogger;
 
     public function setUp()
     {
+        $this->mockClientAPI = $this->getMockBuilder('\CloudFlare\Plugin\Backend\ClientAPI')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockLogger = $this->getMockBuilder('\Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->cacheTags = new CacheTags($this->mockLogger);
+        $this->cacheTags = new CacheTags($this->mockClientAPI, $this->mockLogger);
     }
 
     public function testSetCloudFlareCacheTagsResponseHeaderSetsHeader() {
-        $mockResponse = $this->getMockBuilder('Magento\Framework\App\Response\Http\Interceptor')
+        $mockResponse = $this->getMockBuilder('\Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->getMock();
         $mockResponse->expects($this->once())->method('setHeader');
@@ -63,5 +67,17 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
             $string = $string."a";
         }
         return $string;
+    }
+
+    public function testPurgeCacheTagsDoesntCallAPIForEmptyArray() {
+        $tags = array();
+        $this->mockClientAPI->expects($this->never())->method('zonePurgeCacheByTags');
+        $this->cacheTags->purgeCacheTags($tags);
+    }
+
+    public function testPurgeCacheTagsCallsAPIForNonEmptyArray() {
+        $tags = array('tagToPurge');
+        $this->mockClientAPI->expects($this->once())->method('zonePurgeCacheByTags');
+        $this->cacheTags->purgeCacheTags($tags);
     }
 }
