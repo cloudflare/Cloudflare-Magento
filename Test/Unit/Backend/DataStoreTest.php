@@ -53,4 +53,23 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
     public function testGetHostAPIUserUniqueIdReturnsNull() {
         $this->assertNull($this->dataStore->getHostAPIUserUniqueId());
     }
+
+    public function testGetZoneIdReturnsValue() {
+        $domain = "domain";
+        $key = DataStore::ZONE_ID_KEY.$domain;
+        $zoneId = "zoneId";
+
+        $this->mockMagentoAPI->method('getValue')->with($key)->willReturn($zoneId);
+        $response = $this->dataStore->getZoneId($domain);
+        $this->assertEquals($zoneId, $response);
+    }
+
+    public function testSetZoneIdSetsValue() {
+        $domain = "domain";
+        $key = DataStore::ZONE_ID_KEY.$domain;
+        $zoneId = "zoneId";
+
+        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key,$zoneId);
+        $this->dataStore->setZoneId($domain,$zoneId);
+    }
 }

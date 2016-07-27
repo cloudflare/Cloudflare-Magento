@@ -15,7 +15,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     protected $proxy;
 
     public function setUp() {
-        $this->mockClienAPIClient = $this->getMockBuilder('\CF\API\Client')
+        $this->mockClienAPIClient = $this->getMockBuilder('\CloudFlare\Plugin\Backend\ClientAPI')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockContext = $this->getMockBuilder('Magento\Backend\App\Action\Context')
