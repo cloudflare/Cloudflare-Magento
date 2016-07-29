@@ -31,6 +31,8 @@ class CacheTags
      * @return $response
      */
     public function setCloudFlareCacheTagsResponseHeader($response, $tags) {
+        //hash cache tags to fit more in each header
+        $tags = $this->hashCacheTags($tags);
         $cacheTagHeaderList = $this->get255ByteCacheTagHeaderStringValues($tags);
 
         /*
@@ -92,7 +94,23 @@ class CacheTags
      */
     public function purgeCacheTags(array $tags) {
         if(!empty($tags)) {
+            $tags = $this->hashCacheTags($tags);
             $this->clientAPI->zonePurgeCacheByTags($tags);
         }
+    }
+
+    /**
+     * Convert cache tags to 3 character hashes so we can fit more in each header
+     *
+     * @param array $tags
+     * @return array
+     */
+    public function hashCacheTags(array $tags) {
+        $hashedCacheTags = array();
+        foreach($tags as $tag) {
+            array_push($hashedCacheTags, substr(hash('sha256', $tag),0,3));
+        }
+
+        return $hashedCacheTags;
     }
 }

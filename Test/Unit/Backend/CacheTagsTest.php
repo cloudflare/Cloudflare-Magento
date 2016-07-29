@@ -80,4 +80,12 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->mockClientAPI->expects($this->once())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);
     }
+
+    public function testHashCacheTagsHashesWithSha256AndTruncatesToThreeCharacters() {
+        $tag = "cacheTag";
+        $tags = array($tag);
+        $expectedHash = substr(hash('sha256', $tag),0,3);
+        $hashedCacheTags = $this->cacheTags->hashCacheTags($tags);
+        $this->assertEquals($expectedHash, $hashedCacheTags[0]);
+    }
 }
