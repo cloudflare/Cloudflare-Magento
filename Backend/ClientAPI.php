@@ -22,6 +22,20 @@ class ClientAPI extends Client {
     }
 
     /**
+     * DELETE zones/:id/purge_cache
+     * https://api.cloudflare.com/#zone-purge-all-files
+     *
+     * @return mixed
+     */
+    public function zonePurgeCache() {
+        $zoneId = $this->getZoneIdForDomainName($this->integrationAPI->getMagentoDomainName());
+
+        $request = new Request('DELETE', 'zones/'. $zoneId .'/purge_cache', array(), array('purge_everything' => true));
+
+        return $this->callAPI($request);
+    }
+
+    /**
      * @param $domainName
      * @return null
      */

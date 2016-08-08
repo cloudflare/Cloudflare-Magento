@@ -90,6 +90,8 @@ class CacheTags
     }
 
     /**
+     * Purge cache by tag
+     *
      * @param $tags
      */
     public function purgeCacheTags(array $tags) {
@@ -97,6 +99,15 @@ class CacheTags
             $tags = $this->hashCacheTags($tags);
             $this->clientAPI->zonePurgeCacheByTags($tags);
         }
+    }
+
+    /**
+     * Purge entire cache
+     *
+     * @return mixed
+     */
+    public function purgeCache() {
+        return $this->clientAPI->zonePurgeCache();
     }
 
     /**
