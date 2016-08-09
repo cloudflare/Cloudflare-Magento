@@ -88,4 +88,9 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $hashedCacheTags = $this->cacheTags->hashCacheTags($tags);
         $this->assertEquals($expectedHash, $hashedCacheTags[0]);
     }
+
+    public function testPurgeCacheCallsPurgeCacheAPI() {
+        $this->mockClientAPI->expects($this->once())->method('zonePurgeCache');
+        $this->cacheTags->purgeCache();
+    }
 }
