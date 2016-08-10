@@ -2,32 +2,19 @@
 
 namespace CloudFlare\Plugin\Backend;
 
-class PluginRoutes
+class PluginRoutes extends \CF\API\PluginRoutes
 {
-    public static $routes = array(
-        'account' => array(
-            'class' => 'CloudFlare\Plugin\Backend\PluginActions',
-            'methods' => array(
-                'POST' => array(
-                    'function' => 'postAccountSaveAPICredentials'
-                )
-            )
-        ),
-        'plugin/:id/settings' => array(
-            'class' => 'CloudFlare\Plugin\Backend\PluginActions',
-            'methods' => array(
-                'GET' => array(
-                    'function' => 'getPluginSettings'
-                )
-            )
-        ),
-        'plugin/:id/settings/:human_readable_id' => array(
-            'class' => 'CloudFlare\Plugin\Backend\PluginActions',
-            'methods' => array(
-                'PATCH' => array(
-                    'function' => 'patchPluginSettings'
-                )
-            )
-        )
-    );
+    /**
+     * @param $routeList
+     * @return mixed
+     */
+    public static function getRoutes($routeList) {
+
+        foreach($routeList as $routePath => $route) {
+            $route['class'] = '\CloudFlare\Plugin\Backend\PluginActions';
+            $routeList[$routePath] = $route;
+        }
+
+        return $routeList;
+    }
 }

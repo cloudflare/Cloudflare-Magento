@@ -5,8 +5,9 @@ namespace CloudFlare\Plugin\Backend;
 use \CF\Integration\DefaultIntegration;
 use \CF\API\APIInterface;
 use \CF\API\Request;
+use \CF\API\AbstractPluginActions;
 
-class PluginActions
+class PluginActions extends AbstractPluginActions
 {
     protected $api;
     protected $config;
@@ -16,76 +17,10 @@ class PluginActions
     protected $logger;
     protected $request;
 
-    /**
-     * @param DefaultIntegration $magentoIntegration
-     * @param APIInterface $api
-     * @param Request $request
-     */
-    public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request) {
-        $this->api = $api;
-        $this->config = $magentoIntegration->getConfig();
-        $this->integrationAPI = $magentoIntegration->getIntegrationAPI();
-        $this->dataStore = $magentoIntegration->getDataStore();
-        $this->logger = $magentoIntegration->getLogger();
-        $this->request = $request;
-        //plugin API needs to make client API calls as part of setting default settings.
-        $this->clientAPI = new ClientAPI($magentoIntegration);
-    }
-
-    /**
-     * @param $clientAPI
-     */
-    public function setClientAPI($clientAPI) {
-        $this->clientAPI = $clientAPI;
-    }
-
-
-    /**
-     * POST /account
-     * body.apiKey
-     * body.email
-     */
-    public function postAccountSaveAPICredentials() {
-        $requestBody = $this->request->getBody();
-        if(empty($requestBody["apiKey"])) {
-            return $this->api->createAPIError("Missing required parameter: 'apiKey'.");
-        }
-        if(empty($requestBody["email"])) {
-            return $this->api->createAPIError("Missing required parameter: 'email'.");
-        }
-
-        $this->dataStore->createUserDataStore($requestBody["apiKey"], $requestBody["email"], null, null);
-
-        return $this->api->createAPISuccessResponse(array("email" => $this->dataStore->getCloudFlareEmail()));
-    }
-
-    /*
-     * GET /plugin/:id/settings
-     */
-    public function getPluginSettings() {
-        return $this->api->createAPISuccessResponse(array($this->api->createPluginResult(\CF\API\Plugin::SETTING_DEFAULT_SETTINGS, false, true, '')));
-    }
-
-    /*
-     * PATCH /plugin/:id/settings/:human_readable_id
-     */
-    public function patchPluginSettings() {
-        $pathArray = explode('/', $this->request->getUrl());
-        $settingId = $pathArray[3];
-
-        switch($settingId) {
-            case \CF\API\Plugin::SETTING_DEFAULT_SETTINGS:
-                return $this->patchPluginSettingsDefaultSettings();
-                break;
-            default:
-                return $this->api->createAPIError($settingId . ' is not a valid setting id.');
-        }
-    }
-
     /*
      * PATCH /plugin/:id/settings/default_settings
      */
-    public function patchPluginSettingsDefaultSettings() {
+    public function applyDefaultSettings() {
         $pathArray = explode('/', $this->request->getUrl());
         $zoneId = $pathArray[1];
 
@@ -126,8 +61,6 @@ class PluginActions
         $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/mirage', array(), array('value' => 'off')));
 
         $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/rocket_loader', array(), array('value' => 'off')));
-
-        return $this->api->createAPISuccessResponse($this->api->createPluginResult(\CF\API\Plugin::SETTING_DEFAULT_SETTINGS, true, true, ''));
     }
 
     /**
