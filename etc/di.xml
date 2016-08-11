@@ -36,6 +36,11 @@
             <argument name="integration" xsi:type="object">\CF\Integration\DefaultIntegration</argument>
         </arguments>
     </type>
+    <type name="\CF\Router\RequestRouter">
+        <arguments>
+            <argument name="integrationContext" xsi:type="object">\CF\Integration\DefaultIntegration</argument>
+        </arguments>
+    </type>
     <!-- Restore original visitor IP from CloudFlare header -->
     <type name="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
         <arguments>

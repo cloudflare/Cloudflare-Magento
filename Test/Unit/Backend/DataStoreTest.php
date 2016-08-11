@@ -72,4 +72,17 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
         $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key,$zoneId);
         $this->dataStore->setZoneId($domain,$zoneId);
     }
+
+    public function testGetCallsMagentoAPIGetValue() {
+        $key = "key";
+        $this->mockMagentoAPI->expects($this->once())->method('getValue')->with($key);
+        $this->dataStore->get($key);
+    }
+
+    public function testSetCallsMagentoAPISetValue() {
+        $key = "key";
+        $value = "value";
+        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key, $value);
+        $this->dataStore->set($key, $value);
+    }
 }

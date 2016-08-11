@@ -4,20 +4,16 @@ namespace CloudFlare\Plugin\Test\Unit\Controller\Adminhtml\Plugin;
 use CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy;
 
 class ProxyTest extends \PHPUnit_Framework_TestCase {
-    protected $mockClienAPIClient;
     protected $mockContext;
     protected $mockDataStore;
     protected $mockIntegrationContext;
     protected $mockResultJsonFactory;
     protected $mockLogger;
     protected $mockMagentoAPI;
-    protected $mockPluginAPIClient;
+    protected $mockRequestRouter;
     protected $proxy;
 
     public function setUp() {
-        $this->mockClienAPIClient = $this->getMockBuilder('\CloudFlare\Plugin\Backend\ClientAPI')
-            ->disableOriginalConstructor()
-            ->getMock();
         $this->mockContext = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
@@ -36,18 +32,18 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $this->mockMagentoAPI = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoAPI')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockPluginAPIClient = $this->getMockBuilder('\CF\API\Plugin')
+        $this->mockRequestRouter = $this->getMockBuilder('\CF\Router\RequestRouter')
             ->disableOriginalConstructor()
             ->getMock();
         $this->proxy = new Proxy(
-            $this->mockClienAPIClient,
             $this->mockContext,
             $this->mockDataStore,
             $this->mockIntegrationContext,
             $this->mockResultJsonFactory,
             $this->mockLogger,
             $this->mockMagentoAPI,
-            $this->mockPluginAPIClient);
+            $this->mockRequestRouter
+        );
     }
 
     public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest() {
@@ -60,14 +56,13 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $mockProxy = $this->getMock('CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
             array('setJsonFormTokenOnMagentoRequest', 'getJSONBody'),
             array(
-                $this->mockClienAPIClient,
                 $this->mockContext,
                 $this->mockDataStore,
                 $this->mockIntegrationContext,
                 $this->mockResultJsonFactory,
                 $this->mockLogger,
                 $this->mockMagentoAPI,
-                $this->mockPluginAPIClient)
+                $this->mockRequestRouter)
         );
         $mockProxy->method('getJSONBody')->willReturn(array(Proxy::FORM_KEY => Proxy::FORM_KEY));
 
@@ -95,13 +90,4 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($token, $mockRequest->getParam(Proxy::FORM_KEY));
     }
-
-    public function testIsClientAPIReturnsTrueForClientAPIPaths() {
-        $this->assertTrue($this->proxy->isClientAPI("https://api.cloudflare.com/client/v4/zones/:zoneId"));
-    }
-
-    public function testIsPluginAPIReturnsTrueForPluginAPIPaths() {
-        $this->assertTrue($this->proxy->isPluginAPI("https://partners.cloudflare/plugins/account/"));
-    }
-
 }

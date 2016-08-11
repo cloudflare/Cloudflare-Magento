@@ -1,11 +1,10 @@
 <?php
 namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
 
-use \CF\API\Plugin;
 use \CF\API\Request;
 use \CF\Integration\DefaultConfig;
 use \CF\Integration\DefaultIntegration;
-use \CF\Router\DefaultRestAPIRouter;
+use \CF\Router\RequestRouter;
 use \CloudFlare\Plugin\Backend\ClientAPI;
 use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
@@ -20,46 +19,44 @@ use \Psr\Log\LoggerInterface;
 
 class Proxy extends AbstractAction {
 
-    protected $clientAPIClient;
     protected $dataStore;
     protected $integrationContext;
     protected $logger;
     protected $jsonBody;
     protected $magentoAPI;
-    protected $pluginAPIClient;
     protected $resultJsonFactory;
+    protected $requestRouter;
 
     const FORM_KEY = "form_key";
 
 
     /**
-     * @param Client $clienAPIClient
      * @param Context $context
      * @param Backend\DataStore|DataStore $dataStore
      * @param DefaultIntegration $integrationContext
      * @param JsonFactory $resultJsonFactory
      * @param LoggerInterface $logger
      * @param Backend\MagentoAPI|MagentoAPI $magentoAPI
-     * @param Plugin $pluginAPIClient
+     * @param RequestRouter $requestRouter
      */
     public function __construct(
-        ClientAPI $clienAPIClient,
         Context $context,
         DataStore $dataStore,
         DefaultIntegration $integrationContext,
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
         MagentoAPI $magentoAPI,
-        Plugin $pluginAPIClient
-
+        RequestRouter $requestRouter
     ) {
-        $this->clientAPIClient = $clienAPIClient;
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
         $this->logger = $logger;
         $this->magentoAPI = $magentoAPI;
-        $this->pluginAPIClient = $pluginAPIClient;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->requestRouter = $requestRouter;
+
+        $this->requestRouter->addRouter('\CloudFlare\Plugin\Backend\ClientAPI', ClientRoutes::$routes);
+        $this->requestRouter->addRouter('\CF\API\Plugin', PluginRoutes::getRoutes(\CF\API\PluginRoutes::$routes));
 
         // php://input can only be read once
         $decodedJson = json_decode(file_get_contents('php://input'), true);
@@ -85,21 +82,7 @@ class Proxy extends AbstractAction {
 
         $request = new Request($method, $path, $parameters, $body);
 
-        $apiClient = null;
-        $routes = null;
-        if($this->isClientAPI($path)) {
-            $apiClient = $this->clientAPIClient;
-            $routes = ClientRoutes::$routes;
-        } else if($this->isPluginAPI($path)) {
-            $apiClient = $this->pluginAPIClient;
-            $routes = PluginRoutes::$routes;
-        } else {
-            $this->logger->error("Bad Request: ". $request->getUrl());
-            return $result->setData($this->clientAPIClient->createAPIError("Bad Request: ". $request->getUrl()));
-        }
-
-        $router = new DefaultRestAPIRouter($this->integrationContext, $apiClient, $routes);
-        $response = $router->route($request);
+        $response = $this->requestRouter->route($request);
 
         return $result->setData($response);
     }
@@ -113,22 +96,6 @@ class Proxy extends AbstractAction {
      */
     public function setJsonBody($jsonBody) {
         $this->jsonBody = $jsonBody;
-    }
-
-    /**
-     * @param $path
-     * @return bool
-     */
-    public function isClientAPI($path) {
-        return (strpos($path, ClientAPI::ENDPOINT) !== false);
-    }
-
-    /**
-     * @param $path
-     * @return bool
-     */
-    public function isPluginAPI($path) {
-        return (strpos($path, Plugin::ENDPOINT) !== false);
     }
 
     /*
