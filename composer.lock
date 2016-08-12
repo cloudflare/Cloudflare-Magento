@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7be78d6b869fb212dff8e96e6f0236e9",
-    "content-hash": "4ebaf339c74bb8ad7035cf13633fa0ed",
+    "hash": "37342092e4ff2cda6ffef0c3b385a19a",
+    "content-hash": "1f66c4b16af7e49d46e0401634ef948d",
     "packages": [
         {
             "name": "cloudflare/cloudflare-plugin-backend",
-            "version": "1.0.4",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudflare/cloudflare-plugin-backend.git",
-                "reference": "f52dbd54eb638af451305a1367db11e637dc9de2"
+                "reference": "1c81bb1f86650d8e0a121a14633fa8a94ef1496c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudflare/cloudflare-plugin-backend/zipball/f52dbd54eb638af451305a1367db11e637dc9de2",
-                "reference": "f52dbd54eb638af451305a1367db11e637dc9de2",
+                "url": "https://api.github.com/repos/cloudflare/cloudflare-plugin-backend/zipball/1c81bb1f86650d8e0a121a14633fa8a94ef1496c",
+                "reference": "1c81bb1f86650d8e0a121a14633fa8a94ef1496c",
                 "shasum": ""
             },
             "require": {
@@ -40,20 +40,20 @@
                 "BSD-3-Clause"
             ],
             "description": "A PHP backend for CloudFlare plugins.",
-            "time": "2016-07-15 09:14:53"
+            "time": "2016-08-11 23:24:15"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "5.3.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f3c8c22471cb55475105c14769644a49c3262b93"
+                "reference": "70f1fa53b71c4647bf2762c09068a95f77e12fb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f3c8c22471cb55475105c14769644a49c3262b93",
-                "reference": "f3c8c22471cb55475105c14769644a49c3262b93",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/70f1fa53b71c4647bf2762c09068a95f77e12fb8",
+                "reference": "70f1fa53b71c4647bf2762c09068a95f77e12fb8",
                 "shasum": ""
             },
             "require": {
@@ -62,15 +62,9 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0",
-                "psr/log": "^1.0"
+                "phpunit/phpunit": "^4.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
@@ -98,7 +92,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2015-05-20 03:47:55"
+            "time": "2016-07-15 19:28:39"
         },
         {
             "name": "guzzlehttp/ringphp",
