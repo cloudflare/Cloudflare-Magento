@@ -1,12 +1,14 @@
 <?php
 namespace CloudFlare\Plugin\Test\Unit\Backend;
 
+use CF\API\Plugin;
 use CloudFlare\Plugin\Backend\CacheTags;
 
 class CacheTagsTest extends \PHPUnit_Framework_TestCase
 {
     protected $cacheTags;
     protected $mockClientAPI;
+    protected $mockDataStore;
     protected $mockLogger;
 
     public function setUp()
@@ -14,10 +16,13 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->mockClientAPI = $this->getMockBuilder('\CloudFlare\Plugin\Backend\ClientAPI')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockDataStore = $this->getMockBuilder('\CloudFlare\Plugin\Backend\DataStore')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockLogger = $this->getMockBuilder('\Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->cacheTags = new CacheTags($this->mockClientAPI, $this->mockLogger);
+        $this->cacheTags = new CacheTags($this->mockClientAPI, $this->mockDataStore, $this->mockLogger);
     }
 
     public function testSetCloudFlareCacheTagsResponseHeaderSetsHeader() {
@@ -70,12 +75,21 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testPurgeCacheTagsDoesntCallAPIForEmptyArray() {
+        $this->mockDataStore->method('get')->willReturn(false);
         $tags = array();
         $this->mockClientAPI->expects($this->never())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);
     }
 
+    public function testPurgeCacheTagsDoesntCallAPIIfAutomaticCacheTagDisabled() {
+        $this->mockDataStore->method('get')->with(Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG)->willReturn(false);
+        $tags = array('tagsToPurge');
+        $this->mockClientAPI->expects($this->never())->method('zonePurgeCacheByTags');
+        $this->cacheTags->purgeCacheTags($tags);
+    }
+
     public function testPurgeCacheTagsCallsAPIForNonEmptyArray() {
+        $this->mockDataStore->method('get')->with(Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG)->willReturn(true);
         $tags = array('tagToPurge');
         $this->mockClientAPI->expects($this->once())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);

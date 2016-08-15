@@ -14,12 +14,18 @@ class CacheTags
     protected $clientAPI;
 
     /**
+     * @var \CloudFlare\Plugin\Backend\DataStore
+     */
+    protected $dataStore;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
-    public function __construct(ClientAPI $clientAPI, LoggerInterface $logger) {
+    public function __construct(ClientAPI $clientAPI, DataStore $dataStore, LoggerInterface $logger) {
         $this->clientAPI = $clientAPI;
+        $this->dataStore = $dataStore;
         $this->logger = $logger;
     }
 
@@ -95,7 +101,7 @@ class CacheTags
      * @param $tags
      */
     public function purgeCacheTags(array $tags) {
-        if(!empty($tags)) {
+        if (!empty($tags) && $this->dataStore->get(\CF\API\Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG) === true) {
             $tags = $this->hashCacheTags($tags);
             $this->clientAPI->zonePurgeCacheByTags($tags);
         }
