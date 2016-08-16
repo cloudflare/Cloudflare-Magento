@@ -18,13 +18,13 @@
     "featureManagerIsSecurityLevelEnabled": true,
     "featureManagerIsSSLEnabled": false,
     "featureManagerIsWAFEnabled": true,
-    "homePageCards": ["ApplyDefaultSettingsCard", "PurgeCacheCard"],
+    "homePageCards": ["ApplyDefaultSettingsCard", "PluginSpecificCacheTagCard", "PurgeCacheCard"],
     "moreSettingsCards": {
         "container.moresettings.speed": ["AlwaysOnlineCard", "ImageOptimizationCard"],
         "container.moresettings.security": ["SecurityLevelCard"]
     },
     "locale": "en",
-    "integrationName": "magento",
+    "integrationName": "Magento",
     "useHostAPILogin": false,
     "version": "1.0.0-beta"
 }

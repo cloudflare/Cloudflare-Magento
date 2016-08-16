@@ -54,6 +54,7 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
         $response = $this->clientActions->getZonesReturnMagentoZone();
 
         $this->assertEquals($testResult, $response["result"][0]);
+        $this->assertEquals(1, count($response["result"]));
     }
 
     public function testGetZonesReturnMagentoZoneReturnsInactiveZoneIfItDoesntExists() {

@@ -42,7 +42,7 @@ class ClientActions
         $response = $this->api->callAPI($this->request);
 
         if($this->api->responseOk($response)) {
-            if(count($response["result"] === 0 )) {
+            if(count($response["result"]) === 0) {
                array_push($response["result"], array(
                         'name' => $magentoDomainName,
                         'plan' => array('name' => ''),
