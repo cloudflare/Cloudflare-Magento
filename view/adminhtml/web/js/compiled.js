@@ -79886,7 +79886,7 @@ var PluginSpecificCacheCard = function (_Component) {
         if (value === true && this.state.isModalOpen === false) {
             this.handleModalOpen();
         } else {
-            this.setState({ isModalOpen: false });
+            this.handleModalClose();
 
             var _props = this.props;
             var activeZoneId = _props.activeZoneId;
