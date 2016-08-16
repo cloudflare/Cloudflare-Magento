@@ -101,7 +101,7 @@ class CacheTags
      * @param $tags
      */
     public function purgeCacheTags(array $tags) {
-        if (!empty($tags) && $this->dataStore->get(\CF\API\Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG) === true) {
+        if (!empty($tags) && $this->dataStore->get(\CF\API\Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG)) {
             $tags = $this->hashCacheTags($tags);
             $this->clientAPI->zonePurgeCacheByTags($tags);
         }
