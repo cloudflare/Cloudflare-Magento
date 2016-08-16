@@ -66,6 +66,7 @@ class MagentoAPI implements IntegrationAPIInterface
     /**
      * @param $key
      * @param $value
+     * @return bool
      */
     public function setValue($key, $value) {
         $keyValueModel = $this->keyValueFactory->create();
@@ -81,6 +82,7 @@ class MagentoAPI implements IntegrationAPIInterface
             $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
             $keyValueModel->save();
         }
+        return true;
     }
 
     /**
