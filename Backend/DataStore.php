@@ -29,6 +29,7 @@ class DataStore implements DataStoreInterface
         //Magento doesn't use the host api - $uniqueId, $userKey will always be null
         $this->set(self::CLIENT_API_KEY, $clientAPIKey);
         $this->set(self::CLOUDFLARE_EMAIL, $email);
+        return true;
     }
 
     /**
