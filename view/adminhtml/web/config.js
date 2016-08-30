@@ -20,8 +20,8 @@
     "featureManagerIsWAFEnabled": true,
     "homePageCards": ["ApplyDefaultSettingsCard", "PluginSpecificCacheTagCard", "PurgeCacheCard"],
     "moreSettingsCards": {
-        "container.moresettings.speed": ["AlwaysOnlineCard", "ImageOptimizationCard"],
-        "container.moresettings.security": ["SecurityLevelCard"]
+        "container.moresettings.security": ["SecurityLevelCard"],
+        "container.moresettings.speed": ["AlwaysOnlineCard", "ImageOptimizationCard"]
     },
     "locale": "en",
     "integrationName": "Magento",
