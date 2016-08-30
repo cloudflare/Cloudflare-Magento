@@ -4,32 +4,45 @@
  * everything here.
  */
 
-
-.cloudflare-partners .col-5 {
-    margin-left: 0 !important; /* margin-left: 0 */
-}
-
-/* hide checkbox on cf-component-toggle */
-.cloudflare-partners .cf-toggle input[type=checkbox] {
-    display: none; /* block */
-}
-
-/* center app nav */
-.cloudflare-partners .slider-nav-container {
-    margin: 0 auto; /* margin: 0*/
-    width: 25%; /* width: 100% */
-}
-
 /* center cf-component-toggle */
 .cf-toggle {
-
     margin: 0 auto;
 }
 
-/* hide ul disc on purge cache button list */
-.cloudflare-partners ul.cf-dropdown {
-    list-style-type: none;
+.cf-toggle::before, .cf-toggle::after {
+    font-size: 10px;
 }
+
+#cf-login-page {
+    max-width: 400px;
+    margin: 0 auto;
+}
+#cf-login-page form {
+    margin-bottom: 20px;
+}
+
+#cf-login-page h3 {
+    text-align: center;
+}
+
+#cf-login-page .cf-form__fieldset_content {
+    background-color: #FFF;
+    border-color: #FFF;
+}
+
+#cf-login-page legend {
+    display: none;
+}
+
+#cf-login-page .cf-layout__row {
+    margin-top:15px;
+}
+
+#cf-login-page .cf-layout__column {
+    text-align: center;
+}
+
+
 
 /* cf-component-select */
 /**
@@ -254,7 +267,7 @@
     position: absolute;
     top: 100%;
     width: 100%;
-    z-index: 10;
+    z-index: 214748364;
     -webkit-overflow-scrolling: touch;
 }
 .Select-menu {
