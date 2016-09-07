@@ -26,5 +26,5 @@
     "locale": "en",
     "integrationName": "Magento",
     "useHostAPILogin": false,
-    "version": "1.0.0-beta"
+    "version": "1.0.8"
 }
