@@ -76106,8 +76106,6 @@ var _zoneAnalytics = _dereq_('./zoneAnalytics');
 
 var _zoneRailgun = _dereq_('./zoneRailgun');
 
-var _zoneScan = _dereq_('./zoneScan');
-
 var _zoneSettings = _dereq_('./zoneSettings');
 
 var _pluginSettings = _dereq_('./pluginSettings');
@@ -76133,7 +76131,6 @@ function asyncZoneSetActiveZone(zone) {
             }
             dispatch((0, _zoneSettings.asyncZoneFetchSettings)(zone.id));
             dispatch((0, _zoneAnalytics.asyncZoneFetchAnalytics)(zone.id));
-            dispatch((0, _zoneScan.asyncZoneFetchScan)(zone.id));
         }
     };
 }
@@ -76146,7 +76143,7 @@ function zoneSetActiveZoneIfEmpty(zone) {
     };
 }
 
-},{"../constants/ActionTypes":545,"./pluginSettings":529,"./zoneAnalytics":531,"./zoneDnsRecords":532,"./zoneRailgun":535,"./zoneScan":536,"./zoneSettings":537}],525:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"./pluginSettings":529,"./zoneAnalytics":531,"./zoneDnsRecords":532,"./zoneRailgun":535,"./zoneSettings":536}],525:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76164,7 +76161,7 @@ function applicationInit() {
     };
 }
 
-},{"../constants/ActionTypes":545}],526:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],526:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76253,7 +76250,7 @@ function configUpdateByKey(key, value) {
     };
 }
 
-},{"../actions/user":530,"../constants/ActionTypes":545,"../reducers/config":592,"../utils/Auth/Auth":612,"./intl":527,"./notifications":528,"cf-util-http":125}],527:[function(_dereq_,module,exports){
+},{"../actions/user":530,"../constants/ActionTypes":544,"../reducers/config":590,"../utils/Auth/Auth":609,"./intl":527,"./notifications":528,"cf-util-http":125}],527:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76315,7 +76312,7 @@ function asyncIntlFetchTranslations(locale) {
     };
 }
 
-},{"../constants/ActionTypes":545,"./app":525,"./notifications":528,"cf-util-http":125}],528:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"./app":525,"./notifications":528,"cf-util-http":125}],528:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76400,7 +76397,7 @@ function notificationAddClientAPIError(errorAction, errorMessage) {
     };
 }
 
-},{"../constants/ActionTypes":545}],529:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],529:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76503,7 +76500,7 @@ function asyncPluginUpdateSetting(settingName, zoneId, value) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/PluginAPI/PluginAPI":616,"./notifications":528}],530:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/PluginAPI/PluginAPI":613,"./notifications":528}],530:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76649,7 +76646,7 @@ function asyncUserSignup(email, password) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../constants/UrlPaths":548,"../utils/CFHostAPI/CFHostAPI":614,"../utils/PluginAPI/PluginAPI":616,"./notifications":528,"./zones":538,"redux-simple-router":500}],531:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/UrlPaths":547,"../utils/CFHostAPI/CFHostAPI":611,"../utils/PluginAPI/PluginAPI":613,"./notifications":528,"./zones":537,"redux-simple-router":500}],531:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76703,7 +76700,7 @@ function asyncZoneFetchAnalytics(zoneId) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],532:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./notifications":528}],532:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -76847,7 +76844,7 @@ function asyncDNSRecordUpdate(zoneId, dnsRecord, proxied) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],533:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./notifications":528}],533:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77025,7 +77022,7 @@ function asyncSetHostAPIProvisionedDomainActive(domainName) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../constants/Schemas":547,"../utils/CFClientV4API/CFClientV4API":613,"../utils/CFHostAPI/CFHostAPI":614,"./activeZone":524,"./notifications":528,"./zones":538}],534:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/Schemas":546,"../utils/CFClientV4API/CFClientV4API":610,"../utils/CFHostAPI/CFHostAPI":611,"./activeZone":524,"./notifications":528,"./zones":537}],534:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77100,7 +77097,7 @@ function asyncZonePurgeCacheEverything(zoneId) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],535:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./notifications":528}],535:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77201,104 +77198,7 @@ function asyncZoneRailgunConnectionUpdate(zoneId, railgun, isConnected) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],536:[function(_dereq_,module,exports){
-'use strict';
-
-exports.__esModule = true;
-exports.zoneFetchScan = zoneFetchScan;
-exports.zoneFetchScanSuccess = zoneFetchScanSuccess;
-exports.zoneFetchScanError = zoneFetchScanError;
-exports.asyncZoneFetchScan = asyncZoneFetchScan;
-exports.zoneUpdateScan = zoneUpdateScan;
-exports.zoneUpdateScanSuccess = zoneUpdateScanSuccess;
-exports.zoneUpdateScanError = zoneUpdateScanError;
-exports.asyncZoneUpdateScan = asyncZoneUpdateScan;
-
-var _CFClientV4API = _dereq_('../utils/CFClientV4API/CFClientV4API');
-
-var _notifications = _dereq_('./notifications');
-
-var _ActionTypes = _dereq_('../constants/ActionTypes');
-
-var ActionTypes = _interopRequireWildcard(_ActionTypes);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function zoneFetchScan() {
-    return {
-        type: ActionTypes.ZONE_FETCH_SCAN
-    };
-}
-
-function zoneFetchScanSuccess(zoneId, zoneScan) {
-    return {
-        type: ActionTypes.ZONE_FETCH_SCAN_SUCCESS,
-        zoneId: zoneId,
-        zoneScan: zoneScan
-    };
-}
-
-function zoneFetchScanError() {
-    return {
-        type: ActionTypes.ZONE_FETCH_SCAN_ERROR
-    };
-}
-
-function asyncZoneFetchScan(zoneId) {
-    return function (dispatch) {
-        dispatch(zoneFetchScan());
-        (0, _CFClientV4API.zoneScanGet)(zoneId, function (response) {
-            if ((0, _CFClientV4API.v4ResponseOk)(response)) {
-                dispatch(zoneFetchScanSuccess(zoneId, response.body.result));
-            } else {
-                dispatch((0, _notifications.notificationAddClientAPIError)(zoneFetchScanError(), response));
-            }
-        }, function (error) {
-            dispatch((0, _notifications.notificationAddClientAPIError)(zoneFetchScanError(), error));
-        });
-    };
-}
-
-function zoneUpdateScan(zoneId, zoneScan) {
-    return {
-        type: ActionTypes.ZONE_UPDATE_SCAN,
-        zoneId: zoneId,
-        zoneScan: zoneScan
-    };
-}
-
-function zoneUpdateScanSuccess(zoneId, zoneScan) {
-    return {
-        type: ActionTypes.ZONE_UPDATE_SCAN_SUCCESS,
-        zoneId: zoneId,
-        zoneScan: zoneScan
-    };
-}
-
-function zoneUpdateScanError(zoneId, zoneScan) {
-    return {
-        type: ActionTypes.ZONE_UPDATE_SCAN_ERROR,
-        zoneId: zoneId,
-        zoneScan: zoneScan
-    };
-}
-
-function asyncZoneUpdateScan(zoneId, showInterstitial) {
-    return function (dispatch) {
-        dispatch(zoneUpdateScan(zoneId, { show_interstitial: showInterstitial }));
-        (0, _CFClientV4API.zoneScanPut)(zoneId, showInterstitial, function (response) {
-            if ((0, _CFClientV4API.v4ResponseOk)(response)) {
-                dispatch(zoneUpdateScanSuccess(zoneId, response.body.result));
-            } else {
-                dispatch((0, _notifications.notificationAddClientAPIError)(zoneUpdateScanError(zoneId, { show_interstitial: !showInterstitial }), response));
-            }
-        }, function (error) {
-            dispatch((0, _notifications.notificationAddClientAPIError)(zoneUpdateScanError(zoneId, { show_interstitial: !showInterstitial }), error));
-        });
-    };
-}
-
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],537:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./notifications":528}],536:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77397,7 +77297,7 @@ function asyncZoneUpdateSetting(settingName, zoneId, value) {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./notifications":528}],538:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./notifications":528}],537:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77509,7 +77409,7 @@ function asyncFetchZones() {
     };
 }
 
-},{"../constants/ActionTypes":545,"../utils/CFClientV4API/CFClientV4API":613,"./activeZone":524,"./notifications":528,"./zoneDnsRecords":532}],539:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/CFClientV4API/CFClientV4API":610,"./activeZone":524,"./notifications":528,"./zoneDnsRecords":532}],538:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77623,7 +77523,7 @@ AppNavigationLiNode.propTypes = {
     title: _react.PropTypes.string.isRequired
 };
 
-},{"cf-component-link":82,"react":497,"react-intl":309}],540:[function(_dereq_,module,exports){
+},{"cf-component-link":82,"react":497,"react-intl":309}],539:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77700,7 +77600,7 @@ CloudToggle.propTypes = {
     onBlur: _react.PropTypes.func
 };
 
-},{"react":497}],541:[function(_dereq_,module,exports){
+},{"react":497}],540:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77783,7 +77683,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(CustomCardControl));
 
-},{"../../constants/Plans.js":546,"../../constants/UrlPaths.js":548,"../../selectors/config.js":606,"../../selectors/generateUTMLink.js":607,"cf-component-button":7,"cf-component-card":18,"react":497,"react-intl":309,"react-redux":321}],542:[function(_dereq_,module,exports){
+},{"../../constants/Plans.js":545,"../../constants/UrlPaths.js":547,"../../selectors/config.js":603,"../../selectors/generateUTMLink.js":604,"cf-component-button":7,"cf-component-card":18,"react":497,"react-intl":309,"react-redux":321}],541:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77829,7 +77729,7 @@ FeatureManager.propTypes = {
     error: _react2.default.PropTypes.string
 };
 
-},{"react":497}],543:[function(_dereq_,module,exports){
+},{"react":497}],542:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77911,7 +77811,7 @@ MarketingFeature.propTypes = {
     descriptionKey: _react.PropTypes.string.isRequired
 };
 
-},{"react":497,"react-intl":309}],544:[function(_dereq_,module,exports){
+},{"react":497,"react-intl":309}],543:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -77936,7 +77836,7 @@ function renderCards(cards) {
     });
 }
 
-},{"../../utils/ImportCards":615,"lodash":209,"react":497}],545:[function(_dereq_,module,exports){
+},{"../../utils/ImportCards":612,"lodash":209,"react":497}],544:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78052,7 +77952,7 @@ var ZONE_RAILGUNS_CONNECTION_UPDATE = exports.ZONE_RAILGUNS_CONNECTION_UPDATE = 
 var ZONE_RAILGUNS_CONNECTION_UPDATE_SUCCESSS = exports.ZONE_RAILGUNS_CONNECTION_UPDATE_SUCCESSS = 'ZONES_RAILGUNS_CONNECTION_UPDATE__SUCCESS';
 var ZONE_RAILGUNS_CONNECTION_UPDATE_ERROR = exports.ZONE_RAILGUNS_CONNECTION_UPDATE_ERROR = 'ZONES_RAILGUNS_CONNECTION_UPDATE_ERROR';
 
-},{}],546:[function(_dereq_,module,exports){
+},{}],545:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78097,7 +77997,7 @@ function getLocalizedPlanId(planName) {
     return localizedPlanName;
 }
 
-},{}],547:[function(_dereq_,module,exports){
+},{}],546:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78123,7 +78023,7 @@ function normalizeZoneRailgunGetAll(result) {
     return (0, _normalizr.normalize)(result, (0, _normalizr.arrayOf)(zoneRailgunSchema));
 }
 
-},{"normalizr":215}],548:[function(_dereq_,module,exports){
+},{"normalizr":215}],547:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78143,7 +78043,7 @@ var SUPPORT_PAGE = exports.SUPPORT_PAGE = 'https://support.cloudflare.com/hc/en-
 var TERMS_AND_CONDITIONS_PAGE = exports.TERMS_AND_CONDITIONS_PAGE = 'https://www.cloudflare.com/terms';
 var PRIVACY_POLICY_PAGE = exports.PRIVACY_POLICY_PAGE = 'https://www.cloudflare.com/security-policy';
 
-},{}],549:[function(_dereq_,module,exports){
+},{}],548:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78258,7 +78158,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ActivationCheckCard));
 
-},{"../../actions/zoneProvision":533,"cf-component-button":7,"cf-component-card":18,"cf-component-list":86,"react":497,"react-intl":309,"react-redux":321}],550:[function(_dereq_,module,exports){
+},{"../../actions/zoneProvision":533,"cf-component-button":7,"cf-component-card":18,"cf-component-list":86,"react":497,"react-intl":309,"react-redux":321}],549:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78370,7 +78270,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ActiveZoneSelector));
 
-},{"../../actions/activeZone":524,"../../actions/notifications":528,"../../selectors/config":606,"../../utils/utils":617,"cf-component-select":105,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],551:[function(_dereq_,module,exports){
+},{"../../actions/activeZone":524,"../../actions/notifications":528,"../../selectors/config":603,"../../utils/utils":614,"cf-component-select":105,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],550:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78455,7 +78355,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(AdvanceDDoSCard));
 
-},{"../../components/CustomCardControl/CustomCardControl":541,"../../constants/Plans.js":546,"cf-component-card":18,"react":497,"react-intl":309,"react-redux":321}],552:[function(_dereq_,module,exports){
+},{"../../components/CustomCardControl/CustomCardControl":540,"../../constants/Plans.js":545,"cf-component-card":18,"react":497,"react-intl":309,"react-redux":321}],551:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78556,7 +78456,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(AlwaysOnlineCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],553:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],552:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -78743,7 +78643,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(AnaltyicsPage));
 
-},{"cf-component-heading":71,"cf-component-tabs":116,"lodash":209,"react":497,"react-c3-wrapper":301,"react-intl":309,"react-redux":321}],554:[function(_dereq_,module,exports){
+},{"cf-component-heading":71,"cf-component-tabs":116,"lodash":209,"react":497,"react-c3-wrapper":301,"react-intl":309,"react-redux":321}],553:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
 
@@ -78961,7 +78861,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppWrapper);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../../actions/config":526,"../../containers/ActiveZoneSelector/ActiveZoneSelector":550,"../../containers/AppNavigation/AppNavigation":555,"../../containers/GlobalNotifications/GlobalNotifications":565,"../../containers/UnderAttackButton/UnderAttackButton":586,"../../selectors/config":606,"../../utils/Auth/Auth":612,"cf-component-layout":80,"intl":206,"react":497,"react-gateway":307,"react-intl":309,"react-redux":321}],555:[function(_dereq_,module,exports){
+},{"../../actions/config":526,"../../containers/ActiveZoneSelector/ActiveZoneSelector":549,"../../containers/AppNavigation/AppNavigation":554,"../../containers/GlobalNotifications/GlobalNotifications":564,"../../containers/UnderAttackButton/UnderAttackButton":584,"../../selectors/config":603,"../../utils/Auth/Auth":609,"cf-component-layout":80,"intl":206,"react":497,"react-gateway":307,"react-intl":309,"react-redux":321}],554:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79087,7 +78987,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(AppNavigation));
 
-},{"../../components/AppNavigationLiNode/AppNavigationLiNode":539,"../../constants/UrlPaths":548,"../../selectors/config":606,"../../utils/Auth/Auth":612,"react":497,"react-intl":309,"react-redux":321,"redux-simple-router":500}],556:[function(_dereq_,module,exports){
+},{"../../components/AppNavigationLiNode/AppNavigationLiNode":538,"../../constants/UrlPaths":547,"../../selectors/config":603,"../../utils/Auth/Auth":609,"react":497,"react-intl":309,"react-redux":321,"redux-simple-router":500}],555:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79251,7 +79151,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ApplyDefaultSettingsCard));
 
-},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":608,"../../utils/utils":617,"cf-component-button":7,"cf-component-card":18,"cf-component-loading":88,"cf-component-modal":96,"react":497,"react-intl":309,"react-redux":321}],557:[function(_dereq_,module,exports){
+},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":605,"../../utils/utils":614,"cf-component-button":7,"cf-component-card":18,"cf-component-loading":88,"cf-component-modal":96,"react":497,"react-intl":309,"react-redux":321}],556:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79350,7 +79250,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(BrowserCacheTTLCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],558:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],557:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79451,7 +79351,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(BrowserIntegrityCheckCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],559:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],558:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79549,7 +79449,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(CacheLevelCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-radio":103,"react":497,"react-intl":309,"react-redux":321}],560:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-radio":103,"react":497,"react-intl":309,"react-redux":321}],559:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79649,7 +79549,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ChallengePassageCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],561:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],560:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -79835,7 +79735,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ClientLoginPage));
 
-},{"../../actions/user":530,"../../constants/UrlPaths.js":548,"../../containers/MarketingFeatureCollection/MarketingFeatureCollection":572,"../../selectors/generateUTMLink.js":607,"cf-component-button":7,"cf-component-form":68,"cf-component-input":76,"cf-component-layout":80,"react":497,"react-intl":309,"react-redux":321}],562:[function(_dereq_,module,exports){
+},{"../../actions/user":530,"../../constants/UrlPaths.js":547,"../../containers/MarketingFeatureCollection/MarketingFeatureCollection":571,"../../selectors/generateUTMLink.js":604,"cf-component-button":7,"cf-component-form":68,"cf-component-input":76,"cf-component-layout":80,"react":497,"react-intl":309,"react-redux":321}],561:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80014,7 +79914,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(DNSManagementPage));
 
-},{"../../constants/UrlPaths.js":548,"../../containers/ActivationCheckCard/ActivationCheckCard":549,"../../containers/DNSRecordEditor/DNSRecordEditor":563,"../../containers/ZoneProvisionContainer/ZoneProvisionContainer":588,"cf-component-button":7,"cf-component-heading":71,"cf-component-table":113,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],563:[function(_dereq_,module,exports){
+},{"../../constants/UrlPaths.js":547,"../../containers/ActivationCheckCard/ActivationCheckCard":548,"../../containers/DNSRecordEditor/DNSRecordEditor":562,"../../containers/ZoneProvisionContainer/ZoneProvisionContainer":586,"cf-component-button":7,"cf-component-heading":71,"cf-component-table":113,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],562:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80171,7 +80071,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(DNSRecordEditor));
 
-},{"../../actions/zoneDnsRecords":532,"../../components/CloudToggle/CloudToggle":540,"cf-component-loading":88,"cf-component-table":113,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],564:[function(_dereq_,module,exports){
+},{"../../actions/zoneDnsRecords":532,"../../components/CloudToggle/CloudToggle":539,"cf-component-loading":88,"cf-component-table":113,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],563:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80272,7 +80172,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(DevelopmentModeCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],565:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],564:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80354,7 +80254,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(GlobalNotifications));
 
-},{"../../actions/notifications":528,"cf-component-notifications":100,"react":497,"react-intl":309,"react-redux":321}],566:[function(_dereq_,module,exports){
+},{"../../actions/notifications":528,"cf-component-notifications":100,"react":497,"react-intl":309,"react-redux":321}],565:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80399,9 +80299,8 @@ var HomePage = function (_Component) {
         var activeZoneId = _props.activeZoneId;
         var config = _props.config;
         var zoneSettings = _props.zoneSettings;
-        var zoneScan = _props.zoneScan;
 
-        var isEmpty = _lodash2.default.isEmpty(zoneSettings[activeZoneId]) && _lodash2.default.isEmpty((0, _pluginSettings.getPluginSettingsForZoneId)(activeZoneId, this.state)) && _lodash2.default.isEmpty(zoneScan.entities[activeZoneId]);
+        var isEmpty = _lodash2.default.isEmpty(zoneSettings[activeZoneId]) && _lodash2.default.isEmpty((0, _pluginSettings.getPluginSettingsForZoneId)(activeZoneId, this.state));
 
         return _react2.default.createElement(
             'div',
@@ -80427,13 +80326,12 @@ function mapStateToProps(state) {
     return {
         activeZoneId: state.activeZone.id,
         config: state.config.config,
-        zoneSettings: state.zoneSettings.entities,
-        zoneScan: state.zoneScan
+        zoneSettings: state.zoneSettings.entities
     };
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(HomePage));
 
-},{"../../components/RenderCardsDynamically/RenderCardsDynamically":544,"../../selectors/pluginSettings":608,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],567:[function(_dereq_,module,exports){
+},{"../../components/RenderCardsDynamically/RenderCardsDynamically":543,"../../selectors/pluginSettings":605,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],566:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80615,7 +80513,7 @@ var HostLoginPage = function (_Component) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)()(HostLoginPage));
 
-},{"../../actions/user":530,"../../constants/UrlPaths.js":548,"../../containers/MarketingFeatureCollection/MarketingFeatureCollection":572,"react":497,"react-intl":309,"react-redux":321,"react-router":354}],568:[function(_dereq_,module,exports){
+},{"../../actions/user":530,"../../constants/UrlPaths.js":547,"../../containers/MarketingFeatureCollection/MarketingFeatureCollection":571,"react":497,"react-intl":309,"react-redux":321,"react-router":354}],567:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80716,7 +80614,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(IPV6Card));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],569:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],568:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80832,7 +80730,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ImageOptimizationCard));
 
-},{"../../actions/zoneSettings":537,"../../components/CustomCardControl/CustomCardControl":541,"../../constants/Plans.js":546,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],570:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../components/CustomCardControl/CustomCardControl":540,"../../constants/Plans.js":545,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],569:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -80933,7 +80831,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(IpRewriteCard));
 
-},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":608,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],571:[function(_dereq_,module,exports){
+},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":605,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],570:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81005,7 +80903,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(LoginPage);
 
-},{"../../constants/UrlPaths.js":548,"../../containers/ClientLoginPage/ClientLoginPage":561,"../../containers/HostLoginPage/HostLoginPage":567,"../../selectors/config":606,"../../utils/Auth/Auth":612,"react":497,"react-redux":321,"redux-simple-router":500}],572:[function(_dereq_,module,exports){
+},{"../../constants/UrlPaths.js":547,"../../containers/ClientLoginPage/ClientLoginPage":560,"../../containers/HostLoginPage/HostLoginPage":566,"../../selectors/config":603,"../../utils/Auth/Auth":609,"react":497,"react-redux":321,"redux-simple-router":500}],571:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81080,7 +80978,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(MarketingFeatureCollection);
 
-},{"../../components/MarketingFeature/MarketingFeature":543,"../../selectors/config":606,"cf-component-flex":61,"react":497,"react-redux":321}],573:[function(_dereq_,module,exports){
+},{"../../components/MarketingFeature/MarketingFeature":542,"../../selectors/config":603,"cf-component-flex":61,"react":497,"react-redux":321}],572:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81203,7 +81101,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(MinifyCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-checkbox":23,"react":497,"react-intl":309,"react-redux":321}],574:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-checkbox":23,"react":497,"react-intl":309,"react-redux":321}],573:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81267,9 +81165,8 @@ var MoreSettingsPage = function (_Component) {
         var _props = this.props;
         var activeZoneId = _props.activeZoneId;
         var zoneSettings = _props.zoneSettings;
-        var zoneScan = _props.zoneScan;
 
-        var isEmpty = _lodash2.default.isEmpty(zoneSettings[activeZoneId]) && _lodash2.default.isEmpty((0, _pluginSettings.getPluginSettingsForZoneId)(activeZoneId, this.state)) && _lodash2.default.isEmpty(zoneScan.entities[activeZoneId]);
+        var isEmpty = _lodash2.default.isEmpty(zoneSettings[activeZoneId]) && _lodash2.default.isEmpty((0, _pluginSettings.getPluginSettingsForZoneId)(activeZoneId, this.state));
 
         return _react2.default.createElement(
             'div',
@@ -81290,13 +81187,12 @@ function mapStateToProps(state) {
     return {
         activeZoneId: state.activeZone.id,
         config: state.config.config,
-        zoneSettings: state.zoneSettings.entities,
-        zoneScan: state.zoneScan
+        zoneSettings: state.zoneSettings.entities
     };
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(MoreSettingsPage));
 
-},{"../../components/RenderCardsDynamically/RenderCardsDynamically":544,"../../selectors/pluginSettings":608,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],575:[function(_dereq_,module,exports){
+},{"../../components/RenderCardsDynamically/RenderCardsDynamically":543,"../../selectors/pluginSettings":605,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],574:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81483,7 +81379,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(PerformancePage));
 
-},{"../../components/FeatureManager/FeatureManager":542,"../../containers/AlwaysOnlineCard/AlwaysOnlineCard":552,"../../containers/BrowserCacheTTLCard/BrowserCacheTTLCard":557,"../../containers/CacheLevelCard/CacheLevelCard":559,"../../containers/DevelopmentModeCard/DevelopmentModeCard":564,"../../containers/IPV6Card/IPV6Card":568,"../../containers/ImageOptimizationCard/ImageOptimizationCard":569,"../../containers/IpRewriteCard/IpRewriteCard":570,"../../containers/MinifyCard/MinifyCard":573,"../../containers/ProtocolRewriteCard/ProtocolRewriteCard":578,"../../containers/PurgeCacheCard/PurgeCacheCard":579,"../../containers/RailgunCard/RailgunCard":580,"../../containers/WAFCard/WAFCard":587,"../../selectors/pluginSettings":608,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],576:[function(_dereq_,module,exports){
+},{"../../components/FeatureManager/FeatureManager":541,"../../containers/AlwaysOnlineCard/AlwaysOnlineCard":551,"../../containers/BrowserCacheTTLCard/BrowserCacheTTLCard":556,"../../containers/CacheLevelCard/CacheLevelCard":558,"../../containers/DevelopmentModeCard/DevelopmentModeCard":563,"../../containers/IPV6Card/IPV6Card":567,"../../containers/ImageOptimizationCard/ImageOptimizationCard":568,"../../containers/IpRewriteCard/IpRewriteCard":569,"../../containers/MinifyCard/MinifyCard":572,"../../containers/ProtocolRewriteCard/ProtocolRewriteCard":577,"../../containers/PurgeCacheCard/PurgeCacheCard":578,"../../containers/RailgunCard/RailgunCard":579,"../../containers/WAFCard/WAFCard":585,"../../selectors/pluginSettings":605,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],575:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81651,7 +81547,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(PluginSpecificCacheCard));
 
-},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":608,"../../utils/utils":617,"cf-component-button":7,"cf-component-card":18,"cf-component-modal":96,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],577:[function(_dereq_,module,exports){
+},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":605,"../../utils/utils":614,"cf-component-button":7,"cf-component-card":18,"cf-component-modal":96,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],576:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81762,7 +81658,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(PluginSpecificCacheTagCard));
 
-},{"../../actions/pluginSettings":529,"../../components/CustomCardControl/CustomCardControl":541,"../../constants/Plans.js":546,"../../selectors/pluginSettings":608,"../../selectors/zones":610,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],578:[function(_dereq_,module,exports){
+},{"../../actions/pluginSettings":529,"../../components/CustomCardControl/CustomCardControl":540,"../../constants/Plans.js":545,"../../selectors/pluginSettings":605,"../../selectors/zones":607,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],577:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -81862,7 +81758,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ProtocolRewriteCard));
 
-},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":608,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],579:[function(_dereq_,module,exports){
+},{"../../actions/pluginSettings":529,"../../selectors/pluginSettings":605,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],578:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82063,7 +81959,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(PurgeCacheCard));
 
-},{"../../actions/zonePurgeCache":534,"cf-component-button":7,"cf-component-card":18,"cf-component-dropdown":56,"cf-component-modal":96,"cf-component-textarea":118,"react":497,"react-intl":309,"react-redux":321}],580:[function(_dereq_,module,exports){
+},{"../../actions/zonePurgeCache":534,"cf-component-button":7,"cf-component-card":18,"cf-component-dropdown":56,"cf-component-modal":96,"cf-component-textarea":118,"react":497,"react-intl":309,"react-redux":321}],579:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82226,7 +82122,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(RailgunCard));
 
-},{"../../actions/zoneRailgun":535,"cf-component-card":18,"cf-component-table":113,"cf-component-toggle":120,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],581:[function(_dereq_,module,exports){
+},{"../../actions/zoneRailgun":535,"cf-component-card":18,"cf-component-table":113,"cf-component-toggle":120,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],580:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82322,98 +82218,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(SSLCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],582:[function(_dereq_,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-var _react = _dereq_('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = _dereq_('react-redux');
-
-var _reactIntl = _dereq_('react-intl');
-
-var _zoneScan = _dereq_('../../actions/zoneScan');
-
-var _cfComponentCard = _dereq_('cf-component-card');
-
-var _cfComponentToggle = _dereq_('cf-component-toggle');
-
-var _cfComponentToggle2 = _interopRequireDefault(_cfComponentToggle);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ScanCard = function (_Component) {
-    _inherits(ScanCard, _Component);
-
-    function ScanCard() {
-        _classCallCheck(this, ScanCard);
-
-        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-    }
-
-    ScanCard.prototype.handleChange = function handleChange(value) {
-        var _props = this.props;
-        var activeZoneId = _props.activeZoneId;
-        var dispatch = _props.dispatch;
-
-        dispatch((0, _zoneScan.asyncZoneUpdateScan)(activeZoneId, value));
-    };
-
-    ScanCard.prototype.render = function render() {
-        var formatMessage = this.props.intl.formatMessage;
-
-        return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-                _cfComponentCard.Card,
-                null,
-                _react2.default.createElement(
-                    _cfComponentCard.CardSection,
-                    null,
-                    _react2.default.createElement(
-                        _cfComponentCard.CardContent,
-                        { title: formatMessage({ id: 'container.scanCard.title' }) },
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            _react2.default.createElement(_reactIntl.FormattedMessage, { id: 'container.scanCard.description' })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        _cfComponentCard.CardControl,
-                        null,
-                        _react2.default.createElement(_cfComponentToggle2.default, {
-                            label: '',
-                            value: this.props.showInterstitialValue,
-                            onChange: this.handleChange.bind(this) })
-                    )
-                )
-            )
-        );
-    };
-
-    return ScanCard;
-}(_react.Component);
-
-function mapStateToProps(state) {
-    return {
-        activeZoneId: state.activeZone.id,
-        showInterstitialValue: state.zoneScan.entities[state.activeZone.id].show_interstitial
-    };
-}
-exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ScanCard));
-
-},{"../../actions/zoneScan":536,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],583:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],581:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82511,7 +82316,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(SecurityLevelCard));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],584:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-select":105,"react":497,"react-intl":309,"react-redux":321}],582:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82542,10 +82347,6 @@ var _FeatureManager = _dereq_('../../components/FeatureManager/FeatureManager');
 
 var _FeatureManager2 = _interopRequireDefault(_FeatureManager);
 
-var _ScanCard = _dereq_('../../containers/ScanCard/ScanCard');
-
-var _ScanCard2 = _interopRequireDefault(_ScanCard);
-
 var _SecurityLevelCard = _dereq_('../../containers/SecurityLevelCard/SecurityLevelCard');
 
 var _SecurityLevelCard2 = _interopRequireDefault(_SecurityLevelCard);
@@ -82574,17 +82375,15 @@ var SecurityPage = function (_Component) {
     SecurityPage.prototype.render = function render() {
         var _props = this.props;
         var activeZoneId = _props.activeZoneId;
-        var zoneScan = _props.zoneScan;
         var zoneSettings = _props.zoneSettings;
 
         var isSettingsEmpty = _lodash2.default.isEmpty(zoneSettings.entities[activeZoneId]);
-        var isScanEmpty = _lodash2.default.isEmpty(zoneScan.entities[activeZoneId]);
 
         return _react2.default.createElement(
             'div',
             null,
-            (isSettingsEmpty || isScanEmpty) && _react2.default.createElement(_reactIntl.FormattedMessage, { id: 'errors.noActiveZoneSelected' }),
-            !isSettingsEmpty && !isScanEmpty && _react2.default.createElement(
+            isSettingsEmpty && _react2.default.createElement(_reactIntl.FormattedMessage, { id: 'errors.noActiveZoneSelected' }),
+            !isSettingsEmpty && _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
@@ -82615,7 +82414,7 @@ var SecurityPage = function (_Component) {
                 _react2.default.createElement(
                     _FeatureManager2.default,
                     { isEnabled: this.props.config.featureManagerIsScanEnabled },
-                    _react2.default.createElement(_ScanCard2.default, null)
+                    _react2.default.createElement(ScanCard, null)
                 )
             )
         );
@@ -82628,13 +82427,12 @@ function mapStateToProps(state) {
     return {
         activeZoneId: state.activeZone.id,
         config: state.config.config,
-        zoneSettings: state.zoneSettings,
-        zoneScan: state.zoneScan
+        zoneSettings: state.zoneSettings
     };
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(SecurityPage));
 
-},{"../../components/FeatureManager/FeatureManager":542,"../../containers/BrowserIntegrityCheckCard/BrowserIntegrityCheckCard":558,"../../containers/ChallengePassageCard/ChallengePassageCard":560,"../../containers/SSLCard/SSLCard":581,"../../containers/ScanCard/ScanCard":582,"../../containers/SecurityLevelCard/SecurityLevelCard":583,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],585:[function(_dereq_,module,exports){
+},{"../../components/FeatureManager/FeatureManager":541,"../../containers/BrowserIntegrityCheckCard/BrowserIntegrityCheckCard":557,"../../containers/ChallengePassageCard/ChallengePassageCard":559,"../../containers/SSLCard/SSLCard":580,"../../containers/SecurityLevelCard/SecurityLevelCard":581,"cf-component-heading":71,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],583:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82859,7 +82657,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(SignUpPage));
 
-},{"../../actions/notifications":528,"../../actions/user":530,"../../constants/UrlPaths":548,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],586:[function(_dereq_,module,exports){
+},{"../../actions/notifications":528,"../../actions/user":530,"../../constants/UrlPaths":547,"lodash":209,"react":497,"react-intl":309,"react-redux":321}],584:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -82943,7 +82741,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(UnderAttackButton));
 
-},{"../../actions/zoneSettings":537,"../../selectors/zoneSettings":609,"cf-component-button":7,"react":497,"react-intl":309,"react-redux":321}],587:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../selectors/zoneSettings":606,"cf-component-button":7,"react":497,"react-intl":309,"react-redux":321}],585:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83054,7 +82852,7 @@ function mapStateToProps(state) {
 }
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(WAFCard));
 
-},{"../../actions/zoneSettings":537,"../../components/CustomCardControl/CustomCardControl":541,"../../constants/Plans.js":546,"../../selectors/zoneSettings":609,"../../utils/utils":617,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],588:[function(_dereq_,module,exports){
+},{"../../actions/zoneSettings":536,"../../components/CustomCardControl/CustomCardControl":540,"../../constants/Plans.js":545,"../../selectors/zoneSettings":606,"../../utils/utils":614,"cf-component-card":18,"cf-component-toggle":120,"react":497,"react-intl":309,"react-redux":321}],586:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83273,7 +83071,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactIntl.injectIntl)((0, _reactRedux.connect)(mapStateToProps)(ZoneProvisionContainer));
 
-},{"../../actions/zoneProvision":533,"../../actions/zones":538,"../../components/FeatureManager/FeatureManager":542,"cf-component-button":7,"cf-component-loading":88,"cf-component-modal":96,"react":497,"react-intl":309,"react-redux":321}],589:[function(_dereq_,module,exports){
+},{"../../actions/zoneProvision":533,"../../actions/zones":537,"../../components/FeatureManager/FeatureManager":541,"cf-component-button":7,"cf-component-loading":88,"cf-component-modal":96,"react":497,"react-intl":309,"react-redux":321}],587:[function(_dereq_,module,exports){
 'use strict';
 
 var _react = _dereq_('react');
@@ -83325,7 +83123,7 @@ _reactDom2.default.render(_react2.default.createElement(
     )
 ), document.getElementById('root'));
 
-},{"./routes":605,"./store/configureStore":611,"cf-util-http":125,"history/lib/createHashHistory":175,"react":497,"react-dom":302,"react-redux":321,"react-router":354}],590:[function(_dereq_,module,exports){
+},{"./routes":602,"./store/configureStore":608,"cf-util-http":125,"history/lib/createHashHistory":175,"react":497,"react-dom":302,"react-redux":321,"react-router":354}],588:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83360,7 +83158,7 @@ function activeZoneReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],591:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],589:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83393,7 +83191,7 @@ function appReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],592:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],590:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83445,7 +83243,7 @@ function configReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],593:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],591:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83474,8 +83272,6 @@ var _zonePurgeCache = _dereq_('./zonePurgeCache');
 
 var _zoneRailgun = _dereq_('./zoneRailgun');
 
-var _zoneScan = _dereq_('./zoneScan');
-
 var _zoneSettings = _dereq_('./zoneSettings');
 
 var _zones = _dereq_('./zones');
@@ -83495,14 +83291,13 @@ var rootReducer = (0, _redux.combineReducers)({
     zoneDnsRecords: _zoneDnsRecords.dnsRecordsReducer,
     zonePurgeCache: _zonePurgeCache.zonePurgeCacheReducer,
     zoneRailguns: _zoneRailgun.zoneRailgunReducer,
-    zoneScan: _zoneScan.zoneScanReducer,
     zoneSettings: _zoneSettings.zoneSettingsReducer,
     pluginSettings: _pluginSettings.pluginSettingsReducer
 });
 
 exports.default = rootReducer;
 
-},{"./activeZone":590,"./app":591,"./config":592,"./intl":594,"./notifications":595,"./pluginSettings":596,"./user":597,"./zoneAnalytics":598,"./zoneDnsRecords.js":599,"./zonePurgeCache":600,"./zoneRailgun":601,"./zoneScan":602,"./zoneSettings":603,"./zones":604,"redux":507,"redux-simple-router":500}],594:[function(_dereq_,module,exports){
+},{"./activeZone":588,"./app":589,"./config":590,"./intl":592,"./notifications":593,"./pluginSettings":594,"./user":595,"./zoneAnalytics":596,"./zoneDnsRecords.js":597,"./zonePurgeCache":598,"./zoneRailgun":599,"./zoneSettings":600,"./zones":601,"redux":507,"redux-simple-router":500}],592:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83547,7 +83342,7 @@ function intlReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],595:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],593:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83584,7 +83379,7 @@ function notificationsReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],596:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],594:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83660,7 +83455,7 @@ function pluginPatchSetting(zoneId, setting, state) {
     return patchedEntities;
 }
 
-},{"../constants/ActionTypes":545,"../constants/Schemas":547,"lodash":209}],597:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/Schemas":546,"lodash":209}],595:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83724,7 +83519,7 @@ function userReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545,"../utils/Auth/Auth":612}],598:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../utils/Auth/Auth":609}],596:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83806,7 +83601,7 @@ function buildZoneAnalyticsData(zoneAnalyticsResponse) {
     return data;
 }
 
-},{"../constants/ActionTypes":545,"lodash":209}],599:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"lodash":209}],597:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83901,7 +83696,7 @@ function patchDnsRecord(zoneId, dnsRecordList, dnsRecord) {
     return dnsRecordList;
 }
 
-},{"../constants/ActionTypes":545,"lodash":209,"normalizr":215}],600:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"lodash":209,"normalizr":215}],598:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -83942,7 +83737,7 @@ function zonePurgeCacheReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545}],601:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544}],599:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84012,71 +83807,7 @@ function getPatchedEntities(state, action) {
     return patchedEntities;
 }
 
-},{"../constants/ActionTypes":545,"../constants/Schemas":547}],602:[function(_dereq_,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-exports.zoneScanReducer = zoneScanReducer;
-
-var _ActionTypes = _dereq_('../constants/ActionTypes');
-
-var ActionTypes = _interopRequireWildcard(_ActionTypes);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var initialState = {
-    entities: {},
-    isFetching: false
-};
-
-function zoneScanReducer() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-    var action = arguments[1];
-
-    switch (action.type) {
-        case ActionTypes.ZONE_FETCH_SCAN:
-            return _extends({}, state, {
-                isFetching: true
-            });
-        case ActionTypes.ZONE_FETCH_SCAN_SUCCESS:
-            return _extends({}, state, {
-                entities: patchEntity(action.zoneId, action.zoneScan, state),
-                isFetching: false
-            });
-        case ActionTypes.ZONE_FETCH_SCAN_ERROR:
-            return _extends({}, state, {
-                isFetching: false
-            });
-        case ActionTypes.ZONE_UPDATE_SCAN:
-            return _extends({}, state, {
-                entities: patchEntity(action.zoneId, action.zoneScan, state),
-                isFetching: true
-            });
-        case ActionTypes.ZONE_UPDATE_SCAN_SUCCESS:
-            return _extends({}, state, {
-                entities: patchEntity(action.zoneId, action.zoneScan, state),
-                isFetching: false
-            });
-        case ActionTypes.ZONE_UPDATE_SCAN_ERROR:
-            return _extends({}, state, {
-                entities: patchEntity(action.zoneId, action.zoneScan, state),
-                isFetching: false
-            });
-        default:
-            return state;
-    }
-}
-
-function patchEntity(zoneId, zoneScan, state) {
-    var entities = state.entities;
-    entities[zoneId] = zoneScan;
-    return entities;
-}
-
-},{"../constants/ActionTypes":545}],603:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/Schemas":546}],600:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84152,7 +83883,7 @@ function zonePatchSetting(zoneId, setting, state) {
     return patchedEntities;
 }
 
-},{"../constants/ActionTypes":545,"../constants/Schemas":547,"lodash":209}],604:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/Schemas":546,"lodash":209}],601:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84246,7 +83977,7 @@ function zonesReducer() {
     }
 }
 
-},{"../constants/ActionTypes":545,"../constants/Schemas":547,"lodash":209}],605:[function(_dereq_,module,exports){
+},{"../constants/ActionTypes":544,"../constants/Schemas":546,"lodash":209}],602:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84324,7 +84055,7 @@ exports.default = _react2.default.createElement(
     _react2.default.createElement(_reactRouter.Route, { path: UrlPaths.MORE_SETTINGS_PAGE, component: _MoreSettingsPage2.default, onEnter: requireAuth })
 );
 
-},{"./constants/UrlPaths":548,"./containers/AnalyticsPage/AnaltyicsPage":553,"./containers/App/App":554,"./containers/DNSManagementPage/DNSManagementPage":562,"./containers/HomePage/HomePage":566,"./containers/LoginPage/LoginPage":571,"./containers/MoreSettingsPage/MoreSettingsPage":574,"./containers/PerformancePage/PerformancePage":575,"./containers/SecurityPage/SecurityPage":584,"./containers/SignUpPage/SignUpPage":585,"./utils/Auth/Auth":612,"react":497,"react-router":354}],606:[function(_dereq_,module,exports){
+},{"./constants/UrlPaths":547,"./containers/AnalyticsPage/AnaltyicsPage":552,"./containers/App/App":553,"./containers/DNSManagementPage/DNSManagementPage":561,"./containers/HomePage/HomePage":565,"./containers/LoginPage/LoginPage":570,"./containers/MoreSettingsPage/MoreSettingsPage":573,"./containers/PerformancePage/PerformancePage":574,"./containers/SecurityPage/SecurityPage":582,"./containers/SignUpPage/SignUpPage":583,"./utils/Auth/Auth":609,"react":497,"react-router":354}],603:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84347,7 +84078,7 @@ function isDNSPageEnabled(config) {
     return getConfigValue(config, 'isDNSPageEnabled') === true;
 }
 
-},{"../reducers/config":592}],607:[function(_dereq_,module,exports){
+},{"../reducers/config":590}],604:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84361,7 +84092,7 @@ function generateUTMLink(pageURL, utmSource, utmCampaign, utmContent) {
 	return utmLink;
 }
 
-},{}],608:[function(_dereq_,module,exports){
+},{}],605:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84394,7 +84125,7 @@ function getPluginSettingsModifiedDateForZoneId(zoneId, settingId, state) {
     return _lodash2.default.get(state, ['pluginSettings', 'entities', zoneId, settingId, 'modified_on'], '');
 }
 
-},{"lodash":209}],609:[function(_dereq_,module,exports){
+},{"lodash":209}],606:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84417,7 +84148,7 @@ function getZoneSettingsModifiedDateForZoneId(zoneId, settingId, state) {
     return _lodash2.default.get(state, ['zoneSettings', 'entities', zoneId, settingId, 'modified_on'], '');
 }
 
-},{"lodash":209}],610:[function(_dereq_,module,exports){
+},{"lodash":209}],607:[function(_dereq_,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -84426,7 +84157,7 @@ function getZonePlanLegacyId(zoneName, zones) {
     return zones.entities.zones[zoneName].plan.legacy_id;
 }
 
-},{}],611:[function(_dereq_,module,exports){
+},{}],608:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84461,7 +84192,7 @@ function configureStore(history, initialState) {
     return store;
 }
 
-},{"../reducers":593,"redux":507,"redux-logger":499,"redux-simple-router":500,"redux-thunk":501}],612:[function(_dereq_,module,exports){
+},{"../reducers":591,"redux":507,"redux-logger":499,"redux-simple-router":500,"redux-thunk":501}],609:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84490,7 +84221,7 @@ function setEmail(email) {
     localStorage.cfEmail = email;
 }
 
-},{"lodash":209}],613:[function(_dereq_,module,exports){
+},{"lodash":209}],610:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -84508,8 +84239,6 @@ exports.zonePatchSetting = zonePatchSetting;
 exports.zoneDeleteZone = zoneDeleteZone;
 exports.zoneRailgunGetAll = zoneRailgunGetAll;
 exports.zoneRailgunPatch = zoneRailgunPatch;
-exports.zoneScanGet = zoneScanGet;
-exports.zoneScanPut = zoneScanPut;
 
 var _cfUtilHttp = _dereq_('cf-util-http');
 
@@ -84828,39 +84557,7 @@ function zoneRailgunPatch(zoneId, railgunId, connected, onSuccess, onError) {
     return _cfUtilHttp2.default.patch(ENDPOINT + '/zones/' + zoneId + '/railguns/' + railgunId, opts, onSuccess, onError);
 }
 
-/*
- * Get CloudFlare Scan for zone
- *
- * @param {String}   [zoneId]
- * @param {Function} [onSuccess]
- * @param {Function} [onError]
- *
- * @returns {Object} API Response
- */
-function zoneScanGet(zoneId, onSuccess, onError) {
-    return _cfUtilHttp2.default.get(ENDPOINT + '/zones/' + zoneId + '/scan', {}, onSuccess, onError);
-}
-
-/*
- * Put show_interstitial CloudFlare Scan for zone
- *
- * @param {String}   [zoneId]
- * @param {Boolean}  [showInterstitial]
- * @param {Function} [onSuccess]
- * @param {Function} [onError]
- *
- * @returns {Object} API Response
- */
-function zoneScanPut(zoneId, showInterstitial, onSuccess, onError) {
-    var opts = {
-        body: {
-            'show_interstitial': showInterstitial
-        }
-    };
-    return _cfUtilHttp2.default.put(ENDPOINT + '/zones/' + zoneId + '/scan', opts, onSuccess, onError);
-}
-
-},{"cf-util-http":125}],614:[function(_dereq_,module,exports){
+},{"cf-util-http":125}],611:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -85041,7 +84738,7 @@ function send(method, opts, onSuccess, onError) {
     return _cfUtilHttp2.default.request(method, ENDPOINT, opts, onSuccess, onError);
 }
 
-},{"cf-util-http":125}],615:[function(_dereq_,module,exports){
+},{"cf-util-http":125}],612:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -85107,10 +84804,6 @@ var _SSLCard = _dereq_('../containers/SSLCard/SSLCard');
 
 var _SSLCard2 = _interopRequireDefault(_SSLCard);
 
-var _ScanCard = _dereq_('../containers/ScanCard/ScanCard');
-
-var _ScanCard2 = _interopRequireDefault(_ScanCard);
-
 var _SecurityLevelCard = _dereq_('../containers/SecurityLevelCard/SecurityLevelCard');
 
 var _SecurityLevelCard2 = _interopRequireDefault(_SecurityLevelCard);
@@ -85137,7 +84830,6 @@ var _DNSManagementPage2 = _interopRequireDefault(_DNSManagementPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Cards
 var cardMapper = {
     AdvanceDDoSCard: _AdvanceDDoSCard2.default,
     AlwaysOnlineCard: _AlwaysOnlineCard2.default,
@@ -85156,7 +84848,6 @@ var cardMapper = {
     ProtocolRewriteCard: _ProtocolRewriteCard2.default,
     PurgeCacheCard: _PurgeCacheCard2.default,
     SSLCard: _SSLCard2.default,
-    ScanCard: _ScanCard2.default,
     SecurityLevelCard: _SecurityLevelCard2.default,
     WAFCard: _WAFCard2.default,
     RailgunCard: _RailgunCard2.default,
@@ -85164,9 +84855,10 @@ var cardMapper = {
 };
 
 // Pages
+// Cards
 exports.cardMapper = cardMapper;
 
-},{"../containers/AdvanceDDoSCard/AdvanceDDoSCard":551,"../containers/AlwaysOnlineCard/AlwaysOnlineCard":552,"../containers/ApplyDefaultSettingsCard/ApplyDefaultSettingsCard":556,"../containers/BrowserCacheTTLCard/BrowserCacheTTLCard":557,"../containers/BrowserIntegrityCheckCard/BrowserIntegrityCheckCard":558,"../containers/CacheLevelCard/CacheLevelCard":559,"../containers/ChallengePassageCard/ChallengePassageCard":560,"../containers/DNSManagementPage/DNSManagementPage":562,"../containers/DevelopmentModeCard/DevelopmentModeCard":564,"../containers/IPV6Card/IPV6Card":568,"../containers/ImageOptimizationCard/ImageOptimizationCard":569,"../containers/IpRewriteCard/IpRewriteCard":570,"../containers/MinifyCard/MinifyCard":573,"../containers/PluginSpecificCacheCard/PluginSpecificCacheCard":576,"../containers/PluginSpecificCacheTagCard/PluginSpecificCachetTagCard.js":577,"../containers/ProtocolRewriteCard/ProtocolRewriteCard":578,"../containers/PurgeCacheCard/PurgeCacheCard":579,"../containers/RailgunCard/RailgunCard":580,"../containers/SSLCard/SSLCard":581,"../containers/ScanCard/ScanCard":582,"../containers/SecurityLevelCard/SecurityLevelCard":583,"../containers/WAFCard/WAFCard":587}],616:[function(_dereq_,module,exports){
+},{"../containers/AdvanceDDoSCard/AdvanceDDoSCard":550,"../containers/AlwaysOnlineCard/AlwaysOnlineCard":551,"../containers/ApplyDefaultSettingsCard/ApplyDefaultSettingsCard":555,"../containers/BrowserCacheTTLCard/BrowserCacheTTLCard":556,"../containers/BrowserIntegrityCheckCard/BrowserIntegrityCheckCard":557,"../containers/CacheLevelCard/CacheLevelCard":558,"../containers/ChallengePassageCard/ChallengePassageCard":559,"../containers/DNSManagementPage/DNSManagementPage":561,"../containers/DevelopmentModeCard/DevelopmentModeCard":563,"../containers/IPV6Card/IPV6Card":567,"../containers/ImageOptimizationCard/ImageOptimizationCard":568,"../containers/IpRewriteCard/IpRewriteCard":569,"../containers/MinifyCard/MinifyCard":572,"../containers/PluginSpecificCacheCard/PluginSpecificCacheCard":575,"../containers/PluginSpecificCacheTagCard/PluginSpecificCachetTagCard.js":576,"../containers/ProtocolRewriteCard/ProtocolRewriteCard":577,"../containers/PurgeCacheCard/PurgeCacheCard":578,"../containers/RailgunCard/RailgunCard":579,"../containers/SSLCard/SSLCard":580,"../containers/SecurityLevelCard/SecurityLevelCard":581,"../containers/WAFCard/WAFCard":585}],613:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -85227,7 +84919,7 @@ function pluginSettingPatch(zoneId, settingName, value, onSuccess, onError) {
     return _cfUtilHttp2.default.patch(ENDPOINT + '/plugin/' + zoneId + '/settings/' + settingName, opts, onSuccess, onError);
 }
 
-},{"../../utils/CFClientV4API/CFClientV4API":613,"cf-util-http":125}],617:[function(_dereq_,module,exports){
+},{"../../utils/CFClientV4API/CFClientV4API":610,"cf-util-http":125}],614:[function(_dereq_,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -85275,7 +84967,7 @@ function getLastModifiedDate(intl, modfiedDate) {
     return formatMessage({ id: 'utils.utils.lastmodifieddate' }, value);
 }
 
-},{}]},{},[589])
+},{}]},{},[587])
 
  })();
 //# sourceMappingURL=compiled.js.map
