@@ -21,18 +21,18 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
 
         $this->mockMagentoAPI->expects($this->at(0))
             ->method('setValue')
-            ->with(DataStore::CLIENT_API_KEY, $apiKey);
+            ->with(DataStore::CLIENT_API_KEY, json_encode($apiKey));
 
         $this->mockMagentoAPI->expects($this->at(1))
             ->method('setValue')
-            ->with(DataStore::CLOUDFLARE_EMAIL, $email);
+            ->with(DataStore::CLOUDFLARE_EMAIL, json_encode($email));
 
         $this->dataStore->createUserDataStore($apiKey, $email, null, null);
     }
 
     public function testGetClientV4APIKeyReturnsCorrectValue() {
         $apiKey = "apiKey";
-        $this->mockMagentoAPI->method('getValue')->willReturn($apiKey);
+        $this->mockMagentoAPI->method('getValue')->willReturn(json_encode($apiKey));
 
         $response = $this->dataStore->getClientV4APIKey();
         $this->assertEquals($response, $apiKey);
@@ -40,7 +40,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
 
     public function testGetCloudFlareEmailReturnsCorrectValue() {
         $email = "email";
-        $this->mockMagentoAPI->method('getValue')->willReturn($email);
+        $this->mockMagentoAPI->method('getValue')->willReturn(json_encode($email));
 
         $response = $this->dataStore->getClientV4APIKey();
         $this->assertEquals($response, $email);
@@ -59,7 +59,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
         $key = DataStore::ZONE_ID_KEY.$domain;
         $zoneId = "zoneId";
 
-        $this->mockMagentoAPI->method('getValue')->with($key)->willReturn($zoneId);
+        $this->mockMagentoAPI->method('getValue')->with($key)->willReturn(json_encode($zoneId));
         $response = $this->dataStore->getZoneId($domain);
         $this->assertEquals($zoneId, $response);
     }
@@ -69,7 +69,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
         $key = DataStore::ZONE_ID_KEY.$domain;
         $zoneId = "zoneId";
 
-        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key,$zoneId);
+        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key,json_encode($zoneId));
         $this->dataStore->setZoneId($domain,$zoneId);
     }
 
@@ -82,7 +82,7 @@ class DataStoreTest extends \PHPUnit_Framework_TestCase{
     public function testSetCallsMagentoAPISetValue() {
         $key = "key";
         $value = "value";
-        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key, $value);
+        $this->mockMagentoAPI->expects($this->once())->method('setValue')->with($key, json_encode($value));
         $this->dataStore->set($key, $value);
     }
 }

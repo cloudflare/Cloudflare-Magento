@@ -9,6 +9,10 @@
     margin: 0 auto;
 }
 
+.cf-icon--loading::before {
+    width: 16px;
+}
+
 .cf-toggle::before, .cf-toggle::after {
     font-size: 10px;
 }
