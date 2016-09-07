@@ -82,7 +82,7 @@ class DataStore implements DataStoreInterface
      * @return mixed
      */
     public function get($key) {
-        return $this->magentoAPI->getValue($key);
+        return json_decode($this->magentoAPI->getValue($key), true);
     }
 
     /**
@@ -91,6 +91,6 @@ class DataStore implements DataStoreInterface
      * @return mixed
      */
     public function set($key, $value) {
-        return $this->magentoAPI->setValue($key, $value);
+        return $this->magentoAPI->setValue($key, json_encode($value));
     }
 }
