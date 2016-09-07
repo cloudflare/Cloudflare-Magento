@@ -1,6 +1,3 @@
-### Attention
-This plugin is under active development and not yet ready for public consumption.
-
 ## Installing the CloudFlare Magento2 extension
 From the magento2 root directory run the following commands:
 
