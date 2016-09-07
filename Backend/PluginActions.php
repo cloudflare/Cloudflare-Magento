@@ -2,10 +2,12 @@
 
 namespace CloudFlare\Plugin\Backend;
 
-use \CF\Integration\DefaultIntegration;
 use \CF\API\APIInterface;
 use \CF\API\Request;
 use \CF\API\AbstractPluginActions;
+use CF\API\Exception\PageRuleLimitException;
+use \CF\API\Exception\ZoneSettingFailException;
+use \CF\Integration\DefaultIntegration;
 
 class PluginActions extends AbstractPluginActions
 {
@@ -17,6 +19,12 @@ class PluginActions extends AbstractPluginActions
     protected $logger;
     protected $request;
 
+    //CloudFlare API doesn't have error codes for these :(
+    private static $upgradePlanErrors = array(
+        "Not allowed to edit setting for mirage",
+        "Not allowed to edit setting for polish",
+    );
+
     /*
      * PATCH /plugin/:id/settings/default_settings
      */
@@ -24,43 +32,76 @@ class PluginActions extends AbstractPluginActions
         $pathArray = explode('/', $this->request->getUrl());
         $zoneId = $pathArray[1];
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/security_level', array(), array('value' => 'medium')));
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/security_level', array(), array('value' => 'medium'));
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/cache_level', array(), array('value' => 'basic')));
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/cache_level', array(), array('value' => 'basic'));
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/minify', array(), array('value' => array('css' => 'on', 'html' => 'off', 'js' => 'off'))));
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/minify', array(), array('value' => array('css' => 'on', 'html' => 'off', 'js' => 'off')));
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/browser_cache_ttl', array(), array('value' => 14400))); //4 hours
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/browser_cache_ttl', array(), array('value' => 14400)); //4 hours
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/always_online', array(), array('value' => 'on')));
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/always_online', array(), array('value' => 'on'));
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/development_mode', array(), array('value' => 'off')));
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/development_mode', array(), array('value' => 'off'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/ipv6', array(), array('value' => 'off'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/websockets', array(), array('value' => 'on'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/ip_geolocation', array(), array('value' => 'on'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/email_obfuscation', array(), array('value' => 'on'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/server_side_exclude', array(), array('value' => 'on'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/hotlink_protection', array(), array('value' => 'off'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/polish', array(), array('value' => 'off'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/mirage', array(), array('value' => 'off'));
+
+        $this->patchZoneSetting('zones/'. $zoneId .'/settings/rocket_loader', array(), array('value' => 'off'));
 
         $adminUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/' . $this->integrationAPI->getMagentoAdminPath() . "*";
         $checkoutUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/checkout*';
         $setupUrlPattern = $this->integrationAPI->getMagentoDomainName() . '/setup*';
 
-        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($adminUrlPattern)));
-        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($checkoutUrlPattern)));
-        $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $this->createPageRuleDisablePerformanceCacheBypassJsonBody($setupUrlPattern)));
+        $this->postPageRule($zoneId, $this->createPageRuleDisablePerformanceCacheBypassJsonBody($adminUrlPattern));
+        $this->postPageRule($zoneId, $this->createPageRuleDisablePerformanceCacheBypassJsonBody($checkoutUrlPattern));
+        $this->postPageRule($zoneId, $this->createPageRuleDisablePerformanceCacheBypassJsonBody($setupUrlPattern));
+    }
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/ipv6', array(), array('value' => 'off')));
+    /**
+     * @param $url
+     * @param $parameters
+     * @param $body
+     * @return bool
+     * @throws ZoneSettingFailException
+     */
+    public function patchZoneSetting($url, $parameters, $body) {
+        $response = $this->clientAPI->callAPI(new \CF\API\Request('PATCH', $url, $parameters, $body));
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/websockets', array(), array('value' => 'on')));
+        if(!$this->clientAPI->responseOk($response)) {
+            foreach($response['errors'] as $error) {
+                if(in_array($error['message'], self::$upgradePlanErrors)) {
+                    //error is related to upgrading the plan.
+                    return true;
+                }
+            }
+            throw new ZoneSettingFailException();
+        }
+    }
 
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/ip_geolocation', array(), array('value' => 'on')));
-
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/email_obfuscation', array(), array('value' => 'on')));
-
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/server_side_exclude', array(), array('value' => 'on')));
-
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/hotlink_protection', array(), array('value' => 'off')));
-
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/polish', array(), array('value' => 'off')));
-        
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/mirage', array(), array('value' => 'off')));
-
-        $this->clientAPI->callAPI(new \CF\API\Request('PATCH', 'zones/'. $zoneId .'/settings/rocket_loader', array(), array('value' => 'off')));
+    /**
+     * @param $zoneId
+     * @param $body
+     * @throws PageRuleLimitException
+     */
+    public function postPageRule($zoneId, $body) {
+        $response = $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $body));
+        if(!$this->clientAPI->responseOk($response)) {
+            throw new PageRuleLimitException();
+        }
     }
 
     /**
