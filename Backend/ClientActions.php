@@ -43,7 +43,6 @@ class ClientActions
             $magentoZone = null;
             foreach ($response['result'] as $zone) {
                 if (strstr($magentoDomainName, $zone['name'])) {
-                    $this->logger->info($magentoDomainName ." ". $zone['name']);
                     $magentoZone = $zone;
                     break;
                 }
