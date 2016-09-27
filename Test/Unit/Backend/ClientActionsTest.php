@@ -42,7 +42,9 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testGetZonesReturnMagentoZoneReturnsZoneIfItExists() {
-        $testResult = "testResult";
+        $domain = 'domain.com';
+        $this->mockMagentoAPI->method('getMagentoDomainName')->willReturn($domain);
+        $testResult = array('name' => $domain);
         $this->mockClientAPIClient->method('callAPI')->willReturn(
             array(
                 "success" => true,
@@ -69,19 +71,5 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
         $response = $this->clientActions->getZonesReturnMagentoZone();
 
         $this->assertEquals("inactive", $response["result"][0]["status"]);
-    }
-
-    public function testGetZonesReturnMagentoZoneAddsNameParameter() {
-        $domainName = "domainName";
-
-        $this->mockMagentoAPI->method('getMagentoDomainName')->willReturn($domainName);
-
-        $this->mockClientAPIClient->expects($this->once())
-            ->method('callAPI')
-            ->with(new Request(null, null, array("name" => $domainName), null));
-
-        $this->clientActions = new ClientActions($this->mockIntegrationContext, $this->mockClientAPIClient, new Request(null, null, null, null));
-
-        $this->clientActions->getZonesReturnMagentoZone();
     }
 }

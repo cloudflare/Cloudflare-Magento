@@ -37,20 +37,26 @@ class ClientActions
      */
     public function getZonesReturnMagentoZone() {
         $magentoDomainName = $this->integrationAPI->getMagentoDomainName();
-        $this->request->setParameters(array('name' => $magentoDomainName));
 
         $response = $this->api->callAPI($this->request);
-
         if($this->api->responseOk($response)) {
-            if(count($response["result"]) === 0) {
-               array_push($response["result"], array(
-                        'name' => $magentoDomainName,
-                        'plan' => array('name' => ''),
-                        'type' => '',
-                        'status' => 'inactive',
-                    )
-                );
+            $magentoZone = null;
+            foreach ($response['result'] as $zone) {
+                if (strstr($magentoDomainName, $zone['name'])) {
+                    $magentoZone = $zone;
+                    break;
+                }
             }
+            if($magentoZone === null) {
+               $this->logger->warning($magentoDomainName . 'doesn\'t appear to be provisioned on CloudFlare.com.');
+               $magentoZone =  array(
+                    'name' => $magentoDomainName,
+                    'plan' => array('name' => ''),
+                    'type' => '',
+                    'status' => 'inactive',
+               );
+            }
+            $response['result'] = array($magentoZone);
         }
 
         return $response;
