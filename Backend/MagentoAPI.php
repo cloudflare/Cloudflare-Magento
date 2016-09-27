@@ -33,13 +33,14 @@ class MagentoAPI implements IntegrationAPIInterface
 
     public function getMagentoDomainName() {
 
-        //getBaseUrl() has format (http | https)://[DOMAIN NAME]/
+        //getBaseUrl() has format (http | https)://(www)[DOMAIN NAME]/
         //need [DOMAIN NAME]
         $domainName = $this->storeManager->getStore()->getBaseUrl();
         $domainName = str_replace("http://", "", $domainName);
         $domainName = str_replace("https://", "", $domainName);
+        $domainName = str_replace("www.", "", $domainName);
         $domainName = rtrim($domainName, "/");
-        
+
         return $domainName;
     }
 

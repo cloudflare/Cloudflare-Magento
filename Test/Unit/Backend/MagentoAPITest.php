@@ -40,7 +40,7 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl() {
-        $this->mockStore->method('getBaseUrl')->willReturn("http://site.com/");
+        $this->mockStore->method('getBaseUrl')->willReturn("http://www.site.com/");
         $fqdn = $this->magentoAPI->getMagentoDomainName();
         $this->assertEquals("site.com", $fqdn);
     }
