@@ -41,10 +41,12 @@ class ClientActions
         $response = $this->api->callAPI($this->request);
         if($this->api->responseOk($response)) {
             $magentoZone = null;
+            $bestMatch = strlen($magentoDomainName);
             foreach ($response['result'] as $zone) {
-                if (strstr($magentoDomainName, $zone['name'])) {
+                $firstOccurrence = strpos($magentoDomainName, $zone['name']);
+                if ($firstOccurrence !== false && $firstOccurrence < $bestMatch) {
+                    $bestMatch = $firstOccurrence;
                     $magentoZone = $zone;
-                    break;
                 }
             }
             if($magentoZone === null) {
