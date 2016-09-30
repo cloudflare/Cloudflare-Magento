@@ -72,4 +72,23 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("inactive", $response["result"][0]["status"]);
     }
+
+    public function testGetZoneReturnsMagentoZoneReturnsCorrectDomainForListsWithSimilarDomains() {
+        $expectedDomain = 'domaindomain.com';
+        $domain = array('name' => $expectedDomain);
+        $domain2 = array('name' => 'domain.com');
+
+        $this->mockMagentoAPI->method('getMagentoDomainName')->willReturn($expectedDomain);
+        //order is important, less specific match needs to come before the most specific match
+        $this->mockClientAPIClient->method('callAPI')->willReturn(
+            array(
+                "success" => true,
+                "result" => array($domain2, $domain)
+            )
+        );
+        $this->mockClientAPIClient->method('responseOk')->willReturn(true);
+
+        $response = $this->clientActions->getZonesReturnMagentoZone();
+        $this->assertEquals($expectedDomain, $response['result'][0]['name']);
+    }
 }
