@@ -21,7 +21,7 @@
     "homePageCards": ["ApplyDefaultSettingsCard", "PluginSpecificCacheTagCard", "PurgeCacheCard"],
     "moreSettingsCards": {
         "container.moresettings.security": ["SecurityLevelCard", "WAFCard"],
-        "container.moresettings.speed": ["AlwaysOnlineCard", "ImageOptimizationCard", "DevelopmentModeCard"]
+        "container.moresettings.performance": ["AlwaysOnlineCard", "ImageOptimizationCard", "DevelopmentModeCard"]
     },
     "locale": "en",
     "integrationName": "Magento",
