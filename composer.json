@@ -1,8 +1,8 @@
 {
   "name": "cloudflare/cloudflare-magento",
-  "description": "CloudFlare Plugin for Magento2",
+  "description": "Cloudflare Plugin for Magento2",
   "version": "1.0.9",
-  "homepage": "https://github.com/cloudflare/CloudFlare-Magento",
+  "homepage": "https://github.com/cloudflare/Cloudflare-Magento",
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
     "guzzlehttp/guzzle": "~5.0",
