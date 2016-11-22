@@ -48,8 +48,8 @@ class Index extends \Magento\Backend\App\Action
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('CloudFlare_Plugin::index');
         $resultPage->addBreadcrumb(__('System'), __('System'));
-        $resultPage->addBreadcrumb(__('CloudFlare'), __('CloudFlare'));
-        $resultPage->getConfig()->getTitle()->prepend(__('CloudFlare'));
+        $resultPage->addBreadcrumb(__('CloudFlare'), __('Cloudflare'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Cloudflare'));
         return $resultPage;
     }
 }

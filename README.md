@@ -1,4 +1,4 @@
-## Installing the CloudFlare Magento2 extension
+## Installing the Cloudflare Magento2 extension
 From the magento2 root directory run the following commands:
 
 1. `composer require cloudflare/cloudflare-magento`
