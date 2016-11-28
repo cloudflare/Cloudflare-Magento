@@ -46,7 +46,10 @@
     text-align: center;
 }
 
-
+/* Fix z-index issue with Magento Nav */
+.cloudflare-partners .header {
+    z-index: 1;
+}
 
 /* cf-component-select */
 /**
