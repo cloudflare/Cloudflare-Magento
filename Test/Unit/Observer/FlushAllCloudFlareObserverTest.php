@@ -11,7 +11,8 @@ class FlushAllCloudFlareObserverTest extends \PHPUnit_Framework_TestCase
     protected $mockConfig;
     protected $mockObserver;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->mockCacheTags = $this->getMockBuilder('\CloudFlare\Plugin\Backend\CacheTags')
             ->disableOriginalConstructor()
             ->getMock();
@@ -24,7 +25,8 @@ class FlushAllCloudFlareObserverTest extends \PHPUnit_Framework_TestCase
         $this->flushAllCloudFlareObserver = new FlushAllCloudFlareObserver($this->mockConfig, $this->mockCacheTags);
     }
 
-    public function testExecuteCallsPurgeCache() {
+    public function testExecuteCallsPurgeCache()
+    {
         $this->mockConfig->method('isEnabled')->willReturn(true);
         $this->mockCacheTags->expects($this->once())->method('purgeCache');
 

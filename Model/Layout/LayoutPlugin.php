@@ -6,6 +6,7 @@ use \Magento\Framework\App\ResponseInterface;
 use \Magento\PageCache\Model\Config;
 use \Psr\Log\LoggerInterface;
 use \CloudFlare\Plugin\Backend\CacheTags;
+
 class LayoutPlugin
 {
     /**
@@ -47,7 +48,6 @@ class LayoutPlugin
         $this->config = $config;
         $this->logger = $logger;
         $this->cacheTagsUtil = $cacheTagsUtil;
-
     }
 
 

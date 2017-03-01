@@ -4,7 +4,8 @@ namespace CloudFlare\Plugin\Test\Unit\Backend;
 use CloudFlare\Plugin\Backend\MagentoAPI;
 use CloudFlare\Plugin\Setup\InstallSchema;
 
-class MagentoAPITest extends \PHPUnit_Framework_TestCase {
+class MagentoAPITest extends \PHPUnit_Framework_TestCase
+{
 
     protected $mockConfigReader;
     protected $mockKeyValueFactory;
@@ -14,7 +15,8 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
     protected $mockStore;
     protected $magentoAPI;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->mockConfigReader = $this->getMockBuilder('\Magento\Framework\App\DeploymentConfig\Reader')
             ->disableOriginalConstructor()
             ->getMock();
@@ -36,28 +38,41 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockStoreManager->method('getStore')->willReturn($this->mockStore);
-        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+        $this->magentoAPI = new MagentoAPI(
+            $this->mockConfigReader,
+            $this->mockKeyValueFactory,
+            $this->mockStoreManager,
+            $this->mockLogger
+        );
     }
 
-    public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl() {
+    public function testGetMagentoDomainNameRemovesHttpHttpsSlashFromBaseUrl()
+    {
         $this->mockStore->method('getBaseUrl')->willReturn("http://www.site.com/");
         $fqdn = $this->magentoAPI->getMagentoDomainName();
         $this->assertEquals("site.com", $fqdn);
     }
 
-    public function testGetMagentoAdminPathReturnsConfigPath() {
+    public function testGetMagentoAdminPathReturnsConfigPath()
+    {
         $configPath = "configPath";
         $this->mockConfigReader->method('load')->willReturn(
             array(
                 'backend' => array('frontName' => $configPath)
             )
         );
-        $this->magentoAPI = new MagentoAPI($this->mockConfigReader, $this->mockKeyValueFactory, $this->mockStoreManager, $this->mockLogger);
+        $this->magentoAPI = new MagentoAPI(
+            $this->mockConfigReader,
+            $this->mockKeyValueFactory,
+            $this->mockStoreManager,
+            $this->mockLogger
+        );
 
         $this->assertEquals($configPath, $this->magentoAPI->getMagentoAdminPath());
     }
 
-    public function testGetValueReturnsNullForBadKey() {
+    public function testGetValueReturnsNullForBadKey()
+    {
         $key = "key";
 
         $this->mockKeyValueModel->method('load')
@@ -69,7 +84,8 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($result);
     }
 
-    public function testGetValueReturnsCorrectValue() {
+    public function testGetValueReturnsCorrectValue()
+    {
         $key = "key";
         $value = "value";
 
@@ -86,7 +102,8 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($value, $result);
     }
 
-    public function testSetValueCreatesNewKeyIfItDoesntExist() {
+    public function testSetValueCreatesNewKeyIfItDoesntExist()
+    {
         $key = "key";
         $value = "value";
 
@@ -103,10 +120,10 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase {
         $this->mockKeyValueModel->expects($this->once())->method('save');
 
         $this->magentoAPI->setValue($key, $value);
-
     }
 
-    public function testSetValueUpdatesExistingKey() {
+    public function testSetValueUpdatesExistingKey()
+    {
         $id = "1";
         $key = "key";
         $value = "value";

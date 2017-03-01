@@ -28,7 +28,8 @@ class PluginActions extends AbstractPluginActions
     /*
      * PATCH /plugin/:id/settings/default_settings
      */
-    public function applyDefaultSettings() {
+    public function applyDefaultSettings()
+    {
         $pathArray = explode('/', $this->request->getUrl());
         $zoneId = $pathArray[1];
 
@@ -78,12 +79,13 @@ class PluginActions extends AbstractPluginActions
      * @return bool
      * @throws ZoneSettingFailException
      */
-    public function patchZoneSetting($url, $parameters, $body) {
+    public function patchZoneSetting($url, $parameters, $body)
+    {
         $response = $this->clientAPI->callAPI(new \CF\API\Request('PATCH', $url, $parameters, $body));
 
-        if(!$this->clientAPI->responseOk($response)) {
-            foreach($response['errors'] as $error) {
-                if(in_array($error['message'], self::$upgradePlanErrors)) {
+        if (!$this->clientAPI->responseOk($response)) {
+            foreach ($response['errors'] as $error) {
+                if (in_array($error['message'], self::$upgradePlanErrors)) {
                     //error is related to upgrading the plan.
                     return true;
                 }
@@ -97,9 +99,10 @@ class PluginActions extends AbstractPluginActions
      * @param $body
      * @throws PageRuleLimitException
      */
-    public function postPageRule($zoneId, $body) {
+    public function postPageRule($zoneId, $body)
+    {
         $response = $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $body));
-        if(!$this->clientAPI->responseOk($response)) {
+        if (!$this->clientAPI->responseOk($response)) {
             throw new PageRuleLimitException();
         }
     }
@@ -108,7 +111,8 @@ class PluginActions extends AbstractPluginActions
      * @param $urlPattern
      * @return array
      */
-    public function createPageRuleDisablePerformanceCacheBypassJsonBody($urlPattern) {
+    public function createPageRuleDisablePerformanceCacheBypassJsonBody($urlPattern)
+    {
         return array(
             'targets' => array(
                 array(

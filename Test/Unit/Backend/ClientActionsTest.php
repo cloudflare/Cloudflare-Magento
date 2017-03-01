@@ -37,11 +37,21 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mockIntegrationContext = new \CF\Integration\DefaultIntegration($this->mockConfig, $this->mockMagentoAPI, $this->mockDataStore, $this->mockLogger);
-        $this->clientActions = new ClientActions($this->mockIntegrationContext, $this->mockClientAPIClient, $this->mockRequest);
+        $this->mockIntegrationContext = new DefaultIntegration(
+            $this->mockConfig,
+            $this->mockMagentoAPI,
+            $this->mockDataStore,
+            $this->mockLogger
+        );
+        $this->clientActions = new ClientActions(
+            $this->mockIntegrationContext,
+            $this->mockClientAPIClient,
+            $this->mockRequest
+        );
     }
 
-    public function testGetZonesReturnMagentoZoneReturnsZoneIfItExists() {
+    public function testGetZonesReturnMagentoZoneReturnsZoneIfItExists()
+    {
         $domain = 'domain.com';
         $this->mockMagentoAPI->method('getMagentoDomainName')->willReturn($domain);
         $testResult = array('name' => $domain);
@@ -59,7 +69,8 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($response["result"]));
     }
 
-    public function testGetZonesReturnMagentoZoneReturnsInactiveZoneIfItDoesntExists() {
+    public function testGetZonesReturnMagentoZoneReturnsInactiveZoneIfItDoesntExists()
+    {
         $this->mockClientAPIClient->method('callAPI')->willReturn(
             array(
                 "success" => true,
@@ -73,7 +84,8 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("inactive", $response["result"][0]["status"]);
     }
 
-    public function testGetZoneReturnsMagentoZoneReturnsCorrectDomainForListsWithSimilarDomains() {
+    public function testGetZoneReturnsMagentoZoneReturnsCorrectDomainForListsWithSimilarDomains()
+    {
         $expectedDomain = 'domaindomain.com';
         $domain = array('name' => $expectedDomain);
         $domain2 = array('name' => 'domain.com');

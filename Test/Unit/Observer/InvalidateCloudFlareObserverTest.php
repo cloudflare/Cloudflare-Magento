@@ -13,7 +13,8 @@ class InvalidateCloudFlareObserverTest extends \PHPUnit_Framework_TestCase
     protected $mockObject;
     protected $mockObserver;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->mockCacheTags = $this->getMockBuilder('\CloudFlare\Plugin\Backend\CacheTags')
             ->disableOriginalConstructor()
             ->getMock();
@@ -32,7 +33,8 @@ class InvalidateCloudFlareObserverTest extends \PHPUnit_Framework_TestCase
         $this->invalidateCloudFlareObserver = new InvalidateCloudFlareObserver($this->mockConfig, $this->mockCacheTags);
     }
 
-    public function testExecuteCallsPurgeCacheTags() {
+    public function testExecuteCallsPurgeCacheTags()
+    {
         $this->mockConfig->method('isEnabled')->willReturn(true);
         $this->mockObject->method('getIdentities')->willReturn(array('cacheTagToPurge'));
         $this->mockEvent->method('getObject')->willReturn($this->mockObject);

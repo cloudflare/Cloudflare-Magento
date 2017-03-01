@@ -44,18 +44,29 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mockIntegrationContext = new DefaultIntegration($this->mockConfig, $this->mockMagentoAPI, $this->mockDataStore, $this->mockLogger);
-        $this->pluginActions = new PluginActions($this->mockIntegrationContext, $this->mockPluginAPIClient, $this->mockRequest);
+        $this->mockIntegrationContext = new DefaultIntegration(
+            $this->mockConfig,
+            $this->mockMagentoAPI,
+            $this->mockDataStore,
+            $this->mockLogger
+        );
+        $this->pluginActions = new PluginActions(
+            $this->mockIntegrationContext,
+            $this->mockPluginAPIClient,
+            $this->mockRequest
+        );
         $this->pluginActions->setClientAPI($this->mockClientAPIClient);
     }
 
-    public function testPatchZoneSettingThrowsExceptionForBadResponse() {
+    public function testPatchZoneSettingThrowsExceptionForBadResponse()
+    {
         $this->setExpectedException(ZoneSettingFailException::class);
         $this->mockClientAPIClient->method('callAPI')->willReturn(array('errors' => array()));
         $this->pluginActions->patchZoneSetting(null, null, null);
     }
 
-    public function testPatchZoneSettingWillReturnTrueForPlanUpgradeError() {
+    public function testPatchZoneSettingWillReturnTrueForPlanUpgradeError()
+    {
         $this->mockClientAPIClient->method('callAPI')->willReturn(array(
             'errors' => array(
                 array(
@@ -67,7 +78,8 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->pluginActions->patchZoneSetting(null, null, null));
     }
 
-    public function testPostPageRuleThrowsExceptionForBadResponse() {
+    public function testPostPageRuleThrowsExceptionForBadResponse()
+    {
         $this->setExpectedException(PageRuleLimitException::class);
         $this->mockClientAPIClient->method('callAPI')->willReturn(array('errors' => array()));
         $this->pluginActions->postPageRule(null, null, null);

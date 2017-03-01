@@ -25,7 +25,8 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->cacheTags = new CacheTags($this->mockClientAPI, $this->mockDataStore, $this->mockLogger);
     }
 
-    public function testSetCloudFlareCacheTagsResponseHeaderSetsHeader() {
+    public function testSetCloudFlareCacheTagsResponseHeaderSetsHeader()
+    {
         $mockResponse = $this->getMockBuilder('\Magento\Framework\App\Response\Http')
             ->disableOriginalConstructor()
             ->getMock();
@@ -34,15 +35,17 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->cacheTags->setCloudFlareCacheTagsResponseHeader($mockResponse, $tags);
     }
 
-    public function testGet255ByteCacheTagHeaderStringValuesReturnsArraySizeOneForInputLessThan255Bytes() {
+    public function testGet255ByteCacheTagHeaderStringValuesReturnsArraySizeOneForInputLessThan255Bytes()
+    {
         $tag = $this->generateByteString(1);
         $tags = array($tag);
         $response = $this->cacheTags->get255ByteCacheTagHeaderStringValues($tags);
-        $this->assertEquals(1,count($response));
+        $this->assertEquals(1, count($response));
         $this->assertEquals($tag, $response[0]);
     }
 
-    public function testGet255ByteCacheTagHeaderStringValuesConcatsMultipleTags() {
+    public function testGet255ByteCacheTagHeaderStringValuesConcatsMultipleTags()
+    {
         $tag1 = $this->generateByteString(1);
         $tag2 = $this->generateByteString(2);
         $tags = array($tag1, $tag2);
@@ -50,7 +53,8 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tag1.",".$tag2, $response[0]);
     }
 
-    public function testGet255ByteCacheTagHeaderStringValuesTrimsLargeTags() {
+    public function testGet255ByteCacheTagHeaderStringValuesTrimsLargeTags()
+    {
         $tag256 = $this->generateByteString(256);
         $this->assertEquals(256, mb_strlen($tag256, mb_detect_encoding($tag256)));
 
@@ -58,7 +62,8 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(255, mb_strlen($response[0], mb_detect_encoding($response[0])));
     }
 
-    public function testGet255ByteCacheTagHeaderStringValuesHandlesTagListsLargerThan255Bytes() {
+    public function testGet255ByteCacheTagHeaderStringValuesHandlesTagListsLargerThan255Bytes()
+    {
         $tag255 = $this->generateByteString(255);
         $tag1 = $this->generateByteString(1);
         $tags = array($tag255, $tag1);
@@ -66,44 +71,50 @@ class CacheTagsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($response));
     }
 
-    protected function generateByteString($length) {
+    protected function generateByteString($length)
+    {
         $string = "";
-        for($i = 1;$i<=$length;$i++) {
+        for ($i = 1; $i<=$length; $i++) {
             $string = $string."a";
         }
         return $string;
     }
 
-    public function testPurgeCacheTagsDoesntCallAPIForEmptyArray() {
+    public function testPurgeCacheTagsDoesntCallAPIForEmptyArray()
+    {
         $this->mockDataStore->method('get')->willReturn(false);
         $tags = array();
         $this->mockClientAPI->expects($this->never())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);
     }
 
-    public function testPurgeCacheTagsDoesntCallAPIIfAutomaticCacheTagDisabled() {
+    public function testPurgeCacheTagsDoesntCallAPIIfAutomaticCacheTagDisabled()
+    {
         $this->mockDataStore->method('get')->with(Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG)->willReturn(false);
         $tags = array('tagsToPurge');
         $this->mockClientAPI->expects($this->never())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);
     }
 
-    public function testPurgeCacheTagsCallsAPIForNonEmptyArray() {
+    public function testPurgeCacheTagsCallsAPIForNonEmptyArray()
+    {
         $this->mockDataStore->method('get')->with(Plugin::SETTING_PLUGIN_SPECIFIC_CACHE_TAG)->willReturn(true);
         $tags = array('tagToPurge');
         $this->mockClientAPI->expects($this->once())->method('zonePurgeCacheByTags');
         $this->cacheTags->purgeCacheTags($tags);
     }
 
-    public function testHashCacheTagsHashesWithSha256AndTruncatesToThreeCharacters() {
+    public function testHashCacheTagsHashesWithSha256AndTruncatesToThreeCharacters()
+    {
         $tag = "cacheTag";
         $tags = array($tag);
-        $expectedHash = substr(hash('sha256', $tag),0,3);
+        $expectedHash = substr(hash('sha256', $tag), 0, 3);
         $hashedCacheTags = $this->cacheTags->hashCacheTags($tags);
         $this->assertEquals($expectedHash, $hashedCacheTags[0]);
     }
 
-    public function testPurgeCacheCallsPurgeCacheAPI() {
+    public function testPurgeCacheCallsPurgeCacheAPI()
+    {
         $this->mockClientAPI->expects($this->once())->method('zonePurgeCache');
         $this->cacheTags->purgeCache();
     }

@@ -17,7 +17,8 @@ use \Magento\Framework\Controller\Result\JsonFactory;
 use \Magento\Store\Model\StoreManagerInterface;
 use \Psr\Log\LoggerInterface;
 
-class Proxy extends AbstractAction {
+class Proxy extends AbstractAction
+{
 
     protected $dataStore;
     protected $integrationContext;
@@ -60,7 +61,7 @@ class Proxy extends AbstractAction {
 
         // php://input can only be read once
         $decodedJson = json_decode(file_get_contents('php://input'), true);
-        if(json_last_error() !== 0) {
+        if (json_last_error() !== 0) {
             $this->logger->error("Error decoding JSON: ". json_last_error_msg());
         }
         $this->jsonBody = $decodedJson;
@@ -71,7 +72,8 @@ class Proxy extends AbstractAction {
     /**
      * @return \Magento\Framework\Controller\Result\Json
      */
-    public function execute() {
+    public function execute()
+    {
         $result = $this->resultJsonFactory->create();
 
         $magentoRequest = $this->getRequest();
@@ -87,14 +89,16 @@ class Proxy extends AbstractAction {
         return $result->setData($response);
     }
 
-    public function getJsonBody() {
+    public function getJsonBody()
+    {
         return $this->jsonBody;
     }
 
     /**
      * @param $jsonBody
      */
-    public function setJsonBody($jsonBody) {
+    public function setJsonBody($jsonBody)
+    {
         $this->jsonBody = $jsonBody;
     }
 
@@ -102,9 +106,10 @@ class Proxy extends AbstractAction {
      * Magento CSRF validation can't find the CSRF Token "form_key" if its in the JSON
      * so we copy it from the JSON body to the Magento request parameters.
     */
-    public function _processUrlKeys() {
+    public function _processUrlKeys()
+    {
         $requestJsonBody = $this->getJsonBody();
-        if($requestJsonBody !== null && array_key_exists(self::FORM_KEY, $requestJsonBody)) {
+        if ($requestJsonBody !== null && array_key_exists(self::FORM_KEY, $requestJsonBody)) {
             $this->setJsonFormTokenOnMagentoRequest($requestJsonBody[self::FORM_KEY], $this->getRequest());
         }
         return parent::_processUrlKeys();
@@ -114,7 +119,8 @@ class Proxy extends AbstractAction {
      * @param $token "form_key"
      * @param $request
      */
-    public function setJsonFormTokenOnMagentoRequest($token, $request) {
+    public function setJsonFormTokenOnMagentoRequest($token, $request)
+    {
         $parameters = $request->getParams();
         $parameters[self::FORM_KEY] = $token;
         $request->setParams($parameters);
