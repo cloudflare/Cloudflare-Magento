@@ -21,8 +21,9 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockKeyValueFactory = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValueFactory')
-            ->disableOriginalConstructor()
-            ->getMock();
+        ->disableOriginalConstructor()
+        ->setMethods(['create'])
+        ->getMock();
         $this->mockKeyValueModel = $this->getMockBuilder('\CloudFlare\Plugin\Model\KeyValue')
             ->disableOriginalConstructor()
             ->getMock();
@@ -33,8 +34,7 @@ class MagentoAPITest extends \PHPUnit_Framework_TestCase
         $this->mockStoreManager = $this->getMockBuilder('\Magento\Store\Model\StoreManagerInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        //\Magento\Store\Api\Data\StoreInterface doesn't have getBaseUrl, this is what gets injected.
-        $this->mockStore = $this->getMockBuilder('\Magento\Store\Model\Store\Interceptor')
+        $this->mockStore = $this->getMockBuilder('\Magento\Store\Model\Data\StoreConfig')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockStoreManager->method('getStore')->willReturn($this->mockStore);
