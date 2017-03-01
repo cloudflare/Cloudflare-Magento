@@ -3,9 +3,11 @@ namespace CloudFlare\Plugin\Test\Unit\Backend;
 
 use CloudFlare\Plugin\Backend\PluginRoutes;
 
-class PluginRoutesTest extends \PHPUnit_Framework_TestCase {
+class PluginRoutesTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testGetPluginRoutesUpdatesRouteClass() {
+    public function testGetPluginRoutesUpdatesRouteClass()
+    {
         $routes = array(
             'account' => array(
                 'class' => 'Any/Other/Class'
@@ -15,6 +17,5 @@ class PluginRoutesTest extends \PHPUnit_Framework_TestCase {
         $newRoutes = PluginRoutes::getRoutes($routes);
 
         $this->assertEquals('\CloudFlare\Plugin\Backend\PluginActions', $newRoutes['account']['class']);
-
     }
 }

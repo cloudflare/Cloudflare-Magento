@@ -11,7 +11,8 @@ class DataStore implements DataStoreInterface
     const CLOUDFLARE_EMAIL = "cloudflareEmail";
     const ZONE_ID_KEY = "zoneId:";
 
-    public function __construct(MagentoAPI $magentoAPI) {
+    public function __construct(MagentoAPI $magentoAPI)
+    {
         $this->magentoAPI = $magentoAPI;
     }
 
@@ -25,7 +26,8 @@ class DataStore implements DataStoreInterface
      * @internal param $unique_id
      * @internal param $user_key
      */
-    public function createUserDataStore($clientAPIKey, $email, $uniqueId, $userKey) {
+    public function createUserDataStore($clientAPIKey, $email, $uniqueId, $userKey)
+    {
         //Magento doesn't use the host api - $uniqueId, $userKey will always be null
         $this->set(self::CLIENT_API_KEY, $clientAPIKey);
         $this->set(self::CLOUDFLARE_EMAIL, $email);
@@ -35,28 +37,32 @@ class DataStore implements DataStoreInterface
     /**
      * @return mixed
      */
-    public function getHostAPIUserUniqueId() {
+    public function getHostAPIUserUniqueId()
+    {
         return null;
     }
 
     /**
      * @return mixed
      */
-    public function getClientV4APIKey() {
+    public function getClientV4APIKey()
+    {
         return $this->get(self::CLIENT_API_KEY);
     }
 
     /**
      * @return mixed
      */
-    public function getHostAPIUserKey() {
+    public function getHostAPIUserKey()
+    {
         return null;
     }
 
     /**
      * @return mixed
      */
-    public function getCloudFlareEmail() {
+    public function getCloudFlareEmail()
+    {
         return $this->get(self::CLOUDFLARE_EMAIL);
     }
 
@@ -64,7 +70,8 @@ class DataStore implements DataStoreInterface
      * @param $domainName
      * @return null
      */
-    public function getZoneId($domainName) {
+    public function getZoneId($domainName)
+    {
         return $this->get(self::ZONE_ID_KEY . $domainName);
     }
 
@@ -73,7 +80,8 @@ class DataStore implements DataStoreInterface
      * @param $zoneId
      * @return mixed
      */
-    public function setZoneId($domainName, $zoneId) {
+    public function setZoneId($domainName, $zoneId)
+    {
         return $this->set(self::ZONE_ID_KEY . $domainName, $zoneId);
     }
 
@@ -81,7 +89,8 @@ class DataStore implements DataStoreInterface
      * @param $key
      * @return mixed
      */
-    public function get($key) {
+    public function get($key)
+    {
         return json_decode($this->magentoAPI->getValue($key), true);
     }
 
@@ -90,7 +99,8 @@ class DataStore implements DataStoreInterface
      * @param $value
      * @return mixed
      */
-    public function set($key, $value) {
+    public function set($key, $value)
+    {
         return $this->magentoAPI->setValue($key, json_encode($value));
     }
 }

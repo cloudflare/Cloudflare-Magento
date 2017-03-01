@@ -1,5 +1,6 @@
 <?php
 namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
+
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface; // Needed to retrieve config values
@@ -29,7 +30,8 @@ class Index extends \Magento\Backend\App\Action
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        ScopeConfigInterface $scopeConfig, // Needed to retrieve config values
+        ScopeConfigInterface $scopeConfig,
+        // Needed to retrieve config values
         LoggerInterface $logger
     ) {
         parent::__construct($context);

@@ -3,14 +3,16 @@ namespace CloudFlare\Plugin\Test\Unit\Model\Layout;
 
 use CloudFlare\Plugin\Model\Layout\LayoutPlugin;
 
-class LayoutPluginTest extends \PHPUnit_Framework_TestCase {
+class LayoutPluginTest extends \PHPUnit_Framework_TestCase
+{
     protected $layoutPlugin;
     protected $mockCacheTags;
     protected $mockConfig;
     protected $mockLogger;
     protected $mockResponse;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->mockCacheTags = $this->getMockBuilder('\CloudFlare\Plugin\Backend\CacheTags')
             ->disableOriginalConstructor()
             ->getMock();
@@ -23,10 +25,16 @@ class LayoutPluginTest extends \PHPUnit_Framework_TestCase {
         $this->mockResponse = $this->getMockBuilder('\Magento\Framework\App\ResponseInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->layoutPlugin = new LayoutPlugin($this->mockResponse, $this->mockConfig, $this->mockLogger, $this->mockCacheTags);
+        $this->layoutPlugin = new LayoutPlugin(
+            $this->mockResponse,
+            $this->mockConfig,
+            $this->mockLogger,
+            $this->mockCacheTags
+        );
     }
 
-    public function testLayoutPluginCallsSetCloudFlareCacheTagsResponseHeaderOnce() {
+    public function testLayoutPluginCallsSetCloudFlareCacheTagsResponseHeaderOnce()
+    {
         $mockSubject = $this->getMockBuilder('\Magento\Framework\View\Layout')
             ->disableOriginalConstructor()
             ->getMock();

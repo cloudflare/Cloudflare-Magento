@@ -46,7 +46,8 @@ class InvalidateCloudFlareObserver implements ObserverInterface
         }
         $object = $observer->getEvent()->getObject();
 
-        if ($object instanceof \Magento\Framework\DataObject\IdentityInterface === false || empty($object->getIdentities())) {
+        if ($object instanceof \Magento\Framework\DataObject\IdentityInterface === false
+        || empty($object->getIdentities())) {
             return;
         }
 

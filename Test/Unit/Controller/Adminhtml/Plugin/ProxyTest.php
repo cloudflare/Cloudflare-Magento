@@ -3,7 +3,8 @@ namespace CloudFlare\Plugin\Test\Unit\Controller\Adminhtml\Plugin;
 
 use CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy;
 
-class ProxyTest extends \PHPUnit_Framework_TestCase {
+class ProxyTest extends \PHPUnit_Framework_TestCase
+{
     protected $mockContext;
     protected $mockDataStore;
     protected $mockIntegrationContext;
@@ -13,7 +14,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
     protected $mockRequestRouter;
     protected $proxy;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->mockContext = $this->getMockBuilder('Magento\Backend\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
@@ -46,14 +48,16 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest() {
+    public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest()
+    {
         $mockAuth = $this->getMockBuilder('\Magento\Backend\Model\Auth')
             ->disableOriginalConstructor()
             ->getMock();
         $mockAuth->method('isLoggedIn')->willReturn(false);
         $this->mockContext->method('getAuth')->willReturn($mockAuth);
 
-        $mockProxy = $this->getMock('CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
+        $mockProxy = $this->getMock(
+            'CloudFlare\Plugin\Controller\Adminhtml\Plugin\Proxy',
             array('setJsonFormTokenOnMagentoRequest', 'getJSONBody'),
             array(
                 $this->mockContext,
@@ -72,7 +76,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase {
         $mockProxy->_processUrlKeys();
     }
 
-    public function testSetJsonFormTokenOnMagentoRequestSetsTokenCorrectly() {
+    public function testSetJsonFormTokenOnMagentoRequestSetsTokenCorrectly()
+    {
         $token = "token";
 
         $mockCookieInterface = $this->getMockBuilder('\Magento\Framework\Stdlib\Cookie\CookieReaderInterface')

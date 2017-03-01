@@ -20,7 +20,8 @@ class ClientActions
      * @param APIInterface $api
      * @param Request $request
      */
-    public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request) {
+    public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request)
+    {
         $this->api = $api;
         $this->config = $magentoIntegration->getConfig();
         $this->integrationAPI = $magentoIntegration->getIntegrationAPI();
@@ -35,11 +36,12 @@ class ClientActions
      * To ensure the plugin can only be used to manage the current Magento installation we
      * hook on this call to only return a list of size one of the current domain.
      */
-    public function getZonesReturnMagentoZone() {
+    public function getZonesReturnMagentoZone()
+    {
         $magentoDomainName = $this->integrationAPI->getMagentoDomainName();
 
         $response = $this->api->callAPI($this->request);
-        if($this->api->responseOk($response)) {
+        if ($this->api->responseOk($response)) {
             $magentoZone = null;
             $bestMatch = strlen($magentoDomainName);
             foreach ($response['result'] as $zone) {
@@ -49,14 +51,14 @@ class ClientActions
                     $magentoZone = $zone;
                 }
             }
-            if($magentoZone === null) {
-               $this->logger->warning($magentoDomainName . 'doesn\'t appear to be provisioned on CloudFlare.com.');
-               $magentoZone =  array(
+            if ($magentoZone === null) {
+                $this->logger->warning($magentoDomainName . 'doesn\'t appear to be provisioned on CloudFlare.com.');
+                $magentoZone =  array(
                     'name' => $magentoDomainName,
                     'plan' => array('name' => ''),
                     'type' => '',
                     'status' => 'inactive',
-               );
+                );
             }
             $response['result'] = array($magentoZone);
         }

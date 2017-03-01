@@ -22,7 +22,8 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param StoreManagerInterface $storeManager
      * @param LoggerInterface $logger
      */
-    public function __construct(Reader $configReader, KeyValueFactory $keyValueFactory, StoreManagerInterface $storeManager, LoggerInterface $logger) {
+    public function __construct(Reader $configReader, KeyValueFactory $keyValueFactory, StoreManagerInterface $storeManager, LoggerInterface $logger)
+    {
         $this->configReader = $configReader;
         $this->keyValueFactory = $keyValueFactory;
         $this->logger = $logger;
@@ -31,7 +32,8 @@ class MagentoAPI implements IntegrationAPIInterface
         $this->magentoConfig = $this->configReader->load();
     }
 
-    public function getMagentoDomainName() {
+    public function getMagentoDomainName()
+    {
 
         //getBaseUrl() has format (http | https)://(www)[DOMAIN NAME]/
         //need [DOMAIN NAME]
@@ -44,7 +46,8 @@ class MagentoAPI implements IntegrationAPIInterface
         return $domainName;
     }
 
-    public function getMagentoAdminPath() {
+    public function getMagentoAdminPath()
+    {
         return $this->magentoConfig['backend']['frontName'];
     }
 
@@ -52,12 +55,13 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param $key
      * @return null
      */
-    public function getValue($key) {
+    public function getValue($key)
+    {
         $keyValueModel = $this->keyValueFactory->create();
         $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
         $result = $keyValueModel->getData();
 
-        if(array_key_exists(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $result)) {
+        if (array_key_exists(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $result)) {
             return $result[InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN];
         }
 
@@ -69,10 +73,11 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param $value
      * @return bool
      */
-    public function setValue($key, $value) {
+    public function setValue($key, $value)
+    {
         $keyValueModel = $this->keyValueFactory->create();
         $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
-        if(empty($keyValueModel->getData())) {
+        if (empty($keyValueModel->getData())) {
             //key doesn't exist yet, create new
             $keyValueModel = $this->keyValueFactory->create();
             $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN, $key);
@@ -90,7 +95,8 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param $domainName
      * @return mixed
      */
-    public function getDNSRecords($domainName) {
+    public function getDNSRecords($domainName)
+    {
         return null;
     }
 
@@ -99,7 +105,8 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param DNSRecord $DNSRecord
      * @return mixed
      */
-    public function addDNSRecord($domainName, DNSRecord $DNSRecord) {
+    public function addDNSRecord($domainName, DNSRecord $DNSRecord)
+    {
         return null;
     }
 
@@ -108,7 +115,8 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param DNSRecord $DNSRecord
      * @return mixed
      */
-    public function editDNSRecord($domain_name, DNSRecord $DNSRecord) {
+    public function editDNSRecord($domain_name, DNSRecord $DNSRecord)
+    {
         return null;
     }
 
@@ -117,14 +125,16 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param DNSRecord $DNSRecord
      * @return mixed
      */
-    public function removeDNSRecord($domain_name, DNSRecord $DNSRecord) {
+    public function removeDNSRecord($domain_name, DNSRecord $DNSRecord)
+    {
         return null;
     }
 
     /**
      * @return mixed
      */
-    public function getHostAPIKey() {
+    public function getHostAPIKey()
+    {
         return null;
     }
 
@@ -132,14 +142,16 @@ class MagentoAPI implements IntegrationAPIInterface
      * @param null $userId
      * @return mixed
      */
-    public function getDomainList($userId = null) {
+    public function getDomainList($userId = null)
+    {
         return null;
     }
 
     /**
      * @return mixed
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return null;
     }
 }
