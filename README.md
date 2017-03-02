@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/cloudflare/Cloudflare-Magento.svg?branch=master)](https://travis-ci.org/cloudflare/Cloudflare-Magento)
 ## Installing the Cloudflare Magento2 extension
 From the magento2 root directory run the following commands:
 
