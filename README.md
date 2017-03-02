@@ -7,6 +7,24 @@ From the magento2 root directory run the following commands:
 3. `bin/magento setup:upgrade`
 4. `bin/magento setup:di:compile`
 
-## Tests
+## Development
+You'll need to get [authorization keys](http://devdocs.magento.com/guides/v2.0/install-gde/prereq/connect-auth.html) from the Magento marketplace and make an `auth.json`:
+```
+{
+    "http-basic": {
+        "repo.magento.com": {
+            "username": "[MAGENTO USERNAME]",
+            "password": "[MAGENTO PASSWORD]"
+        }
+    }
+}
+```
+This will allow `composer install` to authenticate against `repo.magento.com/`.
 
+### Development Commands
+1. `composer test`
+2. `composer lint`
+3. `composer format`
+
+## Tests
 `vendor/phpunit/phpunit/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/cloudflare/cloudflare-magento/Test/Unit/`
