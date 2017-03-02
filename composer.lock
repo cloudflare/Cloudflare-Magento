@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c34ed389957643cfa0cdce8f5af16d51",
+    "content-hash": "fd235f9065a6c4c6a57449f556383b8f",
     "packages": [
         {
             "name": "cloudflare/cloudflare-plugin-backend",
@@ -3506,7 +3506,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~5.5.0|~5.6.0|~7.0.0"
+        "php": "~5.6.0|~7.0.0"
     },
     "platform-dev": []
 }
