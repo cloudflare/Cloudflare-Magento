@@ -1,9 +1,8 @@
 <?php
 namespace CloudFlare\Plugin\Test\Unit\Backend;
 
-use CF\API\Exception\PageRuleLimitException;
 use \CF\API\Exception\ZoneSettingFailException;
-use \CF\Integration\DefaultIntegration;
+use \CloudFlare\Plugin\Backend\MagentoIntegration;
 use \CloudFlare\Plugin\Backend\PluginActions;
 
 class PluginActionsTest extends \PHPUnit_Framework_TestCase
@@ -18,6 +17,7 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
     protected $mockPluginAPIClient;
     protected $mockRequest;
     protected $pluginActions;
+    protected $mockHttpClientInterface;
 
 
     public function setUp()
@@ -43,12 +43,16 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockRequest = $this->getMockBuilder('\CF\API\Request')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockHttpClientInterface = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoHttpClient')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->mockIntegrationContext = new DefaultIntegration(
+        $this->mockIntegrationContext = new MagentoIntegration(
             $this->mockConfig,
             $this->mockMagentoAPI,
             $this->mockDataStore,
-            $this->mockLogger
+            $this->mockLogger,
+            $this->mockHttpClientInterface
         );
         $this->pluginActions = new PluginActions(
             $this->mockIntegrationContext,
@@ -80,7 +84,7 @@ class PluginActionsTest extends \PHPUnit_Framework_TestCase
 
     public function testPostPageRuleThrowsExceptionForBadResponse()
     {
-        $this->setExpectedException(PageRuleLimitException::class);
+        $this->setExpectedException(ZoneSettingFailException::class);
         $this->mockClientAPIClient->method('callAPI')->willReturn(array('errors' => array()));
         $this->pluginActions->postPageRule(null, null, null);
     }

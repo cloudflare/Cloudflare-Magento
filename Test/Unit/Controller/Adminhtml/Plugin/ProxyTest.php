@@ -13,6 +13,8 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
     protected $mockMagentoAPI;
     protected $mockRequestRouter;
     protected $proxy;
+    protected $mockClientAPI;
+    protected $mockPluginAPI;
 
     public function setUp()
     {
@@ -37,6 +39,13 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         $this->mockRequestRouter = $this->getMockBuilder('\CF\Router\RequestRouter')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockClientAPI = $this->getMockBuilder('\CloudFlare\Plugin\Backend\ClientAPI')
+                ->disableOriginalConstructor()
+                ->getMock();
+        $this->mockPluginAPI = $this->getMockBuilder('\CF\API\Plugin')
+                ->disableOriginalConstructor()
+                ->getMock();
+
         $this->proxy = new Proxy(
             $this->mockContext,
             $this->mockDataStore,
@@ -44,7 +53,9 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
             $this->mockResultJsonFactory,
             $this->mockLogger,
             $this->mockMagentoAPI,
-            $this->mockRequestRouter
+            $this->mockRequestRouter,
+            $this->mockClientAPI,
+            $this->mockPluginAPI
         );
     }
 
@@ -66,7 +77,9 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
                 $this->mockResultJsonFactory,
                 $this->mockLogger,
                 $this->mockMagentoAPI,
-                $this->mockRequestRouter)
+                $this->mockRequestRouter,
+                $this->mockClientAPI,
+                $this->mockPluginAPI)
         );
         $mockProxy->method('getJSONBody')->willReturn(array(Proxy::FORM_KEY => Proxy::FORM_KEY));
 
