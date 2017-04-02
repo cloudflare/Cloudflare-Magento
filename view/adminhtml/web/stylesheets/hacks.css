@@ -4,6 +4,12 @@
  * everything here.
  */
 
+
+ /* Fix black fill in Analytics */
+ .c3-chart {
+     fill: transparent;
+ }
+
 /* center cf-component-toggle */
 .cf-toggle {
     margin: 0 auto;
