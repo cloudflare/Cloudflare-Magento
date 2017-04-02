@@ -1,11 +1,12 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
-    <type name="\CF\Integration\DefaultConfig">
+    <type name="CF\Integration\DefaultConfig">
         <arguments>
             <!-- config only used for debug mode but we use monolog so not based on config anymore -->
             <argument name="config" xsi:type="string">[]</argument>
         </arguments>
     </type>
-    <type name="\CloudFlare\Plugin\Backend\MagentoAPI">
+    <preference for="CF\Integration\ConfigInterface" type="CF\Integration\DefaultConfig" />
+    <type name="CloudFlare\Plugin\Backend\MagentoAPI">
         <arguments>
             <argument name="configReader" xsi:type="object">\Magento\Framework\App\DeploymentConfig\Reader</argument>
             <argument name="keyValueFactory" xsi:type="object">\CloudFlare\Plugin\Model\KeyValueFactory</argument>
@@ -13,32 +14,40 @@
             <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>
         </arguments>
     </type>
-    <type name="\CloudFlare\Plugin\Backend\DataStore">
+    <preference for="CF\Integration\IntegrationAPIInterface" type="CloudFlare\Plugin\Backend\MagentoAPI" />
+    <type name="CloudFlare\Plugin\Backend\DataStore">
         <arguments>
             <argument name="magentoAPI" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoAPI</argument>
         </arguments>
     </type>
-    <type name="\CF\Integration\DefaultIntegration">
+    <type name="CloudFlare\Plugin\Backend\MagentoHttpClient">
+        <arguments>
+            <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>
+        </arguments>
+    </type>
+    <preference for="CF\Integration\DataStoreInterface" type="CloudFlare\Plugin\Backend\DataStore" />
+    <type name="CloudFlare\Plugin\Backend\MagentoIntegration">
         <arguments>
             <argument name="config" xsi:type="object">\CF\Integration\DefaultConfig</argument>
             <argument name="integrationAPI" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoAPI</argument>
             <argument name="dataStore" xsi:type="object">\CloudFlare\Plugin\Backend\DataStore</argument>
             <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>
+            <argument name="httpClient" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoHttpClient</argument>
         </arguments>
     </type>
-    <type name="\CloudFlare\Plugin\Backend\ClientAPI">
+    <type name="CloudFlare\Plugin\Backend\ClientAPI">
         <arguments>
-            <argument name="integration" xsi:type="object">\CF\Integration\DefaultIntegration</argument>
+            <argument name="integration" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
         </arguments>
     </type>
-    <type name="\CF\API\Plugin">
+    <type name="CF\API\Plugin">
         <arguments>
-            <argument name="integration" xsi:type="object">\CF\Integration\DefaultIntegration</argument>
+            <argument name="integration" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
         </arguments>
     </type>
-    <type name="\CF\Router\RequestRouter">
+    <type name="CF\Router\RequestRouter">
         <arguments>
-            <argument name="integrationContext" xsi:type="object">\CF\Integration\DefaultIntegration</argument>
+            <argument name="integrationContext" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
         </arguments>
     </type>
     <!-- Restore original visitor IP from CloudFlare header -->

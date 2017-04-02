@@ -2,6 +2,7 @@
 namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
 
 use \CF\API\Request;
+use \CF\API\Plugin;
 use \CF\Integration\DefaultConfig;
 use \CF\Integration\DefaultIntegration;
 use \CF\Router\RequestRouter;
@@ -10,6 +11,7 @@ use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
 use \CloudFlare\Plugin\Backend\PluginRoutes;
+use \CloudFlare\Plugin\Backend\MagentoHttpClient;
 
 use \Magento\Backend\App\AbstractAction;
 use \Magento\Backend\App\Action\Context;
@@ -27,6 +29,9 @@ class Proxy extends AbstractAction
     protected $magentoAPI;
     protected $resultJsonFactory;
     protected $requestRouter;
+    protected $clientAPI;
+    protected $pluginAPI;
+    protected $magentoHttpClient;
 
     const FORM_KEY = "form_key";
 
@@ -47,7 +52,10 @@ class Proxy extends AbstractAction
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
         MagentoAPI $magentoAPI,
-        RequestRouter $requestRouter
+        RequestRouter $requestRouter,
+        ClientAPI $clientAPI,
+        Plugin $pluginAPI,
+        MagentoHttpClient $magentoHttpClient
     ) {
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
@@ -55,9 +63,14 @@ class Proxy extends AbstractAction
         $this->magentoAPI = $magentoAPI;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->requestRouter = $requestRouter;
+        $this->clientAPI = $clientAPI;
+        $this->pluginAPI = $pluginAPI;
+        $this->magentoHttpClient = $magentoHttpClient;
 
-        $this->requestRouter->addRouter('\CloudFlare\Plugin\Backend\ClientAPI', ClientRoutes::$routes);
-        $this->requestRouter->addRouter('\CF\API\Plugin', PluginRoutes::getRoutes(\CF\API\PluginRoutes::$routes));
+        $this->requestRouter->addRouter($this->clientAPI, ClientRoutes::$routes);
+
+        $this->pluginAPI->setHttpClient($this->magentoHttpClient);
+        $this->requestRouter->addRouter($this->pluginAPI, PluginRoutes::getRoutes(\CF\API\PluginRoutes::$routes));
 
         // php://input can only be read once
         $decodedJson = json_decode(file_get_contents('php://input'), true);

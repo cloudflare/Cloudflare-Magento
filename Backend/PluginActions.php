@@ -5,7 +5,6 @@ namespace CloudFlare\Plugin\Backend;
 use \CF\API\APIInterface;
 use \CF\API\Request;
 use \CF\API\AbstractPluginActions;
-use CF\API\Exception\PageRuleLimitException;
 use \CF\API\Exception\ZoneSettingFailException;
 use \CF\Integration\DefaultIntegration;
 
@@ -24,6 +23,12 @@ class PluginActions extends AbstractPluginActions
         "Not allowed to edit setting for mirage",
         "Not allowed to edit setting for polish",
     );
+
+    public function __construct(DefaultIntegration $defaultIntegration, APIInterface $api, Request $request)
+    {
+        parent::__construct($defaultIntegration, $api, $request);
+        $this->clientAPI = new clientAPI($defaultIntegration);
+    }
 
     /*
      * PATCH /plugin/:id/settings/default_settings
@@ -97,13 +102,13 @@ class PluginActions extends AbstractPluginActions
     /**
      * @param $zoneId
      * @param $body
-     * @throws PageRuleLimitException
+     * @throws ZoneSettingFailException
      */
     public function postPageRule($zoneId, $body)
     {
         $response = $this->clientAPI->callAPI(new \CF\API\Request('POST', 'zones/'. $zoneId .'/pagerules', array(), $body));
         if (!$this->clientAPI->responseOk($response)) {
-            throw new PageRuleLimitException();
+            throw new ZoneSettingFailException();
         }
     }
 

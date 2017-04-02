@@ -3,9 +3,22 @@ namespace CloudFlare\Plugin\Backend;
 
 use \CF\API\Client;
 use \CF\API\Request;
+use \CloudFlare\Plugin\Backend\MagentoIntegration;
 
 class ClientAPI extends Client
 {
+
+    /**
+     * @param MagentoIntegration $integration
+     */
+    public function __construct(MagentoIntegration $integration)
+    {
+        $httpClient = $integration->getHttpClient();
+        $httpClient->setEndpoint($this->getEndpoint());
+        $this->setHttpClient($httpClient);
+        
+        parent::__construct($integration);
+    }
 
     /**
      * DELETE zones/:id/purge_cache
@@ -18,9 +31,11 @@ class ClientAPI extends Client
     {
         $zoneId = $this->getZoneIdForDomainName($this->integrationAPI->getMagentoDomainName());
 
-        $request = new Request('DELETE', 'zones/'. $zoneId .'/purge_cache', array(), array('tags' => $tags));
+        if ($zoneId) {
+            $request = new Request('DELETE', 'zones/'. $zoneId .'/purge_cache', array(), array('tags' => $tags));
 
-        return $this->callAPI($request);
+            return $this->callAPI($request);
+        }
     }
 
     /**
@@ -32,10 +47,11 @@ class ClientAPI extends Client
     public function zonePurgeCache()
     {
         $zoneId = $this->getZoneIdForDomainName($this->integrationAPI->getMagentoDomainName());
+        if ($zoneId) {
+            $request = new Request('DELETE', 'zones/'. $zoneId .'/purge_cache', array(), array('purge_everything' => true));
 
-        $request = new Request('DELETE', 'zones/'. $zoneId .'/purge_cache', array(), array('purge_everything' => true));
-
-        return $this->callAPI($request);
+            return $this->callAPI($request);
+        }
     }
 
     /**
@@ -51,10 +67,14 @@ class ClientAPI extends Client
 
         $request = new Request('GET', 'zones', array('name' => $domainName), array());
         $response = $this->callAPI($request);
-        if ($this->responseOk($response) && count($response['result']) > 0) {
-            $zoneId = $response['result'][0]['id'];
-            $this->data_store->setZoneId($domainName, $zoneId);
-            return $zoneId;
+        try {
+            if ($this->responseOk($response) && count($response['result']) > 0) {
+                $zoneId = $response['result'][0]['id'];
+                $this->data_store->setZoneId($domainName, $zoneId);
+                return $zoneId;
+            }
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
         }
 
         return null;

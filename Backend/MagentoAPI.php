@@ -43,7 +43,8 @@ class MagentoAPI implements IntegrationAPIInterface
         $domainName = str_replace("www.", "", $domainName);
         $domainName = rtrim($domainName, "/");
 
-        return $domainName;
+        return "interiordesignbusiness.net";
+        //return $domainName;
     }
 
     public function getMagentoAdminPath()
