@@ -1,7 +1,7 @@
 {
   "name": "cloudflare/cloudflare-magento",
   "description": "Cloudflare Plugin for Magento2",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/cloudflare/Cloudflare-Magento",
   "scripts": {
     "test": "vendor/phpunit/phpunit/phpunit --bootstrap Test/bootstrap.php Test/ && rm -rf phpUnitGeneratedFiles/",
@@ -16,11 +16,7 @@
     ],
   "require": {
     "php": "~5.6.0|~7.0.0",
-    "guzzlehttp/guzzle": "~5.0",
-    "cloudflare/cloudflare-plugin-backend": "2.1.0",
-    "magento/module-backend": "100.1.*",
-    "magento/module-store": "100.1.*",
-    "magento/framework": "100.1.*"
+    "cloudflare/cloudflare-plugin-backend": "2.1.0"
   },
   "type": "magento2-module",
   "license": [
@@ -35,6 +31,9 @@
   "minimum-stability": "alpha",
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.8",
-    "phpunit/phpunit": "4.1.0"
+    "phpunit/phpunit": "4.1.0",
+    "magento/module-backend": "100.1.*",
+    "magento/module-store": "100.1.*",
+    "magento/framework": "100.1.*"
   }
 }
