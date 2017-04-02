@@ -11,7 +11,6 @@ use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
 use \CloudFlare\Plugin\Backend\PluginRoutes;
-use \CloudFlare\Plugin\Backend\MagentoHttpClient;
 
 use \Magento\Backend\App\AbstractAction;
 use \Magento\Backend\App\Action\Context;
@@ -54,8 +53,7 @@ class Proxy extends AbstractAction
         MagentoAPI $magentoAPI,
         RequestRouter $requestRouter,
         ClientAPI $clientAPI,
-        Plugin $pluginAPI,
-        MagentoHttpClient $magentoHttpClient
+        Plugin $pluginAPI
     ) {
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
@@ -65,11 +63,8 @@ class Proxy extends AbstractAction
         $this->requestRouter = $requestRouter;
         $this->clientAPI = $clientAPI;
         $this->pluginAPI = $pluginAPI;
-        $this->magentoHttpClient = $magentoHttpClient;
 
         $this->requestRouter->addRouter($this->clientAPI, ClientRoutes::$routes);
-
-        $this->pluginAPI->setHttpClient($this->magentoHttpClient);
         $this->requestRouter->addRouter($this->pluginAPI, PluginRoutes::getRoutes(\CF\API\PluginRoutes::$routes));
 
         // php://input can only be read once
