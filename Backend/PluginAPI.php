@@ -11,7 +11,7 @@ class PluginAPI extends Plugin
 
     public function __construct(IntegrationInterface $integration, MagentoHttpClient $magentoHttpClient)
     {
-        parent::__construc($integration);
+        parent::__construct($integration);
 
         $this->magentoHttpClient = $magentoHttpClient;
         $this->magentoHttpClient->setEndpoint($this->getEndpoint());
