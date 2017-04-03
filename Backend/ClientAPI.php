@@ -24,7 +24,7 @@ class ClientAPI extends Client
      * DELETE zones/:id/purge_cache
      * https://api.cloudflare.com/#zone-purge-individual-files-by-url-and-cache-tags
      *
-     * @param $tags
+     * @param String[] $tags
      * @return
      */
     public function zonePurgeCacheByTags($tags)
@@ -55,7 +55,7 @@ class ClientAPI extends Client
     }
 
     /**
-     * @param $domainName
+     * @param String $domainName
      * @return null
      */
     protected function getZoneIdForDomainName($domainName)
