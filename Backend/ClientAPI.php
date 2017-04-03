@@ -16,7 +16,7 @@ class ClientAPI extends Client
         $httpClient = $integration->getHttpClient();
         $httpClient->setEndpoint($this->getEndpoint());
         $this->setHttpClient($httpClient);
-        
+
         parent::__construct($integration);
     }
 
@@ -73,7 +73,7 @@ class ClientAPI extends Client
                 $this->data_store->setZoneId($domainName, $zoneId);
                 return $zoneId;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
         }
 
