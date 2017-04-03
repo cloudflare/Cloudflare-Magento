@@ -23,7 +23,6 @@ class MagentoHttpClient implements \CF\API\HttpClientInterface
     {
         $client = $this->createZendClient($request);
         try {
-            //$this->logger->error(print_r($client, true));
             $response = $client->request();
             return json_decode($response->getBody(), true);
         } catch (\Zend_Http_Client_Exception $e) {
