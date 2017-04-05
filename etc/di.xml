@@ -29,6 +29,7 @@
             <argument name="httpClient" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoHttpClient</argument>
         </arguments>
     </type>
+    <preference for="CF\Integration\IntegrationInterface" type="CloudFlare\Plugin\Backend\MagentoIntegration" />
     <type name="CloudFlare\Plugin\Backend\ClientAPI">
         <arguments>
             <argument name="integration" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
