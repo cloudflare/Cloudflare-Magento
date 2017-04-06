@@ -1,4 +1,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="CF\Integration\DefaultConfig">
+        <arguments>
+            <!-- config only used for debug mode but we use monolog so not based on config anymore -->
+            <argument name="config" xsi:type="string">{}</argument>
+        </arguments>
+    </type>
     <preference for="CF\Integration\ConfigInterface" type="CF\Integration\DefaultConfig" />
     <type name="CloudFlare\Plugin\Backend\MagentoAPI">
         <arguments>
