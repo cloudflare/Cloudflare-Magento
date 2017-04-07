@@ -1,8 +1,8 @@
 <?php
 namespace CloudFlare\Plugin\Test\Unit\Backend;
 
-use \CF\Integration\DefaultIntegration;
 use \CloudFlare\Plugin\Backend\ClientActions;
+use \CloudFlare\Plugin\Backend\MagentoIntegration;
 use \CF\API\Request;
 
 class ClientActionsTest extends \PHPUnit_Framework_TestCase
@@ -15,6 +15,7 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
     protected $mockMagentoAPI;
     protected $mockClientAPIClient;
     protected $mockRequest;
+    protected $mockHttpClient;
 
     public function setUp()
     {
@@ -36,12 +37,16 @@ class ClientActionsTest extends \PHPUnit_Framework_TestCase
         $this->mockRequest = $this->getMockBuilder('\CF\API\Request')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockHttpClient = $this->getMockBuilder('\CF\API\HttpClientInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->mockIntegrationContext = new DefaultIntegration(
+        $this->mockIntegrationContext = new MagentoIntegration(
             $this->mockConfig,
             $this->mockMagentoAPI,
             $this->mockDataStore,
-            $this->mockLogger
+            $this->mockLogger,
+            $this->mockHttpClient
         );
         $this->clientActions = new ClientActions(
             $this->mockIntegrationContext,

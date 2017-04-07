@@ -6,7 +6,6 @@ use \CF\API\APIInterface;
 use \CF\API\Request;
 use \CF\API\AbstractPluginActions;
 use \CF\API\Exception\ZoneSettingFailException;
-use \CF\Integration\DefaultIntegration;
 
 class PluginActions extends AbstractPluginActions
 {
@@ -24,7 +23,7 @@ class PluginActions extends AbstractPluginActions
         "Not allowed to edit setting for polish",
     );
 
-    public function __construct(DefaultIntegration $defaultIntegration, APIInterface $api, Request $request)
+    public function __construct(MagentoIntegration $defaultIntegration, APIInterface $api, Request $request)
     {
         parent::__construct($defaultIntegration, $api, $request);
         $this->clientAPI = new clientAPI($defaultIntegration);

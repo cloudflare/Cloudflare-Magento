@@ -3,13 +3,12 @@ namespace CloudFlare\Plugin\Controller\Adminhtml\Plugin;
 
 use \CF\API\Request;
 use \CF\API\Plugin;
-use \CF\Integration\DefaultConfig;
-use \CF\Integration\DefaultIntegration;
 use \CF\Router\RequestRouter;
 use \CloudFlare\Plugin\Backend\ClientAPI;
 use \CloudFlare\Plugin\Backend\ClientRoutes;
 use \CloudFlare\Plugin\Backend\DataStore;
 use \CloudFlare\Plugin\Backend\MagentoAPI;
+use \CloudFlare\Plugin\Backend\MagentoIntegration;
 use \CloudFlare\Plugin\Backend\PluginRoutes;
 
 use \Magento\Backend\App\AbstractAction;
@@ -38,7 +37,7 @@ class Proxy extends AbstractAction
     /**
      * @param Context $context
      * @param Backend\DataStore|DataStore $dataStore
-     * @param DefaultIntegration $integrationContext
+     * @param MagentoIntegration $integrationContext
      * @param JsonFactory $resultJsonFactory
      * @param LoggerInterface $logger
      * @param Backend\MagentoAPI|MagentoAPI $magentoAPI
@@ -47,7 +46,7 @@ class Proxy extends AbstractAction
     public function __construct(
         Context $context,
         DataStore $dataStore,
-        DefaultIntegration $integrationContext,
+        MagentoIntegration $integrationContext,
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
         MagentoAPI $magentoAPI,

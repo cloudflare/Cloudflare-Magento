@@ -24,7 +24,7 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         $this->mockDataStore = $this->getMockBuilder('\CloudFlare\Plugin\Backend\DataStore')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockIntegrationContext = $this->getMockBuilder('\CF\Integration\DefaultIntegration')
+        $this->mockIntegrationContext = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoIntegration')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockResultJsonFactory = $this->getMockBuilder('\Magento\Framework\Controller\Result\JsonFactory')
