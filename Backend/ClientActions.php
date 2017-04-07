@@ -2,7 +2,6 @@
 
 namespace CloudFlare\Plugin\Backend;
 
-use \CF\Integration\DefaultIntegration;
 use \CF\API\APIInterface;
 use \CF\API\Request;
 
@@ -16,11 +15,11 @@ class ClientActions
     protected $request;
 
     /**
-     * @param DefaultIntegration $magentoIntegration
+     * @param MagentoIntegration $magentoIntegration
      * @param APIInterface $api
      * @param Request $request
      */
-    public function __construct(DefaultIntegration $magentoIntegration, APIInterface $api, Request $request)
+    public function __construct(MagentoIntegration $magentoIntegration, APIInterface $api, Request $request)
     {
         $this->api = $api;
         $this->config = $magentoIntegration->getConfig();

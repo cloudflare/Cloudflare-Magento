@@ -1,11 +1,5 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
-    <type name="CF\Integration\DefaultConfig">
-        <arguments>
-            <!-- config only used for debug mode but we use monolog so not based on config anymore -->
-            <argument name="config" xsi:type="string">{}</argument>
-        </arguments>
-    </type>
-    <preference for="CF\Integration\ConfigInterface" type="CF\Integration\DefaultConfig" />
+    <preference for="CF\Integration\ConfigInterface" type="CloudFlare\Plugin\Backend\MagentoConfig" />
     <type name="CloudFlare\Plugin\Backend\MagentoAPI">
         <arguments>
             <argument name="configReader" xsi:type="object">\Magento\Framework\App\DeploymentConfig\Reader</argument>
@@ -28,7 +22,7 @@
     <preference for="CF\Integration\DataStoreInterface" type="CloudFlare\Plugin\Backend\DataStore" />
     <type name="CloudFlare\Plugin\Backend\MagentoIntegration">
         <arguments>
-            <argument name="config" xsi:type="object">\CF\Integration\DefaultConfig</argument>
+            <argument name="config" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoConfig</argument>
             <argument name="integrationAPI" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoAPI</argument>
             <argument name="dataStore" xsi:type="object">\CloudFlare\Plugin\Backend\DataStore</argument>
             <argument name="logger" xsi:type="object">\Psr\Log\LoggerInterface</argument>

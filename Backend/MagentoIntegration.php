@@ -3,12 +3,13 @@ namespace CloudFlare\Plugin\Backend;
 
 use CF\API\HttpClientInterface;
 use CF\Integration\DefaultIntegration;
+use CF\Integration\IntegrationInterface;
 use CF\Integration\ConfigInterface;
 use CF\Integration\IntegrationAPIInterface;
 use CF\Integration\DataStoreInterface;
 use Psr\Log\LoggerInterface;
 
-class MagentoIntegration extends DefaultIntegration
+class MagentoIntegration extends \CF\Integration\DefaultIntegration implements \CF\Integration\IntegrationInterface
 {
     protected $httpClient;
 
