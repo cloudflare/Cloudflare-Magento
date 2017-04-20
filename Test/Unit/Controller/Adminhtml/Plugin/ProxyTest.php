@@ -24,9 +24,13 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
         $this->mockDataStore = $this->getMockBuilder('\CloudFlare\Plugin\Backend\DataStore')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockHttpClient = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoHttpClient')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->mockIntegrationContext = $this->getMockBuilder('\CloudFlare\Plugin\Backend\MagentoIntegration')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->mockIntegrationContext->method('getHttpClient')->willReturn($this->mockHttpClient);
         $this->mockResultJsonFactory = $this->getMockBuilder('\Magento\Framework\Controller\Result\JsonFactory')
             ->disableOriginalConstructor()
             ->getMock();
@@ -52,11 +56,12 @@ class ProxyTest extends \PHPUnit_Framework_TestCase
             $this->mockIntegrationContext,
             $this->mockResultJsonFactory,
             $this->mockLogger,
-            $this->mockMagentoAPI,
-            $this->mockRequestRouter,
-            $this->mockClientAPI,
-            $this->mockPluginAPI
+            $this->mockMagentoAPI
         );
+
+        $this->proxy->setRequestRouter($this->mockRequestRouter);
+        $this->proxy->setClientAPI($this->mockClientAPI);
+        $this->proxy->setPluginAPI($this->mockPluginAPI);
     }
 
     public function testProcessUrlKeysCallsSetJsonFormTokenOnMagentoRequest()
