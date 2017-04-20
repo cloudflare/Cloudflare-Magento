@@ -41,7 +41,6 @@ class Proxy extends AbstractAction
      * @param JsonFactory $resultJsonFactory
      * @param LoggerInterface $logger
      * @param Backend\MagentoAPI|MagentoAPI $magentoAPI
-     * @param RequestRouter $requestRouter
      */
     public function __construct(
         Context $context,
@@ -49,20 +48,19 @@ class Proxy extends AbstractAction
         MagentoIntegration $integrationContext,
         JsonFactory $resultJsonFactory,
         LoggerInterface $logger,
-        MagentoAPI $magentoAPI,
-        RequestRouter $requestRouter,
-        ClientAPI $clientAPI,
-        Plugin $pluginAPI
+        MagentoAPI $magentoAPI
     ) {
         $this->dataStore = $dataStore;
         $this->integrationContext = $integrationContext;
         $this->logger = $logger;
         $this->magentoAPI = $magentoAPI;
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->requestRouter = $requestRouter;
-        $this->clientAPI = $clientAPI;
-        $this->pluginAPI = $pluginAPI;
 
+        //PI-1074 - new is bad but a necessary work around here.
+        $this->clientAPI = new ClientAPI($this->integrationContext);
+        $this->pluginAPI = new Plugin($this->integrationContext);
+
+        $this->requestRouter = new RequestRouter($this->integrationContext);
         $this->requestRouter->addRouter($this->clientAPI, ClientRoutes::$routes);
         $this->requestRouter->addRouter($this->pluginAPI, PluginRoutes::getRoutes(\CF\API\PluginRoutes::$routes));
 
@@ -132,5 +130,29 @@ class Proxy extends AbstractAction
         $parameters[self::FORM_KEY] = $token;
         $request->setParams($parameters);
         return $request;
+    }
+
+    /**
+     * @param RequestRouter $requestRouter
+     */
+    public function setRequestRouter(RequestRouter $requestRouter)
+    {
+        $this->requestRouter = $requestRouter;
+    }
+
+    /**
+     * @param ClientAPI $clientAPI
+     */
+    public function setClientAPI(ClientAPI $clientAPI)
+    {
+        $this->clientAPI = $clientAPI;
+    }
+
+    /**
+     * @param Plugin $pluginAPI
+     */
+    public function setPluginAPI(Plugin $pluginAPI)
+    {
+        $this->pluginAPI = $pluginAPI;
     }
 }

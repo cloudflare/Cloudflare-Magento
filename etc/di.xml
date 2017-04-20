@@ -30,6 +30,8 @@
         </arguments>
     </type>
     <preference for="CF\Integration\IntegrationInterface" type="CloudFlare\Plugin\Backend\MagentoIntegration" />
+    <!-- PI-1074 - revert when Magnento 2.2 is released -->
+    <!--
     <type name="CloudFlare\Plugin\Backend\ClientAPI">
         <arguments>
             <argument name="integration" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
@@ -44,7 +46,7 @@
         <arguments>
             <argument name="integrationContext" xsi:type="object">\CloudFlare\Plugin\Backend\MagentoIntegration</argument>
         </arguments>
-    </type>
+    </type> -->
     <!-- Restore original visitor IP from CloudFlare header -->
     <type name="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
         <arguments>
