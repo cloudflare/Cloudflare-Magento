@@ -57,12 +57,16 @@ class MagentoAPI implements IntegrationAPIInterface
      */
     public function getValue($key)
     {
-        $keyValueModel = $this->keyValueFactory->create();
-        $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
-        $result = $keyValueModel->getData();
+        try {
+            $keyValueModel = $this->keyValueFactory->create();
+            $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
+            $result = $keyValueModel->getData();
 
-        if (array_key_exists(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $result)) {
-            return $result[InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN];
+            if (array_key_exists(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $result)) {
+                return $result[InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN];
+            }
+        } catch (\Zend_Db_Statement_Exception $e) {
+            $this->logger->error($e->getMessage() . $e->getTraceAsString());
         }
 
         return null;
@@ -75,20 +79,25 @@ class MagentoAPI implements IntegrationAPIInterface
      */
     public function setValue($key, $value)
     {
-        $keyValueModel = $this->keyValueFactory->create();
-        $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
-        if (empty($keyValueModel->getData())) {
-            //key doesn't exist yet, create new
+        try {
             $keyValueModel = $this->keyValueFactory->create();
-            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN, $key);
-            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
-            $keyValueModel->save();
-        } else {
-            //update existing key
-            $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
-            $keyValueModel->save();
+            $keyValueModel->load($key, InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN);
+            if (empty($keyValueModel->getData())) {
+                //key doesn't exist yet, create new
+                $keyValueModel = $this->keyValueFactory->create();
+                $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_KEY_COLUMN, $key);
+                $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
+                $keyValueModel->save();
+            } else {
+                //update existing key
+                $keyValueModel->setData(InstallSchema::CLOUDFLARE_DATA_TABLE_VALUE_COLUMN, $value);
+                $keyValueModel->save();
+            }
+            return true;
+        } catch (\Zend_Db_Statement_Exception $e) {
+            $this->logger->error($e->getMessage() . $e->getTraceAsString());
         }
-        return true;
+        return false;
     }
 
     /**
