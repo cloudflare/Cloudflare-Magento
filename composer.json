@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vendor/phpunit/phpunit/phpunit --bootstrap Test/bootstrap.php Test/ && rm -rf phpUnitGeneratedFiles/",
     "lint": "vendor/bin/phpcs -n --standard=PSR2 Backend/ Block/ Controller/ Model/ Observer/ Setup/ Test/",
-    "format": "vendor/bin/phpcbf --standard=PSR2 Backend/ Block/ Controller/ Model/ Observer/ Setup/ Test/"
+    "format": "vendor/bin/phpcbf --standard=PSR2 Backend/ Block/ Controller/ Model/ Observer/ Setup/ Test/",
+    "bad": "echo $MAGENTO_USERNAME"
   },
   "repositories": [
         {

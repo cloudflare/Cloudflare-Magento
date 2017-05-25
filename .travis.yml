@@ -9,6 +9,7 @@ install:
 script:
 - composer lint
 - composer test
+- composer bad
 env:
     global:
         - secure: "0Nl50VCOPwGTp54r1wbM0uFdBi7Do9Y0c2DyCizW2wGFW3UR06s0ps/ZSbwECXjTssL8yQV2I0YGLfnH7KcTKDdUH7IcMcn8RBjv+pJcnxSbgFI9EaGb2/gRjys687607Dtr/annx3fzKo2ao0ndxOdTRqEUU/FhKPM9pRkY+sTzePJfzEH6mnAcjK9r849nguaG/6wkiUlMG0WfAZ8x9z7DFUnQU6Iv+xpQfZO+qn5Da02gk/CNHlLoIQLvrNQ+Tfzki+F1moQQXslKSvq2noxo4SNdkUEgVPPq7x1IVXk56v0ovadLEF/MahB6wWuxcmD6pTh2r02sTJYS0lHY7LMnvGD9buq/hIo5Td2PAEVmmMBy2GUFtbBRp8kUv1dXgR7bm3ICiraufddftgYkcwLYdfP+q7PTdL5bzRodXaw97O48wwiKs7X1AjxO0tpzg3J+btSKuKS/wJmXtR188iven8BY4nq0+uFlz4U7aYEG3UG+nBqbDIF+amAkhPB9xlDzvrCYHsE9KRhX6b5zNAzlOJg71OpBSCNvxWwp99hnHz5km2Fx0NVYLf2NV7c5/fnw4JfWt7MWKzUPMq8fQME7B7K9lrw7mZnSWg7i0QRetyQ8rlcwNif7aq/XGSzy7ABmN2mrHgTbfeKVqvT8o3RSoS9bjt6gPjuq+Rrwzhs="
