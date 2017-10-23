@@ -4,7 +4,7 @@
         <dev>
             <js>
                 <minify_exclude>
-                      pub/static/adminhtml/Magento/backend/en_US/CloudFlare_Plugin/js/compiled.min.js
+                    /CloudFlare_Plugin/js/compiled.js
                 </minify_exclude>
             </js>
         </dev>
