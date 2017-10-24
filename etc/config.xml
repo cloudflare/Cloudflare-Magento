@@ -3,9 +3,7 @@
     <default>
         <dev>
             <js>
-                <minify_exclude>
-                    /CloudFlare_Plugin/js/compiled.js
-                </minify_exclude>
+                <minify_exclude>/CloudFlare_Plugin/js/compiled.js</minify_exclude>
             </js>
         </dev>
     </default>
