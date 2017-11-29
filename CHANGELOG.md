@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.7](#1.1.7) - 2017-11-29
+## Added
+- Support for PHP version 7.x. [#68](https://github.com/cloudflare/Cloudflare-Magento/pull/68)
+
 ## [1.1.6](#1.1.6) - 2017-05-24
 ## Fixed
 - Fixed bug where DB errors weren't being caught. [#59](https://github.com/cloudflare/Cloudflare-Magento/pull/59)
