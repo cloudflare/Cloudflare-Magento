@@ -14,7 +14,7 @@ class Index extends \Magento\Framework\View\Element\Template
     protected $magentoAPI;
     protected $urlBuilder;
 
-    const COMPILED_JS_PATH = "js/compiled.js";
+    const COMPILED_JS_PATH = "js/compiled.min.js";
 
     /**
      * @param Context $context
@@ -43,8 +43,8 @@ class Index extends \Magento\Framework\View\Element\Template
      */
     protected function _prepareLayout()
     {
-        //Generate link to CloudFlare/Plugin/view/web/js/compiled.js
-        $asset = $this->assetRepository->createAsset('CloudFlare_Plugin::js/compiled.js');
+        //Generate link to CloudFlare/Plugin/view/web/js/compiled.min.js
+        $asset = $this->assetRepository->createAsset('CloudFlare_Plugin::js/compiled.min.js');
         $compiledJsUrl = $asset->getUrl();
         $this->setCompiledJsUrl($compiledJsUrl);
 
