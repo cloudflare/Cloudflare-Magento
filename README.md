@@ -1,3 +1,6 @@
+# Notice: This plugin has been deprecated and is no longer officially supported by Cloudflare.
+## For information regarding using Magento & Cloudflare, please see [this support article](https://support.cloudflare.com/hc/en-us/articles/360021023712-Best-Practices-Speed-up-your-Site-with-Custom-Caching-via-Cloudflare-Page-Rules).
+
 [![Build Status](https://travis-ci.org/cloudflare/Cloudflare-Magento.svg?branch=master)](https://travis-ci.org/cloudflare/Cloudflare-Magento)
 
 ## Installing the Cloudflare Magento2 extension
