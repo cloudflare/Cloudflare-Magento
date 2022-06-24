@@ -1,5 +1,6 @@
 # Notice: This plugin has been deprecated and is no longer officially supported by Cloudflare.
 ## For information regarding using Magento & Cloudflare, please see [this support article](https://support.cloudflare.com/hc/en-us/articles/360021023712-Best-Practices-Speed-up-your-Site-with-Custom-Caching-via-Cloudflare-Page-Rules).
+## Open Source Alternative: Checkout [jetrails/magento2-cloudflare](https://github.com/jetrails/magento2-cloudflare)
 
 [![Build Status](https://travis-ci.org/cloudflare/Cloudflare-Magento.svg?branch=master)](https://travis-ci.org/cloudflare/Cloudflare-Magento)
 
